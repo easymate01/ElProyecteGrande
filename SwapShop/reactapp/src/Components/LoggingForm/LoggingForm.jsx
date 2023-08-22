@@ -6,13 +6,13 @@ const LoggingForm = ({ isHandleRegister, isLogin }) => {
   const [saveUsername, setSaveUsername] = useState("");
   const [saveEmail, setSaveEmail] = useState("");
   const [savePassword, setSavePassword] = useState("");
-  const [saveBirth, setSaveBirth] = useState("");
 
   const navigate = useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
     console.log("Registering...");
+
     fetch(`https://localhost:7035/create/user`, {
       method: "POST",
       headers: {
@@ -22,7 +22,6 @@ const LoggingForm = ({ isHandleRegister, isLogin }) => {
         username: saveUsername,
         email: saveEmail,
         password: savePassword,
-        birthday: saveBirth,
       }),
     })
       .then((res) => res.json())
@@ -38,25 +37,24 @@ const LoggingForm = ({ isHandleRegister, isLogin }) => {
   const handleLogin = (e) => {
     e.preventDefault();
     console.log("Logging in...");
-    // fetch(`https://localhost:7203/user/login`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     userName: saveUsername,
-    //     email: saveEmail,
-    //     password: savePassword,
-    //   }),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log("Registration response:", data);
-    //     navigate("/");
-    //   })
-    //   .catch((error) => {
-    //     console.error("Registration error:", error);
-    //   });
+    fetch(`https://localhost:7035/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: saveUsername,
+        password: savePassword,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Registration response:", data);
+        navigate("/marketplace");
+      })
+      .catch((error) => {
+        console.error("Registration error:", error);
+      });
   };
 
   return (
@@ -86,34 +84,21 @@ const LoggingForm = ({ isHandleRegister, isLogin }) => {
             Username
           </label>
         </div>
-
-        <div className="input-container ic2">
-          <input
-            id="email"
-            className="input"
-            type="text"
-            placeholder=" "
-            onChange={(e) => setSaveEmail(e.target.value)}
-          />
-          <div className="cut cut-short"></div>
-          <label htmlFor="email" className="placeholder">
-            Email
-          </label>
-        </div>
-
-        <div className="input-container ic2">
-          <input
-            id="birthday"
-            className="input"
-            type="date"
-            placeholder=" "
-            onChange={(e) => setSaveBirth(e.target.value)}
-          />
-          <div className="cut cut-short"></div>
-          <label htmlFor="email" className="placeholder">
-            Birthday
-          </label>
-        </div>
+        {isHandleRegister ?? (
+          <div className="input-container ic2">
+            <input
+              id="email"
+              className="input"
+              type="text"
+              placeholder=" "
+              onChange={(e) => setSaveEmail(e.target.value)}
+            />
+            <div className="cut cut-short"></div>
+            <label htmlFor="email" className="placeholder">
+              Email
+            </label>
+          </div>
+        )}
 
         <div className="input-container ic2">
           <input

@@ -70,7 +70,7 @@ namespace webapi.Models.Repositories
 
 
             using (var cmd = new NpgsqlCommand(
-                       "SELECT id, username, email, birthdate FROM users WHERE id = (@id)",
+                       "SELECT id, username, email FROM users WHERE id = (@id)",
                        _connection
                    ))
             {
@@ -83,7 +83,6 @@ namespace webapi.Models.Repositories
                         user.Id = reader.GetInt32(reader.GetOrdinal("id"));
                         user.Username = reader.GetString(reader.GetOrdinal("username"));
                         user.Email = reader.GetString(reader.GetOrdinal("email"));
-                        user.BirthDate = reader.GetDateTime(reader.GetOrdinal("birthdate"));
                     }
                 }
             }

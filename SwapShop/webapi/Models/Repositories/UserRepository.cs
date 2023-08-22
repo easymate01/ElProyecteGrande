@@ -41,7 +41,54 @@ namespace webapi.Models.Repositories
 
         public int LoginUser(string username, string password)
         {
-            throw new NotImplementedException();
+            _connection.Open();
+            int userId = -1;
+            using (var cmd = new NpgsqlCommand(
+               "SELECT id FROM users WHERE username = @username AND password = @password",
+               _connection
+               ))
+            {
+                cmd.Parameters.AddWithValue("username", username);
+                cmd.Parameters.AddWithValue("password", password);
+
+                var result = cmd.ExecuteScalar();
+                if (result != null)
+                {
+                    userId = (int)result;
+                }
+
+            }
+            _connection.Close();
+            return userId;
+        }
+
+
+        public User GetById(int id)
+        {
+            _connection.Open();
+            User user = new User();
+
+
+            using (var cmd = new NpgsqlCommand(
+                       "SELECT id, username, email, birthdate FROM users WHERE id = (@id)",
+                       _connection
+                   ))
+            {
+                cmd.Parameters.AddWithValue("id", id);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        user.Id = reader.GetInt32(reader.GetOrdinal("id"));
+                        user.Username = reader.GetString(reader.GetOrdinal("username"));
+                        user.Email = reader.GetString(reader.GetOrdinal("email"));
+                        user.BirthDate = reader.GetDateTime(reader.GetOrdinal("birthdate"));
+                    }
+                }
+            }
+            _connection.Close();
+            return user;
         }
     }
 }

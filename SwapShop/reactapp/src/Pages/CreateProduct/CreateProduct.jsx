@@ -1,10 +1,11 @@
+import Dashboard from "../../Components/Dashboard/Dashboard";
 import ProductCreator from "../../Components/ProductCreater/ProductCreater";
 
 const CreateProduct = () => {
-    return (
+  return (
     <div>
-        <ProductCreator/>
-    </div>)
-    
-}
+      <ProductCreator />
+    </div>
+  );
+};
 export default CreateProduct;

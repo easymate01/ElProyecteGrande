@@ -13,6 +13,24 @@ const MainPage = () => {
   const [products, setProducts] = useState([]);
   const [viewProduct, setViewProduct] = useState(false);
 
+  
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const response = await fetch(
+          "https://localhost:7035/products"
+        );
+        const data = await response.json();
+        setProducts(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    }
+
+    fetchProducts();
+  }, []);
+
   return (
     <>
       <div className="app">
@@ -21,7 +39,7 @@ const MainPage = () => {
           <div className="app-body-navigation">
             <Nav />
           </div>
-          <Dashboard />
+          <Dashboard allPRoducts={products} />
           <div className="app-body-sidebar">
             <section className="payment-section">
               <h2>New Payment</h2>

@@ -1,6 +1,6 @@
 import ProductCard from "../ProductCard/ProductCard";
-
-const Dashboard = () => {
+import React from "react";
+const Dashboard = ({allPRoducts}) => {
   return (
     <div className="app-body-main-content">
       <section className="service-section">
@@ -10,8 +10,14 @@ const Dashboard = () => {
           <button className="flat-button">Toggle search</button>
         </div>
         {/* --- DASHBOARD FEATURES ---*/}
-        <div className="tiles">
-          <ProductCard />
+        <div className="tiles" >
+          {
+            allPRoducts.map(product=>(
+              <React.Fragment key={product.id}>
+                <ProductCard product={product} />
+              </React.Fragment>
+            ))
+          }
         </div>
         <div className="service-section-footer">
           <p>

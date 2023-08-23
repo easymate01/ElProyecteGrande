@@ -9,6 +9,7 @@ namespace webapi.Controllers
     [Route("[controller]")]
     public class ProductController : Controller
     {
+        //private readonly string _connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=12345;Database=SwagShop";
         private readonly string _connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=1234;Database=SwapShop";
 
         [HttpGet("/products")]

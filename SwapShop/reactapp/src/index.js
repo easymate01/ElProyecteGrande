@@ -10,6 +10,7 @@ import MainPage from "./Pages/MainPage";
 import ProductPage from "./Pages/ProductPage/ProductPage";
 import Login from "./Pages/Login/Login";
 import Registering from "./Pages/Register/Register";
+import CreateProduct from "./Pages/CreateProduct/CreateProduct";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
         path: "/product/:id",
         element: <ProductPage />,
       },
+      {
+        path: "/product/create",
+        element : <CreateProduct/>
+      }
     ],
   },
 ]);

@@ -26,7 +26,7 @@ namespace webapi.Controllers
             return Ok(repository.CreateProduct(product));
         }
 
-        [HttpPost("/product/{productId}")]
+        [HttpGet("/product/{productId}")]
         public ActionResult<Product> GetProductById(int productId)
         {
             var repository = new ProuductRepository(new NpgsqlConnection(_connectionString));

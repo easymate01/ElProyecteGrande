@@ -4,6 +4,10 @@ const Nav = () => {
   return (
     <div className="app-body-navigation">
       <nav className="navigation">
+        <li className="ph-globe">
+          <Link to="/product/create">Add Products</Link>
+        </li>
+
         <li className="ph-browsers">
           <Link to="/">Home</Link>
         </li>
@@ -14,10 +18,6 @@ const Nav = () => {
 
         <li className="ph-swap">
           <Link to="/">Explore</Link>
-        </li>
-
-        <li className="ph-globe">
-          <Link to="/product/create">Add Products</Link>
         </li>
 
         <li className="ph-clipboard-text">

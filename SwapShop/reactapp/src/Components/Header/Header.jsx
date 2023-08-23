@@ -9,8 +9,8 @@ const Header = () => {
             <img src="https://assets.codepen.io/285131/almeria-logo.svg" />
           </span>
           <h1 className="logo-title">
-            <span>Jófogás</span>
-            <span>Copy</span>
+            <span>Swap</span>
+            <span>Shop</span>
           </h1>
         </div>
       </div>

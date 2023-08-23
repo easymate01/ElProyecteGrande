@@ -33,7 +33,6 @@ const MainPage = () => {
   return (
     <>
       <div className="app">
-        <Header isLoggedIn={isLoggedIn} />
         <div className="app-body">
           <Nav />
           <Dashboard allPRoducts={products} isLoggedIn={isLoggedIn} />

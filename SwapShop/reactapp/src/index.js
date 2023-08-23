@@ -11,14 +11,15 @@ import ProductPage from "./Pages/ProductPage/ProductPage";
 import Login from "./Pages/Login/Login";
 import Registering from "./Pages/Register/Register";
 import CreateProduct from "./Pages/CreateProduct/CreateProduct";
+import Header from "./Components/Header/Header";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <Header />,
     children: [
       {
         path: "/",
-        element: <MainPage />,
       },
       {
         path: "/login",

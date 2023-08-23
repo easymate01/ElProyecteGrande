@@ -8,7 +8,6 @@ import "./ProductCreating.css";
 const CreateProduct = () => {
   return (
     <React.Fragment>
-      <Header />
       <div>
         <ProductCreator />
       </div>

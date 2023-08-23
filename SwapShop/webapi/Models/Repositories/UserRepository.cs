@@ -1,4 +1,5 @@
 ﻿using Backend.Models.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
 namespace webapi.Models.Repositories
@@ -63,7 +64,7 @@ namespace webapi.Models.Repositories
             return lastInsertId;
         }
 
-        public int LoginUser(string username, string password)
+        public int LoginUser([FromQuery] string userName, [FromQuery] string password)
         {
             _connection.Open();
             int userId = -1;
@@ -72,7 +73,7 @@ namespace webapi.Models.Repositories
                _connection
                ))
             {
-                cmd.Parameters.AddWithValue("username", username);
+                cmd.Parameters.AddWithValue("username", userName);
                 cmd.Parameters.AddWithValue("password", password);
 
                 var result = cmd.ExecuteScalar();

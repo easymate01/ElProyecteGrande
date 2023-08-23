@@ -44,6 +44,21 @@ textarea {
 a {
   color: inherit;
 }
+.app-header-actions a {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  text-decoration: none;
+  border-top: 2px solid transparent;
+  display: inline-flex;
+  transition: 0.25s ease;
+  margin-left: 10px;
+}
+.tabs a.active,
+.tabs a:hover,
+.tabs a:focus {
+  color: var(--c-text-primary);
+  border-color: var(--c-text-primary);
+}
 .responsive-wrapper {
   width: 90%;
   max-width: 1600px;

@@ -39,7 +39,7 @@ const ProductCreator = () => {
           <h1>Create Item For Sale</h1>
           <input
             type="text"
-            placeholder="Your name"
+            placeholder="Item name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />

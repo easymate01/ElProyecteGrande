@@ -2,7 +2,7 @@ import { useParams, useLocation } from "react-router-dom";
 import { Outlet, Link } from "react-router-dom";
 import React from "react";
 
-const Header = ({ isLoggedIn }) => {
+const Header = ({ isLoggedIn, userName, onLogout }) => {
   const location = useLocation();
 
   return (
@@ -34,7 +34,20 @@ const Header = ({ isLoggedIn }) => {
         </div>
 
         <div className="app-header-actions">
-          {isLoggedIn ? <span>Lili Gulyás</span> : <p>Login</p>}
+          {isLoggedIn ? (
+            <>
+              <li>Hello, {userName}!</li>
+              <li>
+                <button onClick={onLogout}>Logout</button>
+              </li>
+            </>
+          ) : (
+            <>
+              <Link to="/login">Login</Link>
+
+              <Link to="/register">Register</Link>
+            </>
+          )}
           <div className="app-header-actions-buttons">
             <button className="icon-button large">
               <i className="ph-magnifying-glass"></i>

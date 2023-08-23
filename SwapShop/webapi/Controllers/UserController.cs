@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Npgsql;
-using System.ComponentModel.DataAnnotations;
 using webapi.Models;
 using webapi.Models.Repositories;
 
@@ -29,7 +28,7 @@ namespace webapi.Controllers
         }
 
         [HttpPost("/login")]
-        public ActionResult<int> LoginUser([Required] string userName, [Required] string password)
+        public ActionResult<int> LoginUser(string userName, string password)
         {
             var repository = new UserRepository(new NpgsqlConnection(_connectionString));
             return Ok(repository.LoginUser(userName, password));

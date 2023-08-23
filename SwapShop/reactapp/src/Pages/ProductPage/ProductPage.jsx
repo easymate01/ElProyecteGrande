@@ -27,6 +27,14 @@ const ProductPage = () => {
     fetchProducts();
   }, []);
 
+  const handleContactSeller = () => {
+    if (isLoggedIn) {
+      console.log("átiráynítás...");
+    } else {
+      console.log("please login first!");
+    }
+  };
+
   return (
     <>
       {loading ? (
@@ -42,7 +50,7 @@ const ProductPage = () => {
               <h1>{product.price}$</h1>
               <p>{product.description}</p>
 
-              <button onCLick={handleContactSeller}>Contact with seller</button>
+              <button onClick={handleContactSeller}>Contact with seller</button>
               <button>Wishlist</button>
             </div>
           </div>

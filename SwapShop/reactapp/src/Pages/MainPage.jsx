@@ -1,15 +1,16 @@
-import Header from "../Components/Header/Header";
-import Nav from "../Components/Navigation/Nav";
 import React, { useState, useEffect } from "react";
 
 import "./Main.css";
+
+import Nav from "../Components/Navigation/Nav";
+import Header from "../Components/Header/Header";
 import Dashboard from "../Components/Dashboard/Dashboard";
 import Login from "./Login/Login";
 
 const MainPage = () => {
   const [userData, setUserData] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [products, setProducts] = useState([]);
   const [viewProduct, setViewProduct] = useState(false);
@@ -31,17 +32,13 @@ const MainPage = () => {
 
   return (
     <>
-      {isLoggedIn ? (
-        <div className="app">
-          <Header />
-          <div className="app-body">
-            <Nav />
-            <Dashboard allPRoducts={products} isLoggedIn={isLoggedIn} />
-          </div>
+      <div className="app">
+        <Header isLoggedIn={isLoggedIn} />
+        <div className="app-body">
+          <Nav />
+          <Dashboard allPRoducts={products} isLoggedIn={isLoggedIn} />
         </div>
-      ) : (
-        <Login />
-      )}
+      </div>
     </>
   );
 };

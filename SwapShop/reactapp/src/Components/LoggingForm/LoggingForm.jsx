@@ -59,7 +59,7 @@ const LoggingForm = ({ isHandleRegister, isLogin }) => {
 
   return (
     <>
-      {/* <>
+      <>
         <div className="form">
           {!isHandleRegister ? (
             <>
@@ -134,8 +134,8 @@ const LoggingForm = ({ isHandleRegister, isLogin }) => {
             </>
           )}
         </div>
-      </> */}
-      <>
+      </>
+      {/* <>
         <div className="container">
           <div className="left">
             <div className="header">
@@ -165,7 +165,7 @@ const LoggingForm = ({ isHandleRegister, isLogin }) => {
           </div>
           <div className="right"></div>
         </div>
-      </>
+      </>*/}
     </>
   );
 };

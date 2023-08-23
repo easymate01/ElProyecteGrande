@@ -1,6 +1,9 @@
+import { useParams, useLocation } from "react-router-dom";
 import { Outlet, Link } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ isLoggedIn }) => {
+  const location = useLocation();
+
   return (
     <header className="app-header">
       <div className="app-header-logo">
@@ -29,12 +32,7 @@ const Header = () => {
       </div>
 
       <div className="app-header-actions">
-        <button className="user-profile">
-          <span>{}</span>
-          <span>
-            <img src="" />
-          </span>
-        </button>
+        {isLoggedIn ? <span>Lili Gulyás</span> : <p>Login</p>}
         <div className="app-header-actions-buttons">
           <button className="icon-button large">
             <i className="ph-magnifying-glass"></i>

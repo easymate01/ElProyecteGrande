@@ -12,12 +12,12 @@ namespace webapi.Controllers
     {
         private readonly string _connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=1234;Database=SwapShop";
 
-        private readonly ILogger<UserController> _logger;
 
-        public UserController(ILogger<UserController> logger)
+        [HttpGet("/users")]
+        public ActionResult<IEnumerable<User>> GetAllUser()
         {
-            _logger = logger;
-
+            var repository = new UserRepository(new NpgsqlConnection(_connectionString));
+            return Ok(repository.GetAllUsers());
         }
 
         [HttpPost("/create/user")]

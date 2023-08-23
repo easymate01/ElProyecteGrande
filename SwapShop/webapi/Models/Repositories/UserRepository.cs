@@ -14,8 +14,32 @@ namespace webapi.Models.Repositories
 
         public IEnumerable<User> GetAllUsers()
         {
-            throw new NotImplementedException();
+            _connection.Open();
+            List<User> users = new List<User>();
+
+            using (var cmd = new NpgsqlCommand(
+                       "SELECT * FROM users", _connection
+                   ))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var user = new User
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("id")),
+                            Username = reader.GetString(reader.GetOrdinal("username")),
+                            Email = reader.GetString(reader.GetOrdinal("email")),
+                        };
+                        users.Add(user);
+                    }
+                }
+            }
+
+            _connection.Close();
+            return users;
         }
+
 
         public int CreateUser(User user)
         {

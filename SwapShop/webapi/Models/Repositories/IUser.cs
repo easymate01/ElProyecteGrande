@@ -9,9 +9,9 @@ namespace Backend.Models.Repositories
 
         //Logout User
 
-        //Logged-In
         IEnumerable<User> GetAllUsers();
         int CreateUser(User user);
         int LoginUser(string username, string password);
+        User GetById(int id);
     }
 }

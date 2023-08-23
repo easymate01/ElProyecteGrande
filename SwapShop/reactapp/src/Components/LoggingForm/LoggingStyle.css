@@ -1,150 +1,124 @@
-.container-logging {
-  display: flex;
-  height: 99vh;
-  overflow-y: hidden;
+@import url("https://fonts.googleapis.com/css?family=Rubik:400,500&display=swap");
+* {
+  box-sizing: border-box;
 }
-
-.left-div {
-  flex: 1; /* Take up 50% of available space */
-  padding: 20px;
-  border-radius: 5px;
-  margin-right: 10px;
-  display: flex;
-  align-items: center;
+body {
+  font-family: "Rubik", sans-serif;
+  background-color: #ddd !important;
 }
-
-.right-div {
-  flex: 1; /* Take up 50% of available space */
-  padding: 20px;
-  background-color: #e0e0e0;
-  border-radius: 5px;
-  margin-left: 10px;
+.container {
   display: flex;
-  align-items: center;
-  border-radius: 30px;
-  background-color: rgb(241, 241, 241);
+  height: 100vh;
+}
+.left {
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  animation-name: left;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-delay: 1s;
+}
+.right {
+  flex: 1;
+  background-color: black;
   transition: 1s;
+  background-image: url(https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
 }
-
-.form {
-  background-color: #15172b;
-  border-radius: 20px;
-  box-sizing: border-box;
-  height: 500px;
-  padding: 20px;
-  width: 320px;
-  margin: 0 auto;
+.header > h2 {
+  margin: 0;
+  color: #4f46a5;
 }
-.title2 {
-  color: #eee;
-  font-family: sans-serif;
-  font-size: 36px;
-  font-weight: 600;
-  margin-top: 30px;
-}
-
-.subtitle {
-  color: #eee;
-  font-family: sans-serif;
-  font-size: 16px;
-  font-weight: 600;
+.header > h4 {
   margin-top: 10px;
+  font-weight: normal;
+  font-size: 15px;
+  color: rgba(0, 0, 0, 0.4);
 }
-
-.input-container {
-  height: 50px;
-  position: relative;
-  width: 100%;
+.form {
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
 }
-
-.ic1 {
-  margin-top: 40px;
+.form > p {
+  text-align: right;
 }
-
-.ic2 {
-  margin-top: 30px;
+.form > p > a {
+  color: #000;
+  font-size: 14px;
 }
-
-.input {
-  background-color: #303245;
-  border-radius: 12px;
-  border: 0;
-  box-sizing: border-box;
-  color: #eee;
-  font-size: 18px;
-  height: 100%;
+.form-field {
+  height: 46px;
+  padding: 0 16px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  font-family: "Rubik", sans-serif;
   outline: 0;
-  padding: 4px 20px 0;
-  width: 100%;
+  transition: 0.2s;
+  margin-top: 20px;
 }
-
-.cut {
-  background-color: #15172b;
-  border-radius: 10px;
-  height: 20px;
-  left: 20px;
-  position: absolute;
-  top: -20px;
-  transform: translateY(0);
-  transition: transform 200ms;
-  width: 76px;
+.form-field:focus {
+  border-color: #0f7ef1;
 }
-
-.cut-short {
-  width: 50px;
-}
-
-.input:focus ~ .cut,
-.input:not(:placeholder-shown) ~ .cut {
-  transform: translateY(8px);
-}
-
-.placeholder {
-  color: #65657b;
-  font-family: sans-serif;
-  left: 20px;
-  line-height: 14px;
-  pointer-events: none;
-  position: absolute;
-  transform-origin: 0 50%;
-  transition: transform 200ms, color 200ms;
-  top: 20px;
-}
-
-.input:focus ~ .placeholder,
-.input:not(:placeholder-shown) ~ .placeholder {
-  transform: translateY(-30px) translateX(10px) scale(0.75);
-}
-
-.input:not(:placeholder-shown) ~ .placeholder {
-  color: #808097;
-}
-
-.input:focus ~ .placeholder {
-  color: #dc2f55;
-}
-
-.submit {
-  background-color: #08d;
-  border-radius: 12px;
+.form > button {
+  padding: 12px 10px;
   border: 0;
-  box-sizing: border-box;
-  color: #eee;
-  cursor: pointer;
-  font-size: 18px;
-  height: 50px;
-  margin-top: 38px;
-  text-align: center;
-  width: 100%;
+  background: linear-gradient(to right, #de48b5 0%, #0097ff 100%);
+  border-radius: 3px;
+  margin-top: 10px;
+  color: #fff;
+  letter-spacing: 1px;
+  font-family: "Rubik", sans-serif;
 }
-
-.submit:active {
-  background-color: #06b;
+.animation {
+  animation-name: move;
+  animation-duration: 0.4s;
+  animation-fill-mode: both;
+  animation-delay: 2s;
 }
-
-a {
-  color: white;
+.a1 {
+  animation-delay: 2s;
+}
+.a2 {
+  animation-delay: 2.1s;
+}
+.a3 {
+  animation-delay: 2.2s;
+}
+.a4 {
+  animation-delay: 2.3s;
+}
+.a5 {
+  animation-delay: 2.4s;
+}
+.a6 {
+  animation-delay: 2.5s;
+}
+@keyframes move {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-40px);
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+@keyframes left {
+  0% {
+    opacity: 0;
+    width: 0;
+  }
+  100% {
+    opacity: 1;
+    padding: 20px 40px;
+    width: 440px;
+  }
 }

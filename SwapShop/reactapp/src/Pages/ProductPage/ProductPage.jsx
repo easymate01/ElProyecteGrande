@@ -1,29 +1,54 @@
 import { useParams, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
 
 import "./ProductPage.css";
 
 const ProductPage = () => {
   const { id } = useParams();
-  const location = useLocation();
+  const [product, setProduct] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Access the passed data using location.state
-  const product = location.state;
+  const location = useLocation();
+  const isLoggedIn = new URLSearchParams(location.search).get("isLoggedIn");
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const response = await fetch(`https://localhost:7035/product/${id}`);
+        const data = await response.json();
+        setProduct(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    }
+
+    fetchProducts();
+  }, []);
 
   return (
-    <div class="product-card">
-      <div class="photo"></div>
+    <>
+      {loading ? (
+        <>Loading</>
+      ) : (
+        <React.Fragment>
+          <div className="product-card">
+            <div className="photo"></div>
+            <div className="description">
+              <Link to="/marketplace">All Products</Link>
+              <h2>{product.name}</h2>
+              <h4>{product.category}</h4>
+              <h1>{product.price}$</h1>
+              <p>{product.description}</p>
 
-      <div class="description">
-        <Link to="/marketplace">All Products</Link>
-        <h2>{product.name}</h2>
-        <h4>{product.category}</h4>
-        <h1>{product.price}$</h1>
-        <p>{product.description}</p>
-        <button>Contact with seller</button>
-        <button>Wishlist</button>
-      </div>
-    </div>
+              <button onCLick={handleContactSeller}>Contact with seller</button>
+              <button>Wishlist</button>
+            </div>
+          </div>
+        </React.Fragment>
+      )}
+    </>
   );
 };
 export default ProductPage;

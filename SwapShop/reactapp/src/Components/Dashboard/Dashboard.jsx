@@ -1,6 +1,6 @@
 import ProductCard from "../ProductCard/ProductCard";
 import React from "react";
-const Dashboard = ({ allPRoducts }) => {
+const Dashboard = ({ allPRoducts, isLoggedIn }) => {
   return (
     <div className="app-body-main-content">
       <section className="service-section">
@@ -14,7 +14,7 @@ const Dashboard = ({ allPRoducts }) => {
           {allPRoducts.length > 0 &&
             allPRoducts.map((product) => (
               <React.Fragment key={product.id}>
-                <ProductCard product={product} />
+                <ProductCard product={product} isLoggedIn={isLoggedIn} />
               </React.Fragment>
             ))}
         </div>

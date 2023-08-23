@@ -4,11 +4,9 @@ body {
 .form-container {
   align-items: center;
   background-color: #242526;
-  padding: 30px 200px;
   border-radius: 15px;
   color: black;
   display: flex;
-  margin-top: 50px;
   flex-direction: column;
 }
 .nice-form-group label {

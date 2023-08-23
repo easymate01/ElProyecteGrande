@@ -17,7 +17,7 @@ const Header = () => {
 
       <div className="app-header-navigation">
         <div className="tabs">
-          <Link to="/marketplace">All Products</Link>
+          <Link to="/marketplace">Marketplace</Link>
 
           <Link to="/">Trending Products</Link>
 

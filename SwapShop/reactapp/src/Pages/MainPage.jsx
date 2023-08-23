@@ -4,10 +4,11 @@ import React, { useState, useEffect } from "react";
 
 import "./Main.css";
 import Dashboard from "../Components/Dashboard/Dashboard";
-import SideBar from "../Components/Sidebar";
+import Login from "./Login/Login";
 
 const MainPage = () => {
-  const [users, setUsers] = useState("");
+  const [userData, setUserData] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [loading, setLoading] = useState(true);
 
   const [products, setProducts] = useState([]);
@@ -30,13 +31,17 @@ const MainPage = () => {
 
   return (
     <>
-      <div className="app">
-        <Header />
-        <div className="app-body">
-          <Nav />
-          <Dashboard allPRoducts={products} />
+      {isLoggedIn ? (
+        <div className="app">
+          <Header />
+          <div className="app-body">
+            <Nav />
+            <Dashboard allPRoducts={products} isLoggedIn={isLoggedIn} />
+          </div>
         </div>
-      </div>
+      ) : (
+        <Login />
+      )}
     </>
   );
 };

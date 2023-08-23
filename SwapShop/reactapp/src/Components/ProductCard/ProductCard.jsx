@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import "./ProductCard.css";
-const ProductCard = ({ product }) => {
+
+const ProductCard = ({ product, isLoggedIn }) => {
   const navigate = useNavigate();
 
   const { id } = product;
+
   const onView = () => {
-    navigate(`/product/${id}`, { state: product });
+    navigate(`/product/${id}?isLoggedIn=${isLoggedIn}`);
   };
 
   return (

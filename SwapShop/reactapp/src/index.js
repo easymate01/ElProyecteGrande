@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <App />,
+        element: <MainPage />,
       },
       {
         path: "/login",
@@ -38,8 +38,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/product/create",
-        element : <CreateProduct/>
-      }
+        element: <CreateProduct />,
+      },
     ],
   },
 ]);

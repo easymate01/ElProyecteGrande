@@ -35,7 +35,6 @@ const MainPage = () => {
         <div className="app-body">
           <Nav />
           <Dashboard allPRoducts={products} />
-          <SideBar />
         </div>
       </div>
     </>

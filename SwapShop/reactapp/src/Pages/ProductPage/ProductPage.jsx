@@ -10,21 +10,17 @@ const ProductPage = () => {
   // Access the passed data using location.state
   const product = location.state;
 
-  console.log(product);
-
   return (
     <div class="product-card">
-      <Link to="/marketplace">All Products</Link>
+      <div class="photo"></div>
 
-      <div class="photo">
-        <img src={product.image} />
-      </div>
       <div class="description">
-        <h2>{product.title}</h2>
+        <Link to="/marketplace">All Products</Link>
+        <h2>{product.name}</h2>
         <h4>{product.category}</h4>
         <h1>{product.price}$</h1>
         <p>{product.description}</p>
-        <button>Add to Cart</button>
+        <button>Contact with seller</button>
         <button>Wishlist</button>
       </div>
     </div>

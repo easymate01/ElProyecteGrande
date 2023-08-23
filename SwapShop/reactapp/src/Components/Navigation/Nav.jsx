@@ -17,7 +17,7 @@ const Nav = () => {
         </li>
 
         <li className="ph-globe">
-          <Link to="/">Add Products</Link>
+          <Link to="/product/create">Add Products</Link>
         </li>
 
         <li className="ph-clipboard-text">

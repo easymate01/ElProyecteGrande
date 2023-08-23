@@ -1,0 +1,66 @@
+body {
+  background-color: #18191a;
+}
+.form-container {
+  align-items: center;
+  background-color: #242526;
+  padding: 30px 200px;
+  border-radius: 15px;
+  color: black;
+  display: flex;
+  margin-top: 50px;
+  flex-direction: column;
+}
+.nice-form-group label {
+  position: absolute;
+  color: #000;
+  padding: 0 0.5rem;
+  font-size: 16px;
+  transition: top 0.3s, font-size 0.3s; /* Animáció smooth átmenethez */
+}
+h1,
+p {
+  color: white;
+}
+input {
+  padding: 15px 50px;
+  border: 1px solid #ddd;
+  background-color: #242526;
+  border-radius: 15px;
+  font-family: "Rubik", sans-serif;
+  color: white;
+  outline: 0;
+  transition: 0.2s;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.bottom-container {
+  text-align: center;
+  margin-top: 80px;
+}
+
+button {
+  width: 300px;
+  padding: 10px 20px;
+  text-align: center;
+  color: #949494;
+  border-radius: 15px;
+  background-color: #444444;
+  border: 1px solid #444444;
+  margin: 0 auto;
+  transition: top 0.3s, font-size 0.3s; /* Animáció smooth átmenethez */
+  cursor: pointer;
+}
+button:hover {
+  color: #949494;
+  background-color: #1d1d1d;
+}
+
+.small-desc {
+  margin-top: 50px;
+
+  width: 700px;
+  font-size: 14px;
+  color: #aaaaaa;
+}

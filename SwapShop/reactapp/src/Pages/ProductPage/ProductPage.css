@@ -1,15 +1,16 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:400,300,500,700);
 * {
-  box-sizing: border-box;
 }
 body {
   font-family: "Raleway";
+  background: #242526 !important;
 }
 
 .product-card {
+  color: #fff !important;
   width: 90%;
   position: absolute;
-  background: white;
+  background: #454749;
   margin: 0 auto;
   top: 50%;
   left: 50%;
@@ -22,7 +23,7 @@ body {
 }
 .product-card nav {
   width: 100%;
-  color: #727272;
+  color: #fff;
   text-transform: uppercase;
   padding: 20px;
   border-bottom: 2px solid #efefef;
@@ -45,70 +46,82 @@ body {
   width: 15px;
   margin-right: 10px;
 }
+
 .product-card .photo {
+  background: url(https://scontent-vie1-1.xx.fbcdn.net/v/t45.5328-4/369032305_6523624674425610_3437164529856044739_n.jpg?stp=dst-jpg_p720x720&_nc_cat=102&ccb=1-7&_nc_sid=1a0e84&_nc_ohc=8vQG8MAPegEAX8wEZeS&_nc_ht=scontent-vie1-1.xx&oh=00_AfC9WPhWpkeVEemLlKaiRKwi_CXh3VkMbp-vYkjINSLBTw&oe=64EB6ED5);
   padding: 30px;
-  width: 45%;
+  width: 55%;
+  aspect-ratio: 2/3;
   text-align: center;
   float: left;
+  max-height: 800px;
+  background-size: cover;
+  border-right: 2px solid #efefef;
+  background-position: center;
 }
+
 .product-card .photo img {
+  mix-blend-mode: darken;
   max-height: 240px;
 }
 .product-card .description {
+  height: 600px;
   padding: 30px;
   float: left;
-  width: 55%;
-  border-left: 2px solid #efefef;
+  width: 45%;
 }
 .product-card .description h1 {
-  color: #515151;
+  color: #fff;
   font-weight: 300;
   padding-top: 15px;
   margin: 0;
-  font-size: 30px;
-  font-weight: 300;
+  font-size: 40px;
+  font-weight: 800;
 }
 .product-card .description h2 {
-  color: #515151;
-  margin: 0;
+  color: #fff;
+  font-size: 40px;
+  margin: 150px 0 0 0;
   text-transform: uppercase;
   font-weight: 500;
 }
 .product-card .description h4 {
   margin: 0;
-  color: #727272;
+  color: #fff;
   text-transform: uppercase;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 20px;
 }
 .product-card .description p {
-  font-size: 12px;
+  font-size: 18px;
   line-height: 20px;
-  color: #727272;
+  color: #fff;
   padding: 20px 0;
   margin: 0;
 }
 .product-card .description button {
+  width: 250px;
   outline: 0;
   border: 0;
   background: none;
   border: 1px solid #d9d9d9;
   padding: 8px 0px;
   margin-bottom: 30px;
-  color: #515151;
+  color: #fff;
   text-transform: uppercase;
-  width: 125px;
   font-family: inherit;
   margin-right: 5px;
   transition: all 0.3s ease;
   font-weight: 500;
 }
 .product-card .description button:hover {
-  border: 1px solid #aedaa6;
-  color: #aedaa6;
+  border: 1px solid #2d81f4;
+  background-color: #263951;
+  color: #2d81f4;
   cursor: pointer;
 }
 
-.product-card a {
-  color: #515151;
+.product-card,
+#marketlink {
+  color: #fff;
 }

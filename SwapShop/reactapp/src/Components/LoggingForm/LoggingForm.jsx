@@ -46,6 +46,7 @@ const LoggingForm = ({ isHandleRegister, isLogin }) => {
       body: JSON.stringify({
         username: saveUsername,
         password: savePassword,
+        email: saveEmail,
       }),
     })
       .then((res) => res.json())
@@ -56,32 +57,6 @@ const LoggingForm = ({ isHandleRegister, isLogin }) => {
       .catch((error) => {
         console.error("Registration error:", error);
       });
-  };
-
-  const handleSubmit = async () => {
-    const url = "https://localhost:7035/login";
-    const data = {
-      userName: "Mate",
-      password: "1234",
-    };
-
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        const responseBody = await response.json();
-        console.log(responseBody);
-      } else {
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
   };
 
   return (
@@ -107,39 +82,39 @@ const LoggingForm = ({ isHandleRegister, isLogin }) => {
             id="firstname"
             className="input"
             type="text"
-            placeholder=" "
+            placeholder="full name"
             onChange={(e) => setSaveUsername(e.target.value)}
           />
         </div>
-        {isHandleRegister ?? (
-          <div className="input-container ic2">
-            <input
-              id="email"
-              className="input"
-              type="text"
-              placeholder=" "
-              onChange={(e) => setSaveEmail(e.target.value)}
-            />
-            <div className="cut cut-short"></div>
-            <label htmlFor="email" className="placeholder">
-              Email
-            </label>
-          </div>
-        )}
 
         <div className="input-container ic2">
           <input
             id="lastname"
             className="input"
             type="password"
-            placeholder=" "
+            placeholder="password"
             onChange={(e) => setSavePassword(e.target.value)}
           />
           <div className="cut"></div>
-          <label htmlFor="lastname" className="placeholder">
+          <label htmlFor="password" className="placeholder">
             Password
           </label>
         </div>
+
+        <div className="input-container ic2">
+          <input
+            id="email"
+            className="input"
+            type="text"
+            placeholder="email"
+            onChange={(e) => setSaveEmail(e.target.value)}
+          />
+          <div className="cut cut-short"></div>
+          <label htmlFor="email" className="placeholder">
+            Email
+          </label>
+        </div>
+
         {isHandleRegister ? (
           <>
             <button type="submit" className="submit" onClick={handleRegister}>
@@ -151,7 +126,7 @@ const LoggingForm = ({ isHandleRegister, isLogin }) => {
           </>
         ) : (
           <>
-            <button type="submit" className="submit" onClick={handleSubmit}>
+            <button type="submit" className="submit" onClick={handleLogin}>
               Login
             </button>
             <div className="subtitle">

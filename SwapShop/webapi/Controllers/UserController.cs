@@ -28,10 +28,10 @@ namespace webapi.Controllers
         }
 
         [HttpPost("/login")]
-        public ActionResult<int> LoginUser(string userName, string password)
+        public ActionResult<int> LoginUser(User user)
         {
             var repository = new UserRepository(new NpgsqlConnection(_connectionString));
-            return Ok(repository.LoginUser(userName, password));
+            return Ok(repository.LoginUser(user.Username, user.Password));
         }
 
         [HttpGet("/user/{userId}")]

@@ -91,5 +91,39 @@ namespace webapi.Models.Repositories
             _connection.Close();
             return product;
         }
+
+        public IEnumerable<Product> GetProductsByCategory(string category)
+        {
+            _connection.Open();
+            List<Product> products = new List<Product>();
+
+            using (var cmd = new NpgsqlCommand(
+                       "SELECT * FROM products WHERE category = (@category)",
+                       _connection))
+            {
+                cmd.Parameters.AddWithValue("category", category);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var product = new Product
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("id")),
+                            Name = reader.GetString(reader.GetOrdinal("name")),
+                            Description = reader.GetString(reader.GetOrdinal("description")),
+                            Category = reader.GetString(reader.GetOrdinal("category")),
+                            Price = reader.GetDecimal(reader.GetOrdinal("price"))
+                        };
+                        products.Add(product);
+                    }
+                }
+
+            }
+            _connection.Close();
+            return products;
+        }
+
     }
 }
+

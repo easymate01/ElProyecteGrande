@@ -38,7 +38,9 @@ const Header = ({ isLoggedIn, userName, onLogout }) => {
             <>
               <li>Hello, {userName}!</li>
               <li>
-                <button onClick={onLogout}>Logout</button>
+                <button className="logout-btn" onClick={onLogout}>
+                  Logout
+                </button>
               </li>
             </>
           ) : (

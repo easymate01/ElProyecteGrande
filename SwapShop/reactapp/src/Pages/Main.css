@@ -714,3 +714,17 @@ button:focus {
   outline: 0;
   box-shadow: 0 0 0 2px var(--c-gray-800), 0 0 0 4px var(--c-gray-300);
 }
+
+.logout-btn {
+  width: 100px;
+  padding: 10px 20px;
+  text-align: center;
+  color: #949494;
+  border-radius: 15px;
+  background-color: #444444;
+  border: 1px solid #444444;
+  margin: 0 auto;
+  transition: top 0.3s, font-size 0.3s;
+  cursor: pointer;
+  margin-left: 25px;
+}

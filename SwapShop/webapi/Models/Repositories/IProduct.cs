@@ -5,6 +5,8 @@
         IEnumerable<Product> GetAllProducts();
         int CreateProduct(Product product);
         Product GetProductById(int id);
+        IEnumerable<Product> GetProductsByCategory(string category);
+        
 
         //int UpdateProduct(Product product);
 

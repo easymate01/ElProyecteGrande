@@ -10,7 +10,8 @@ namespace webapi.Controllers
     public class ProductController : Controller
     {
         //private readonly string _connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=12345;Database=SwagShop";
-        private readonly string _connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=1234;Database=SwapShop";
+        //private readonly string _connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=1234;Database=SwapShop";
+        private readonly string _connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=0246802468;Database=SwapShop";
 
         [HttpGet("/products")]
         public ActionResult<IEnumerable<Product>> GetAllProducts()

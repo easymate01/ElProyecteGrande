@@ -36,7 +36,7 @@ namespace webapi.Controllers
 
             if (userId < 0)
             {
-                return NotFound("User does not exist.");
+                return Unauthorized("User does not exist.");
             }
 
             return Ok(userId);

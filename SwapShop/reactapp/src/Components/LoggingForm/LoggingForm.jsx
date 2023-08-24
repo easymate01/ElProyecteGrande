@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Outlet, Link } from "react-router-dom";
+import React from "react";
+
 import "./LoggingStyle.css";
 
 const LoggingForm = ({ isHandleRegister, onLogin }) => {
   const [saveUsername, setSaveUsername] = useState("");
   const [saveEmail, setSaveEmail] = useState("");
   const [savePassword, setSavePassword] = useState("");
+  const [error, setError] = useState();
 
   const navigate = useNavigate();
 
@@ -49,11 +52,18 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
         email: saveEmail,
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status == 200) {
+          res.json();
+          onLogin(saveUsername, res);
+          navigate("/marketplace");
+        } else {
+          console.log("An error occurred:", res);
+          setError(res);
+        }
+      })
       .then((data) => {
         console.log("Registration response:", data);
-        onLogin(saveUsername, data);
-        navigate("/marketplace");
       })
       .catch((error) => {
         console.error("Registration error:", error);
@@ -66,19 +76,15 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
         {!isHandleRegister ? (
           <>
             <div className="title2">Please Log In!</div>
-            <div className="subtitle"></div>
           </>
         ) : (
           <>
-            <div className="title2">Welcome</div>
+            <div className="title2">Welcome,</div>
             <div className="subtitle">Let's create your account!</div>
           </>
         )}
         <div className="input-container ic1">
           <div className="cut"></div>
-          <label htmlFor="email" className="placeholder">
-            Username
-          </label>
           <input
             id="firstname"
             className="input"
@@ -97,9 +103,6 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
             onChange={(e) => setSavePassword(e.target.value)}
           />
           <div className="cut"></div>
-          <label htmlFor="password" className="placeholder">
-            Password
-          </label>
         </div>
 
         <div className="input-container ic2">
@@ -111,27 +114,26 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
             onChange={(e) => setSaveEmail(e.target.value)}
           />
           <div className="cut cut-short"></div>
-          <label htmlFor="email" className="placeholder">
-            Email
-          </label>
         </div>
 
         {isHandleRegister ? (
-          <>
+          <React.Fragment>
             <button type="submit" className="submit" onClick={handleRegister}>
               Register
             </button>
-            <div className="subtitle">
+            <div className="link-account">
               <Link to="/login">Login</Link>
             </div>
-          </>
+          </React.Fragment>
         ) : (
           <>
             <button type="submit" className="submit" onClick={handleLogin}>
               Login
             </button>
-            <div className="subtitle">
-              <Link to="/register">Register</Link>
+            {error != null && <h1>ERROR: {error.status}</h1>}
+            <div className="link-account">
+              Don't have an account?
+              <Link to="/register"> Register</Link>
             </div>
           </>
         )}

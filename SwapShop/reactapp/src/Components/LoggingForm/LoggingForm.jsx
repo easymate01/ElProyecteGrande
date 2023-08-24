@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Outlet, Link } from "react-router-dom";
 import "./LoggingStyle.css";
 
-const LoggingForm = ({ isHandleRegister, isLogin }) => {
+const LoggingForm = ({ isHandleRegister, onLogin }) => {
   const [saveUsername, setSaveUsername] = useState("");
   const [saveEmail, setSaveEmail] = useState("");
   const [savePassword, setSavePassword] = useState("");
@@ -52,6 +52,7 @@ const LoggingForm = ({ isHandleRegister, isLogin }) => {
       .then((res) => res.json())
       .then((data) => {
         console.log("Registration response:", data);
+        onLogin(saveUsername);
         navigate("/marketplace");
       })
       .catch((error) => {

@@ -11,7 +11,7 @@ namespace Backend.Models.Repositories
 
         IEnumerable<User> GetAllUsers();
         int CreateUser(User user);
-        int LoginUser(string username, string password);
+        int LoginUser(string username, string password, string email);
         User GetById(int id);
     }
 }

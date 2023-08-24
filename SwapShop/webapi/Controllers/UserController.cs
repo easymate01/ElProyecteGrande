@@ -32,7 +32,7 @@ namespace webapi.Controllers
         public ActionResult<int> LoginUser(User user)
         {
             var repository = new UserRepository(new NpgsqlConnection(_connectionString));
-            return Ok(repository.LoginUser(user.Username, user.Password));
+            return Ok(repository.LoginUser(user.Username, user.Password, user.Email));
         }
 
         [HttpGet("/user/{userId}")]

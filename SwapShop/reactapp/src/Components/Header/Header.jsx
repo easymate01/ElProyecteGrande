@@ -3,8 +3,6 @@ import { Outlet, Link } from "react-router-dom";
 import React from "react";
 
 const Header = ({ isLoggedIn, userName, onLogout }) => {
-  const location = useLocation();
-
   return (
     <React.Fragment>
       <header className="app-header">

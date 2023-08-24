@@ -64,17 +64,18 @@ namespace webapi.Models.Repositories
             return lastInsertId;
         }
 
-        public int LoginUser([FromQuery] string userName, [FromQuery] string password)
+        public int LoginUser([FromQuery] string userName, [FromQuery] string password, string email)
         {
             _connection.Open();
             int userId = -1;
             using (var cmd = new NpgsqlCommand(
-               "SELECT id FROM users WHERE username = @username AND password = @password",
+               "SELECT id FROM users WHERE username = @username AND password = @password AND email = @email",
                _connection
                ))
             {
                 cmd.Parameters.AddWithValue("username", userName);
                 cmd.Parameters.AddWithValue("password", password);
+                cmd.Parameters.AddWithValue("email", email);
 
                 var result = cmd.ExecuteScalar();
                 if (result != null)

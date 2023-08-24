@@ -5,11 +5,11 @@ import React from "react";
 
 import "./ProductCreating.css";
 
-const CreateProduct = () => {
+const CreateProduct = ({ isLoggedIn, userId }) => {
   return (
     <React.Fragment>
       <div>
-        <ProductCreator />
+        <ProductCreator isLoggedIn={isLoggedIn} userId={userId} />
       </div>
     </React.Fragment>
   );

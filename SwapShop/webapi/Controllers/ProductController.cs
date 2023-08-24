@@ -24,6 +24,12 @@ namespace webapi.Controllers
         public ActionResult<int> CreateProduct(Product product)
         {
             var repository = new ProuductRepository(new NpgsqlConnection(_connectionString));
+
+            if (product.userID == null || product.userID <= 0)
+            {
+                return BadRequest("Invalid userID. A valid userID is required.");
+            }
+
             return Ok(repository.CreateProduct(product));
         }
 

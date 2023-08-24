@@ -3,7 +3,7 @@ import "./Product.css";
 
 import { Outlet, Link } from "react-router-dom";
 
-const ProductCreator = () => {
+const ProductCreator = ({ isLoggedIn, userId }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
@@ -22,6 +22,7 @@ const ProductCreator = () => {
         description: description,
         price: price,
         category: category,
+        userid: userId,
       }),
     })
       .then((res) => res.json())
@@ -77,9 +78,16 @@ const ProductCreator = () => {
         </div>
 
         <div className="bottom-container">
-          <button type="submit" onClick={handelAddProduct}>
-            Add Product
-          </button>
+          {isLoggedIn ? (
+            <button type="submit" onClick={handelAddProduct}>
+              Add Product
+            </button>
+          ) : (
+            <>
+              <h3>You have to be loged in!</h3>
+              <button>Login</button>
+            </>
+          )}
         </div>
       </div>
 

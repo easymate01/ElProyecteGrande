@@ -29,7 +29,8 @@ namespace webapi.Models.Repositories
                             Name = reader.GetString(reader.GetOrdinal("name")),
                             Description = reader.GetString(reader.GetOrdinal("description")),
                             Category = reader.GetString(reader.GetOrdinal("category")),
-                            Price = reader.GetDecimal(reader.GetOrdinal("price"))
+                            Price = reader.GetDecimal(reader.GetOrdinal("price")),
+                            userID = reader.GetInt32(reader.GetOrdinal("userid")),
                         };
                         products.Add(product);
                     }
@@ -47,7 +48,7 @@ namespace webapi.Models.Repositories
             int lastInsertId;
 
             using (var cmd = new NpgsqlCommand(
-                       "INSERT INTO products (name, description, price, category) VALUES (@name, @description, @price, @category) RETURNING id",
+                       "INSERT INTO products (name, description, price, category, userid) VALUES (@name, @description, @price, @category, @userid) RETURNING id",
                        _connection
                    ))
             {
@@ -55,6 +56,7 @@ namespace webapi.Models.Repositories
                 cmd.Parameters.AddWithValue("description", product.Description);
                 cmd.Parameters.AddWithValue("price", product.Price);
                 cmd.Parameters.AddWithValue("category", product.Category);
+                cmd.Parameters.AddWithValue("userid", product.userID);
 
                 lastInsertId = (int)cmd.ExecuteScalar();
             }

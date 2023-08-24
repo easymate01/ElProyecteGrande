@@ -15,10 +15,12 @@ import Header from "./Components/Header/Header";
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [userName, setUserName] = React.useState("");
+  const [userId, setUserId] = React.useState("");
 
-  const handleLogin = (username) => {
+  const handleLogin = (username, userId) => {
     setIsLoggedIn(true);
     setUserName(username);
+    setUserId(userId);
   };
 
   const handleLogout = () => {
@@ -59,7 +61,7 @@ const App = () => {
         },
         {
           path: "/product/create",
-          element: <CreateProduct />,
+          element: <CreateProduct isLoggedIn={isLoggedIn} userId={userId} />,
         },
       ],
     },

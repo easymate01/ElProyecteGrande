@@ -52,7 +52,7 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
       .then((res) => res.json())
       .then((data) => {
         console.log("Registration response:", data);
-        onLogin(saveUsername);
+        onLogin(saveUsername, data);
         navigate("/marketplace");
       })
       .catch((error) => {

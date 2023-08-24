@@ -72,7 +72,7 @@ namespace webapi.Models.Repositories
             Product product = new Product();
 
             using (var cmd = new NpgsqlCommand(
-                       "SELECT id, name, description, price, category FROM products WHERE id = (@id)",
+                       "SELECT * FROM products WHERE id = (@id)",
                        _connection
                    ))
             {
@@ -87,6 +87,8 @@ namespace webapi.Models.Repositories
                         product.Description = reader.GetString(reader.GetOrdinal("description"));
                         product.Price = reader.GetDecimal(reader.GetOrdinal("price"));
                         product.Category = reader.GetString(reader.GetOrdinal("category"));
+                        product.userID = reader.GetInt32(reader.GetOrdinal("userid"));
+
                     }
                 }
             }
@@ -115,7 +117,9 @@ namespace webapi.Models.Repositories
                             Name = reader.GetString(reader.GetOrdinal("name")),
                             Description = reader.GetString(reader.GetOrdinal("description")),
                             Category = reader.GetString(reader.GetOrdinal("category")),
-                            Price = reader.GetDecimal(reader.GetOrdinal("price"))
+                            Price = reader.GetDecimal(reader.GetOrdinal("price")),
+                            userID = reader.GetInt32(reader.GetOrdinal("userid"))
+
                         };
                         products.Add(product);
                     }

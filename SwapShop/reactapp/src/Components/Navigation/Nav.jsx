@@ -26,11 +26,11 @@ const Nav = () => {
       </nav>
       <footer className="footer">
         <h1>
-          Almeria<small>©</small>
+          Swap Shop<small>©</small>
         </h1>
         <div>
-          Almeria ©<br />
-          All Rights Reserved 2021
+          Swap Shop ©<br />
+          All Rights Reserved 2023
         </div>
       </footer>
     </div>

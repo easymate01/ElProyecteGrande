@@ -53,20 +53,20 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
       }),
     })
       .then((res) => {
-        if (res.status == 200) {
-          res.json();
-          onLogin(saveUsername, res);
-          navigate("/marketplace");
+        if (res.status === 200) {
+          return res.json(); // Parse the response body as JSON
         } else {
           console.log("An error occurred:", res);
           setError(res);
         }
       })
       .then((data) => {
-        console.log("Registration response:", data);
+        const userId = data;
+        onLogin(saveUsername, userId);
+        navigate("/marketplace");
       })
       .catch((error) => {
-        console.error("Registration error:", error);
+        console.error("Login error:", error);
       });
   };
 

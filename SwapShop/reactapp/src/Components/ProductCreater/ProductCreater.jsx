@@ -1,13 +1,12 @@
 import { useState } from "react";
 import "./Product.css";
 
-import { Outlet, Link } from "react-router-dom";
-
 const ProductCreator = ({ isLoggedIn, userId }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState("");
+  const [created, setCreated] = useState(false);
 
   const handelAddProduct = (e) => {
     e.preventDefault();
@@ -22,12 +21,13 @@ const ProductCreator = ({ isLoggedIn, userId }) => {
         description: description,
         price: price,
         category: category,
-        userid: userId,
+        userID: userId,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
         console.log("Createing Product response:", data);
+        setCreated(true);
       })
       .catch((error) => {
         console.error("Createing Product error:", error);
@@ -79,9 +79,12 @@ const ProductCreator = ({ isLoggedIn, userId }) => {
 
         <div className="bottom-container">
           {isLoggedIn ? (
-            <button type="submit" onClick={handelAddProduct}>
-              Add Product
-            </button>
+            <>
+              <button type="submit" onClick={handelAddProduct}>
+                Add Product
+              </button>
+              {created && <h3>Product created. ✅</h3>}
+            </>
           ) : (
             <>
               <h3>You have to be loged in!</h3>

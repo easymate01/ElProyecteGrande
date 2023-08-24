@@ -22,7 +22,6 @@ const App = () => {
     setUserName(username);
     setUserId(userId);
   };
-
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUserName("");

@@ -78,6 +78,7 @@ namespace webapi.Models.Repositories
                 cmd.Parameters.AddWithValue("email", email);
 
                 var result = cmd.ExecuteScalar();
+                Console.WriteLine(result);
                 if (result != null)
                 {
                     userId = (int)result;

@@ -29,7 +29,7 @@ const ProductPage = () => {
 
   const handleContactSeller = () => {
     if (isLoggedIn) {
-      console.log("átiráynítás...");
+      console.log("you can contact with the seller...");
     } else {
       console.log("please login first!");
     }

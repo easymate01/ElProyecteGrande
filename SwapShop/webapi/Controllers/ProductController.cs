@@ -39,6 +39,7 @@ namespace webapi.Controllers
             var repository = new ProuductRepository(new NpgsqlConnection(_connectionString));
             return Ok(repository.GetProductById(productId));
         }
+
         [HttpGet("/products/{productCategory}")]
         public ActionResult<IEnumerable<Product>> GetProductsByCategory(string productCategory)
         {

@@ -1,4 +1,6 @@
-﻿namespace webapi.Models.Repositories
+﻿using webapi.DTOs;
+
+namespace webapi.Models.Repositories
 {
     public interface IProduct
     {
@@ -9,7 +11,7 @@
 
         Task<IEnumerable<Product>?> GetAllProductAsync();
         Task<Product>? GetById(int productId);
-        Task CreateAsync(Product product);
+        Task CreateAsync(ProductDto product);
         Task<IEnumerable<Product>?> GetProductByCategoryAsync(string category);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using webapi.Data;
+using webapi.DTOs;
 
 namespace webapi.Models.Repositories
 {
@@ -19,11 +20,18 @@ namespace webapi.Models.Repositories
                 .SingleOrDefaultAsync(c => c.Id == productId);
         }
 
-        public async Task CreateAsync(Product product)
+        public async Task CreateAsync(ProductDto product)
         {
             using var dbContext = new DataContext();
-
-            dbContext.Products.Add(product);
+            var newProduct = new Product
+            {
+                Name = product.Name,
+                Category = product.Category,
+                Description = product.Description,
+                Price = product.Price,
+                User = await dbContext.Users.FirstOrDefaultAsync(user => user.Id == product.userId)
+            };
+            dbContext.Products.Add(newProduct);
             await dbContext.SaveChangesAsync();
         }
 

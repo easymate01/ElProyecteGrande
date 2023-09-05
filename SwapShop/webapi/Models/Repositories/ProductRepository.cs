@@ -22,6 +22,7 @@ namespace webapi.Models.Repositories
         public async Task CreateAsync(Product product)
         {
             using var dbContext = new DataContext();
+
             dbContext.Products.Add(product);
             await dbContext.SaveChangesAsync();
         }

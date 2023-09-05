@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using webapi.DTOs;
 using webapi.Models;
 using webapi.Models.Repositories;
 
@@ -26,14 +27,22 @@ namespace webapi.Controllers
         }
 
         [HttpPost("/create/product")]
-        public async Task<ActionResult<Product>> CreateProduct(Product product)
+        public async Task<ActionResult<Product>> CreateProduct(ProductDto product)
         {
             if (product.userId == null || product.userId <= 0)
             {
                 return BadRequest("Invalid userID. A valid userID is required.");
             }
-            await _productRepository.CreateAsync(product);
-            return Ok("User created!");
+            var newProduct = new Product
+            {
+                Name = product.Name,
+                Category = product.Category,
+                Description = product.Description,
+                Price = product.Price,
+                userId = product.userId
+            };
+            await _productRepository.CreateAsync(newProduct);
+            return Ok("Product created!");
 
         }
 

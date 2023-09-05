@@ -14,5 +14,12 @@ namespace webapi.Data
                 "Server=localhost,1433;Database=SwapShop;User Id=sa;Password=yourStrong(!)Password;Encrypt=True;TrustServerCertificate=True;");
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Product>()
+                .HasOne(c => c.User)
+                .WithMany(ss => ss.Products)
+                .HasForeignKey(ss => ss.userId);
+        }
     }
 }

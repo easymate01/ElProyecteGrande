@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Npgsql;
+﻿using Backend.Models.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using webapi.DTOs;
 using webapi.Models;
 using webapi.Models.Repositories;
 
@@ -9,44 +10,57 @@ namespace webapi.Controllers
     [Route("[controller]")]
     public class UserController : Controller
     {
-        //private readonly string _connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=12345;Database=SwagShop";
-        private readonly string _connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=1234;Database=SwapShop";
-        //private readonly string _connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=0246802468;Database=SwapShop";
+        private readonly IUser _userRepository;
+        private readonly ILogger<UserController> _logger;
 
+        public UserController(ILogger<UserController> logger, IProduct product, IUser userRepository)
+        {
+            _userRepository = userRepository;
+            _logger = logger;
+        }
 
         [HttpGet("/users")]
-        public ActionResult<IEnumerable<User>> GetAllUser()
+        public async Task<ActionResult<IEnumerable<User>>> GetAllUser()
         {
-            var repository = new UserRepository(new NpgsqlConnection(_connectionString));
-            return Ok(repository.GetAllUsers());
+            var users = await _userRepository.GetAllUsersAsync();
+
+            return Ok(users);
         }
 
         [HttpPost("/create/user")]
-        public ActionResult<User> CreateUser(User user)
+        public async Task<ActionResult<User>> CreateUser(UserDto user)
         {
-            var repository = new UserRepository(new NpgsqlConnection(_connectionString));
-            return Ok(repository.CreateUser(user));
+            var newUser = await _userRepository.GetUserByNameAsync(user.Username);
+            if (newUser == null)
+            {
+                await _userRepository.CreateUserAsync(user);
+                return Ok("User created!");
+            }
+
+            return Conflict("Registration Failed: This username is already in use. Please choose a different username");
         }
 
         [HttpPost("/login")]
-        public ActionResult<int> LoginUser(User user)
+        public async Task<ActionResult<User>> LoginUser(UserDto user)
         {
-            var repository = new UserRepository(new NpgsqlConnection(_connectionString));
-            int userId = repository.LoginUser(user.Username, user.Password, user.Email);
-
-            if (userId < 0)
+            var existUser = await _userRepository.LoginUserAsync(user);
+            if (existUser == null)
             {
-                return Unauthorized("User does not exist.");
+                return BadRequest("Login Failed. Wrong data...");
             }
 
-            return Ok(userId);
+            return Ok(existUser);
         }
 
         [HttpGet("/user/{userId}")]
-        public ActionResult<User> GetUserById(int userId)
+        public async Task<ActionResult<User>> GetUserById(int userId)
         {
-            var repository = new UserRepository(new NpgsqlConnection(_connectionString));
-            return Ok(repository.GetById(userId));
+            var existUser = await _userRepository.GetById(userId);
+            if (existUser == null)
+            {
+                return Conflict("This user doesn't exsist!");
+            }
+            return Ok(existUser);
         }
 
     }

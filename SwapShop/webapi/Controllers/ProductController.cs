@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Npgsql;
 using webapi.Models;
 using webapi.Models.Repositories;
 
@@ -9,42 +8,55 @@ namespace webapi.Controllers
     [Route("[controller]")]
     public class ProductController : Controller
     {
-        //private readonly string _connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=12345;Database=SwagShop";
-        private readonly string _connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=1234;Database=SwapShop";
-        //private readonly string _connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=0246802468;Database=SwapShop";
+        private readonly IProduct _productRepository;
+        private readonly ILogger<UserController> _logger;
+
+
+        public ProductController(ILogger<UserController> logger, IProduct productRepository)
+        {
+            _productRepository = productRepository;
+            _logger = logger;
+        }
 
         [HttpGet("/products")]
-        public ActionResult<IEnumerable<Product>> GetAllProducts()
+        public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
         {
-            var repository = new ProuductRepository(new NpgsqlConnection(_connectionString));
-            return Ok(repository.GetAllProducts());
+            var products = await _productRepository.GetAllProductAsync();
+            return Ok(products);
         }
 
         [HttpPost("/create/product")]
-        public ActionResult<int> CreateProduct(Product product)
+        public async Task<ActionResult<Product>> CreateProduct(Product product)
         {
-            var repository = new ProuductRepository(new NpgsqlConnection(_connectionString));
-
-            if (product.userID == null || product.userID <= 0)
+            if (product.userId == null || product.userId <= 0)
             {
                 return BadRequest("Invalid userID. A valid userID is required.");
             }
+            await _productRepository.CreateAsync(product);
+            return Ok("User created!");
 
-            return Ok(repository.CreateProduct(product));
         }
 
         [HttpGet("/product/{productId}")]
-        public ActionResult<Product> GetProductById(int productId)
+        public async Task<ActionResult<Product>> GetProductById(int productId)
         {
-            var repository = new ProuductRepository(new NpgsqlConnection(_connectionString));
-            return Ok(repository.GetProductById(productId));
+            var product = await _productRepository.GetById(productId);
+            if (product == null)
+            {
+                return Conflict("Product doesn't exsist!");
+            }
+            return Ok(product);
         }
 
         [HttpGet("/products/{productCategory}")]
-        public ActionResult<IEnumerable<Product>> GetProductsByCategory(string productCategory)
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory(string productCategory)
         {
-            var repository = new ProuductRepository(new NpgsqlConnection(_connectionString));
-            return Ok(repository.GetProductsByCategory(productCategory));
+            var existProduct = await _productRepository.GetProductByCategoryAsync(productCategory);
+            if (existProduct == null)
+            {
+                return Conflict("This product doesn't exsist!");
+            }
+            return Ok(existProduct);
         }
 
     }

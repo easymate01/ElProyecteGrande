@@ -1,4 +1,6 @@
-﻿namespace webapi.Models
+﻿using System.Text.Json.Serialization;
+
+namespace webapi.Models
 {
     public class Product
     {
@@ -7,7 +9,9 @@
         public string Description { get; set; }
         public decimal Price { get; set; }
         public string Category { get; set; }
-        public int userID { get; set; }
+        public int userId { get; set; }
+
+        [JsonIgnore]
         public User User { get; set; }
     }
 }

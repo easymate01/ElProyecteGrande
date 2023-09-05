@@ -1,120 +1,51 @@
 ﻿using Backend.Models.Repositories;
-using Microsoft.AspNetCore.Mvc;
-using Npgsql;
+using Microsoft.EntityFrameworkCore;
+using webapi.Data;
+using webapi.DTOs;
 
 namespace webapi.Models.Repositories
 {
     public class UserRepository : IUser
     {
-        private readonly NpgsqlConnection _connection;
-
-        public UserRepository(NpgsqlConnection connection)
+        public async Task<IEnumerable<User>?> GetAllUsersAsync()
         {
-            _connection = connection;
+            using var dbContext = new DataContext();
+            return await dbContext.Users
+                .ToListAsync();
         }
 
-        public IEnumerable<User> GetAllUsers()
+        public async Task CreateUserAsync(UserDto user)
         {
-            _connection.Open();
-            List<User> users = new List<User>();
-
-            using (var cmd = new NpgsqlCommand(
-                       "SELECT * FROM users", _connection
-                   ))
+            using var dbContext = new DataContext();
+            var newUser = new User
             {
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        var user = new User
-                        {
-                            Id = reader.GetInt32(reader.GetOrdinal("id")),
-                            Username = reader.GetString(reader.GetOrdinal("username")),
-                            Email = reader.GetString(reader.GetOrdinal("email")),
-                        };
-                        users.Add(user);
-                    }
-                }
-            }
-
-            _connection.Close();
-            return users;
+                Username = user.Username,
+                Email = user.Email,
+                Password = user.Password,
+            };
+            dbContext.Users.Add(newUser);
+            await dbContext.SaveChangesAsync();
         }
 
-
-        public int CreateUser(User user)
+        public async Task<User>? LoginUserAsync(UserDto user)
         {
-            _connection.Open();
-            int lastInsertId;
-
-            using (var cmd = new NpgsqlCommand(
-                       "INSERT INTO users (username, email, password, birthdate) VALUES (@username, @email, @password, @birthdate) RETURNING id",
-                       _connection
-                   ))
-            {
-                cmd.Parameters.AddWithValue("username", user.Username);
-                cmd.Parameters.AddWithValue("email", user.Email);
-                cmd.Parameters.AddWithValue("password", user.Password);
-                cmd.Parameters.AddWithValue("birthdate", user.BirthDate);
-
-                lastInsertId = (int)cmd.ExecuteScalar();
-            }
-
-            _connection.Close();
-            return lastInsertId;
+            using var dbContext = new DataContext();
+            return await dbContext.Users
+                .Where(users => user.Username == users.Username && user.Password == users.Password && user.Email == users.Email)
+                .FirstOrDefaultAsync();
         }
 
-        public int LoginUser([FromQuery] string userName, [FromQuery] string password, string email)
+        public async Task<User>? GetById(int userId)
         {
-            _connection.Open();
-            int userId = -1;
-            using (var cmd = new NpgsqlCommand(
-               "SELECT id FROM users WHERE username = @username AND password = @password AND email = @email",
-               _connection
-               ))
-            {
-                cmd.Parameters.AddWithValue("username", userName);
-                cmd.Parameters.AddWithValue("password", password);
-                cmd.Parameters.AddWithValue("email", email);
-
-                var result = cmd.ExecuteScalar();
-                Console.WriteLine(result);
-                if (result != null)
-                {
-                    userId = (int)result;
-                }
-
-            }
-            _connection.Close();
-            return userId;
+            using var dbContext = new DataContext();
+            return await dbContext.Users
+                .FirstOrDefaultAsync(user => user.Id == userId);
         }
-
-
-        public User GetById(int id)
+        public async Task<User>? GetUserByNameAsync(string userName)
         {
-            _connection.Open();
-            User user = new User();
-
-
-            using (var cmd = new NpgsqlCommand(
-                       "SELECT id, username, email FROM users WHERE id = (@id)",
-                       _connection
-                   ))
-            {
-                cmd.Parameters.AddWithValue("id", id);
-
-                using (var reader = cmd.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        user.Id = reader.GetInt32(reader.GetOrdinal("id"));
-                        user.Username = reader.GetString(reader.GetOrdinal("username"));
-                        user.Email = reader.GetString(reader.GetOrdinal("email"));
-                    }
-                }
-            }
-            _connection.Close();
-            return user;
+            using var dbContext = new DataContext();
+            return await dbContext.Users
+                .FirstOrDefaultAsync(user => user.Username == userName);
         }
     }
 }

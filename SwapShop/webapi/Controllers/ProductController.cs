@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using webapi.DTOs;
 using webapi.Models;
-using webapi.Models.Repositories;
+using webapi.Repositories;
 
 namespace webapi.Controllers
 {
@@ -9,20 +9,20 @@ namespace webapi.Controllers
     [Route("[controller]")]
     public class ProductController : Controller
     {
-        private readonly IProduct _productRepository;
+        private readonly IProduct _productService;
         private readonly ILogger<UserController> _logger;
 
 
-        public ProductController(ILogger<UserController> logger, IProduct productRepository)
+        public ProductController(ILogger<UserController> logger, IProduct productService)
         {
-            _productRepository = productRepository;
+            _productService = productService;
             _logger = logger;
         }
 
         [HttpGet("/products")]
         public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
         {
-            var products = await _productRepository.GetAllProductAsync();
+            var products = await _productService.GetAllProductAsync();
             return Ok(products);
         }
 
@@ -34,7 +34,7 @@ namespace webapi.Controllers
                 return BadRequest("Invalid userID. A valid userID is required.");
             }
 
-            await _productRepository.CreateAsync(product);
+            await _productService.CreateAsync(product);
             return Ok("Product created!");
 
         }
@@ -42,7 +42,7 @@ namespace webapi.Controllers
         [HttpGet("/product/{productId}")]
         public async Task<ActionResult<Product>> GetProductById(int productId)
         {
-            var product = await _productRepository.GetById(productId);
+            var product = await _productService.GetById(productId);
             if (product == null)
             {
                 return Conflict("Product doesn't exsist!");
@@ -53,7 +53,7 @@ namespace webapi.Controllers
         [HttpGet("/products/{productCategory}")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory(string productCategory)
         {
-            var existProduct = await _productRepository.GetProductByCategoryAsync(productCategory);
+            var existProduct = await _productService.GetProductByCategoryAsync(productCategory);
             if (existProduct == null)
             {
                 return Conflict("This product doesn't exsist!");

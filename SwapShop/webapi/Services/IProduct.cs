@@ -1,6 +1,7 @@
 ﻿using webapi.DTOs;
+using webapi.Models;
 
-namespace webapi.Models.Repositories
+namespace webapi.Repositories
 {
     public interface IProduct
     {

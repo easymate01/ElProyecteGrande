@@ -1,7 +1,7 @@
 ﻿using webapi.DTOs;
 using webapi.Models;
 
-namespace Backend.Models.Repositories
+namespace webapi.Repositories
 {
     public interface IUser
     {

@@ -1,8 +1,7 @@
-﻿using Backend.Models.Repositories;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using webapi.DTOs;
 using webapi.Models;
-using webapi.Models.Repositories;
+using webapi.Repositories;
 
 namespace webapi.Controllers
 {
@@ -10,19 +9,19 @@ namespace webapi.Controllers
     [Route("[controller]")]
     public class UserController : Controller
     {
-        private readonly IUser _userRepository;
+        private readonly IUser _userService;
         private readonly ILogger<UserController> _logger;
 
-        public UserController(ILogger<UserController> logger, IProduct product, IUser userRepository)
+        public UserController(ILogger<UserController> logger, IProduct product, IUser userService)
         {
-            _userRepository = userRepository;
+            _userService = userService;
             _logger = logger;
         }
 
         [HttpGet("/users")]
         public async Task<ActionResult<IEnumerable<User>>> GetAllUser()
         {
-            var users = await _userRepository.GetAllUsersAsync();
+            var users = await _userService.GetAllUsersAsync();
 
             return Ok(users);
         }
@@ -30,10 +29,10 @@ namespace webapi.Controllers
         [HttpPost("/create/user")]
         public async Task<ActionResult<User>> CreateUser(UserDto user)
         {
-            var newUser = await _userRepository.GetUserByNameAsync(user.Username);
+            var newUser = await _userService.GetUserByNameAsync(user.Username);
             if (newUser == null)
             {
-                await _userRepository.CreateUserAsync(user);
+                await _userService.CreateUserAsync(user);
                 return Ok("User created!");
             }
 
@@ -43,7 +42,7 @@ namespace webapi.Controllers
         [HttpPost("/login")]
         public async Task<ActionResult<User>> LoginUser(UserDto user)
         {
-            var existUser = await _userRepository.LoginUserAsync(user);
+            var existUser = await _userService.LoginUserAsync(user);
             if (existUser == null)
             {
                 return BadRequest("Login Failed. Wrong data...");
@@ -55,7 +54,7 @@ namespace webapi.Controllers
         [HttpGet("/user/{userId}")]
         public async Task<ActionResult<User>> GetUserById(int userId)
         {
-            var existUser = await _userRepository.GetById(userId);
+            var existUser = await _userService.GetById(userId);
             if (existUser == null)
             {
                 return Conflict("This user doesn't exsist!");

@@ -5,15 +5,12 @@ namespace webapi.Data
 {
     public class DataContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
-        public DbSet<Product> Products { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            optionsBuilder.UseSqlServer(
-                "Server=localhost,1433;Database=SwapShop;User Id=sa;Password=yourStrong(!)Password;Encrypt=True;TrustServerCertificate=True;");
         }
 
+        public DbSet<User> Users { get; set; }
+        public DbSet<Product> Products { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>()

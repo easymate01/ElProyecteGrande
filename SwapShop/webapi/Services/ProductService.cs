@@ -14,6 +14,37 @@ namespace webapi.Repositories
             _dbContext = dbContext;
         }
 
+        public async Task<Product> UpdateProduct(int productId, ProductDto product)
+        {
+            var newProduct = await _dbContext.Products.FirstOrDefaultAsync(p => p.Id == productId);
+            if (newProduct == null)
+            {
+                return null;
+            }
+
+            newProduct.Name = product.Name;
+            newProduct.Category = product.Category;
+            newProduct.Description = product.Description;
+            newProduct.Price = product.Price;
+
+            _dbContext.Products.Update(newProduct);
+            await _dbContext.SaveChangesAsync();
+            return newProduct;
+        }
+
+        public async Task<Product> DeleteProduct(int productId)
+        {
+            var productToDelete = await _dbContext.Products.FirstOrDefaultAsync(p => p.Id == productId);
+            if (productToDelete == null)
+            {
+                return null;
+            }
+
+            _dbContext.Products.Remove(productToDelete);
+            await _dbContext.SaveChangesAsync();
+            return productToDelete;
+        }
+
         public async Task<IEnumerable<Product>?> GetAllProductAsync()
         {
             return await _dbContext.Products.ToListAsync();

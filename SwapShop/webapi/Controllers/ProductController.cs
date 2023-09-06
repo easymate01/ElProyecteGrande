@@ -61,5 +61,26 @@ namespace webapi.Controllers
             return Ok(existProduct);
         }
 
+        [HttpPut("/product/update/{productId}")]
+        public async Task<ActionResult<Product>> UpdateProduct(int productId, ProductDto product)
+        {
+            var result = await _productService.UpdateProduct(productId, product);
+            if (result == null)
+            {
+                return Conflict("This product doesn't exsist!");
+            }
+            return Ok(result);
+        }
+
+        [HttpDelete("/product/delete/{productId}")]
+        public async Task<ActionResult<Product>> DeleteProduct(int productId)
+        {
+            var productToDelete = await _productService.DeleteProduct(productId);
+            if(productToDelete == null)
+            {
+                return Conflict("This product doesn't exist");
+            }
+            return Ok(productToDelete);
+        }
     }
 }

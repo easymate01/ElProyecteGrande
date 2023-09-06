@@ -7,12 +7,13 @@ namespace webapi.Repositories
     {
 
 
-        //int UpdateProduct(Product product);
-        //void DeleteProduct(int id);
+        Task<Product> UpdateProduct(int productId, ProductDto product);
+        Task<Product> DeleteProduct(int id);
 
         Task<IEnumerable<Product>?> GetAllProductAsync();
         Task<Product>? GetById(int productId);
         Task<Product> CreateAsync(ProductDto product);
         Task<IEnumerable<Product>?> GetProductByCategoryAsync(string category);
+
     }
 }

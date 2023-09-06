@@ -16,7 +16,6 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [userName, setUserName] = React.useState("");
   const [user, setUser] = React.useState("");
-  console.log(user.id);
 
   const handleLogin = (username, user) => {
     setIsLoggedIn(true);

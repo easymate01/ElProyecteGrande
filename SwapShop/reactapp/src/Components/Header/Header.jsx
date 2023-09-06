@@ -24,7 +24,7 @@ const Header = ({ isLoggedIn, userName, onLogout }) => {
 
             <Link to="/">Trending Products</Link>
 
-            <Link to="/">Account</Link>
+            <Link to="/marketplace/you/account">Account</Link>
 
             <Link to="/">Business</Link>
             <Link to="/">System</Link>

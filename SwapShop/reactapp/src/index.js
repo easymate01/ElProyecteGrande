@@ -11,6 +11,7 @@ import Login from "./Pages/Login/Login";
 import Registering from "./Pages/Register/Register";
 import CreateProduct from "./Pages/CreateProduct/CreateProduct";
 import Header from "./Components/Header/Header";
+import MyAccount from "./Pages/MyAccount/MyAccount";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
@@ -57,6 +58,14 @@ const App = () => {
         {
           path: "/product/:id",
           element: <ProductPage />,
+        },
+        {
+          path: "/product/edit",
+          element: <Registering />,
+        },
+        {
+          path: "/marketplace/you/account",
+          element: <MyAccount userId={user.id} isLoggedIn={isLoggedIn} />,
         },
         {
           path: "/product/create",

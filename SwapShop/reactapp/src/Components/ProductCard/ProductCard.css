@@ -75,3 +75,19 @@ h4 {
   color: white;
   background-color: var(--c-gray-600);
 }
+
+/* MYACCOUNT */
+.product-myacc-btn {
+  width: 33%;
+  max-width: 50px;
+  margin-left: 5px;
+  padding: 5px;
+}
+.buttons-myacc {
+  width: 70%;
+  margin: 0 auto;
+}
+.bi {
+  width: 25px;
+  height: 25px;
+}

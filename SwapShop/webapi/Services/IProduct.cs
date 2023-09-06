@@ -8,7 +8,7 @@ namespace webapi.Repositories
 
 
         Task<Product> UpdateProduct(int productId, ProductDto product);
-        Task<Product> DeleteProduct(int id);
+        Task<Product> DeleteProduct(int productId);
 
         Task<IEnumerable<Product>?> GetAllProductAsync();
         Task<Product>? GetById(int productId);

@@ -14,6 +14,35 @@ namespace webapi.Repositories
             _dbContext = dbContext;
         }
 
+        public async Task<User> UpdateUser(int userId, UserDto user)
+        {
+            var newUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
+            if (newUser == null)
+            {
+                return null;
+            }
+            newUser.Username = user.Username;
+            newUser.Password = user.Password;
+            newUser.Email = user.Email;
+
+            _dbContext.Users.Update(newUser);
+            await _dbContext.SaveChangesAsync();
+            return newUser;
+
+        }
+
+        public async Task<User> DeleteUser(int userId)
+        {
+            var userToDelete = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
+            if (userToDelete == null)
+            {
+                return null;
+            }
+            _dbContext.Users.Remove(userToDelete);
+            await _dbContext.SaveChangesAsync();
+            return userToDelete;
+        }
+
         public async Task<IEnumerable<User>?> GetAllUsersAsync()
         {
             return await _dbContext.Users.ToListAsync();

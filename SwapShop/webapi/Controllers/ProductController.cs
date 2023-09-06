@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using webapi.DTOs;
 using webapi.Models;
 using webapi.Repositories;
@@ -81,6 +82,16 @@ namespace webapi.Controllers
                 return Conflict("This product doesn't exist");
             }
             return Ok(productToDelete);
+        }
+        [HttpGet("/products/user/{userId}")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductByUserId(int userId)
+        {
+            var productsByUserId = await _productService.GetProductsByUserIdAsync(userId);
+            if(productsByUserId == null)
+            {
+                return Conflict("There are no products in this user ID");
+            }
+            return Ok(productsByUserId);
         }
     }
 }

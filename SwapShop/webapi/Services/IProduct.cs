@@ -14,6 +14,7 @@ namespace webapi.Repositories
         Task<Product>? GetById(int productId);
         Task<Product> CreateAsync(ProductDto product);
         Task<IEnumerable<Product>?> GetProductByCategoryAsync(string category);
+        Task<IEnumerable<Product>?> GetProductsByUserIdAsync(int userId);
 
     }
 }

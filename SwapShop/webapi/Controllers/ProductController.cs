@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using webapi.DTOs;
 using webapi.Models;
 using webapi.Repositories;
@@ -46,7 +45,7 @@ namespace webapi.Controllers
             var product = await _productService.GetById(productId);
             if (product == null)
             {
-                return Conflict("Product doesn't exsist!");
+                return NotFound("Product doesn't exsist!");
             }
             return Ok(product);
         }
@@ -57,7 +56,7 @@ namespace webapi.Controllers
             var existProduct = await _productService.GetProductByCategoryAsync(productCategory);
             if (existProduct == null)
             {
-                return Conflict("This product doesn't exsist!");
+                return NotFound("This product doesn't exsist!");
             }
             return Ok(existProduct);
         }
@@ -68,7 +67,7 @@ namespace webapi.Controllers
             var result = await _productService.UpdateProduct(productId, product);
             if (result == null)
             {
-                return Conflict("This product doesn't exsist!");
+                return NotFound("This product doesn't exsist!");
             }
             return Ok(result);
         }
@@ -77,19 +76,20 @@ namespace webapi.Controllers
         public async Task<ActionResult<Product>> DeleteProduct(int productId)
         {
             var productToDelete = await _productService.DeleteProduct(productId);
-            if(productToDelete == null)
+            if (productToDelete == null)
             {
-                return Conflict("This product doesn't exist");
+                return NotFound("This product doesn't exist");
             }
             return Ok(productToDelete);
         }
+
         [HttpGet("/products/user/{userId}")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductByUserId(int userId)
         {
             var productsByUserId = await _productService.GetProductsByUserIdAsync(userId);
-            if(productsByUserId == null)
+            if (!productsByUserId.Any())
             {
-                return Conflict("There are no products in this user ID");
+                return NotFound("No products found for this user ID");
             }
             return Ok(productsByUserId);
         }

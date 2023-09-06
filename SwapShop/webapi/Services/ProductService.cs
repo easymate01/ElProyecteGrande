@@ -78,11 +78,10 @@ namespace webapi.Repositories
                 .Where(product => product.Category == category).ToListAsync();
         }
 
-        async Task<IEnumerable<Product>?> IProduct.GetProductsByUserIdAsync(int userId)
+        public async Task<IEnumerable<Product>?> GetProductsByUserIdAsync(int userId)
         {
             return await _dbContext.Products
                 .Where(p => p.userId == userId).ToListAsync();
-
         }
     }
 }

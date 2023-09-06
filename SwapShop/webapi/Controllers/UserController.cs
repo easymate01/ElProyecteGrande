@@ -57,7 +57,7 @@ namespace webapi.Controllers
             var existUser = await _userService.GetById(userId);
             if (existUser == null)
             {
-                return Conflict("This user doesn't exsist!");
+                return NotFound("This user doesn't exsist!");
             }
             return Ok(existUser);
         }
@@ -69,7 +69,7 @@ namespace webapi.Controllers
             var result = await _userService.UpdateUser(userId, user);
             if (result == null)
             {
-                return Conflict("This user doesn't exsist!");
+                return NotFound("This user doesn't exsist!");
             }
             return Ok(result);
         }
@@ -80,7 +80,7 @@ namespace webapi.Controllers
             var userToDelete = await _userService.DeleteUser(userId);
             if (userToDelete == null)
             {
-                return Conflict("This user doesn't exist");
+                return NotFound("This user doesn't exist");
             }
             return Ok(userToDelete);
         }

@@ -19,7 +19,7 @@ namespace webapi.Repositories
             return await _dbContext.Users.ToListAsync();
         }
 
-        public async Task CreateUserAsync(UserDto user)
+        public async Task<User> CreateUserAsync(UserDto user)
         {
             var newUser = new User
             {
@@ -29,6 +29,7 @@ namespace webapi.Repositories
             };
             _dbContext.Users.Add(newUser);
             await _dbContext.SaveChangesAsync();
+            return newUser;
         }
 
         public async Task<User>? LoginUserAsync(UserDto user)

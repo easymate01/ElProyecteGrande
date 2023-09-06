@@ -8,7 +8,7 @@ namespace webapi.Repositories
         //DELETE USER
         //Logout User
         Task<IEnumerable<User>?> GetAllUsersAsync();
-        Task CreateUserAsync(UserDto user);
+        Task<User> CreateUserAsync(UserDto user);
         Task<User>? LoginUserAsync(UserDto user);
         Task<User>? GetById(int userId);
         Task<User>? GetUserByNameAsync(string userName);

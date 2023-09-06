@@ -16,7 +16,7 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
   const handleRegister = (e) => {
     e.preventDefault();
     console.log("Registering...");
-
+    console.log({ saveUsername, saveEmail, savePassword });
     fetch(`https://localhost:7035/create/user`, {
       method: "POST",
       headers: {
@@ -28,13 +28,21 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
         password: savePassword,
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json(); // Parse the response body as JSON
+        } else {
+          console.log("Registration error:", res);
+          throw new Error("Registration failed."); // Handle non-JSON responses
+        }
+      })
       .then((data) => {
         console.log("Registration response:", data);
         navigate("/");
       })
       .catch((error) => {
-        console.error("Registration error:", error);
+        console.error("Registration error:", error.message);
+        // Handle the error and display a user-friendly message if needed
       });
   };
 

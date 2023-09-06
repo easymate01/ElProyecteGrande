@@ -12,7 +12,7 @@ namespace webapi.Repositories
 
         Task<IEnumerable<Product>?> GetAllProductAsync();
         Task<Product>? GetById(int productId);
-        Task CreateAsync(ProductDto product);
+        Task<Product> CreateAsync(ProductDto product);
         Task<IEnumerable<Product>?> GetProductByCategoryAsync(string category);
     }
 }

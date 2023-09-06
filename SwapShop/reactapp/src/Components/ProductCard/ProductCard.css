@@ -28,9 +28,7 @@
 .product-img {
   border-radius: 8px;
   margin: 0 auto;
-  margin-top: 10px;
   max-height: 330px;
-  aspect-ratio: 1;
 }
 .product-infos {
   margin-top: 60px;

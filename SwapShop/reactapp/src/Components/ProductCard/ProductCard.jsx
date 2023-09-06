@@ -17,7 +17,7 @@ const ProductCard = ({ product, isLoggedIn }) => {
           <div className="image-container">
             <img
               className="product-img"
-              src="https://scontent-vie1-1.xx.fbcdn.net/v/t39.30808-6/337292329_621094136154998_2998947273876574098_n.jpg?stp=dst-jpg_p720x720&_nc_cat=111&ccb=1-7&_nc_sid=3b2858&_nc_ohc=htBI0y0-Q24AX8phcow&_nc_ht=scontent-vie1-1.xx&oh=00_AfAbK-sNYo6hFa1jsHfJT94HpaWO9q0VvquBt0SNz5m1eQ&oe=64EAF3F8"
+              src="https://scontent-vie1-1.xx.fbcdn.net/v/t45.5328-4/363503499_6849900495040486_2838732717185533293_n.jpg?stp=dst-jpg_p720x720&_nc_cat=110&ccb=1-7&_nc_sid=1a0e84&_nc_ohc=B1qH3E43CTQAX8KfFgO&_nc_ht=scontent-vie1-1.xx&oh=00_AfCF89xqSsXc0U2JmxNTzSBdJW8nt0bEz8G3vh-WOEyMqw&oe=64FD36F8"
             />
           </div>
           <div className="product-infos">

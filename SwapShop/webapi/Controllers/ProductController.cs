@@ -34,8 +34,8 @@ namespace webapi.Controllers
                 return BadRequest("Invalid userID. A valid userID is required.");
             }
 
-            await _productService.CreateAsync(product);
-            return Ok("Product created!");
+            var newProduct = await _productService.CreateAsync(product);
+            return Ok(newProduct);
 
         }
 

@@ -32,8 +32,8 @@ namespace webapi.Controllers
             var newUser = await _userService.GetUserByNameAsync(user.Username);
             if (newUser == null)
             {
-                await _userService.CreateUserAsync(user);
-                return Ok("User created!");
+                newUser = await _userService.CreateUserAsync(user);
+                return Ok(newUser);
             }
 
             return Conflict("Registration Failed: This username is already in use. Please choose a different username");

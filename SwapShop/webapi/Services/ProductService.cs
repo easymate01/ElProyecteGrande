@@ -5,7 +5,7 @@ using webapi.Models;
 
 namespace webapi.Repositories
 {
-    public class ProductService : IProduct
+    public class ProductService 
     {
         private readonly DataContext _dbContext;
 
@@ -14,7 +14,7 @@ namespace webapi.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<Product> UpdateProduct(int productId, ProductDto product)
+        public async Task<Product> UpdateProduct(string productId, ProductDto product)
         {
             var newProduct = await _dbContext.Products.FirstOrDefaultAsync(p => p.Id == productId);
             if (newProduct == null)
@@ -32,7 +32,7 @@ namespace webapi.Repositories
             return newProduct;
         }
 
-        public async Task<Product> DeleteProduct(int productId)
+        public async Task<Product> DeleteProduct(string productId)
         {
             var productToDelete = await _dbContext.Products.FirstOrDefaultAsync(p => p.Id == productId);
             if (productToDelete == null)
@@ -50,14 +50,14 @@ namespace webapi.Repositories
             return await _dbContext.Products.ToListAsync();
         }
 
-        public async Task<Product>? GetById(int productId)
+        public async Task<Product>? GetById(string productId)
         {
             return await _dbContext.Products
                 .Include(p => p.User)
                 .SingleOrDefaultAsync(c => c.Id == productId);
         }
 
-        public async Task<Product> CreateAsync(ProductDto product)
+        /*public async Task<Product> CreateAsync(ProductDto product)
         {
             var newProduct = new Product
             {
@@ -70,7 +70,7 @@ namespace webapi.Repositories
             _dbContext.Products.Add(newProduct);
             await _dbContext.SaveChangesAsync();
             return newProduct;
-        }
+        }*/
 
         public async Task<IEnumerable<Product>?> GetProductByCategoryAsync(string category)
         {
@@ -78,7 +78,7 @@ namespace webapi.Repositories
                 .Where(product => product.Category == category).ToListAsync();
         }
 
-        public async Task<IEnumerable<Product>?> GetProductsByUserIdAsync(int userId)
+        public async Task<IEnumerable<Product>?> GetProductsByUserIdAsync(string userId)
         {
             return await _dbContext.Products
                 .Where(p => p.userId == userId).ToListAsync();

@@ -5,7 +5,7 @@ using webapi.Models;
 
 namespace webapi.Repositories
 {
-    public class UserService : IUser
+    public class UserService 
     {
         private readonly DataContext _dbContext;
 
@@ -14,7 +14,7 @@ namespace webapi.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<User> UpdateUser(int userId, UserDto user)
+        /*public async Task<User> UpdateUser(int userId, UserDto user)
         {
             var newUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
             if (newUser == null)
@@ -76,6 +76,6 @@ namespace webapi.Repositories
         public async Task<User>? GetUserByNameAsync(string userName)
         {
             return await _dbContext.Users.FirstOrDefaultAsync(user => user.Username == userName);
-        }
+        }*/
     }
 }

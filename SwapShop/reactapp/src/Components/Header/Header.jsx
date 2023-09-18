@@ -58,6 +58,18 @@ const Header = ({ isLoggedIn, userName, onLogout }) => {
           </div>
         </div>
         <div className="app-header-mobile">
+          <div className="app-header-navigation">
+            <div className="tabs">
+              <Link to="/marketplace">Marketplace</Link>
+
+              <Link to="/">Trending Products</Link>
+
+              <Link to="/marketplace/you/account">Account</Link>
+
+              <Link to="/">Business</Link>
+              <Link to="/">System</Link>
+            </div>
+          </div>
           <button className="icon-button large">
             <i className="ph-list"></i>
           </button>

@@ -26,33 +26,10 @@ namespace webapi.Controllers
             return Ok(users);
         }
 
-        [HttpPost("/create/user")]
-        public async Task<ActionResult<User>> CreateUser(UserDto user)
-        {
-            var newUser = await _userService.GetUserByNameAsync(user.Username);
-            if (newUser == null)
-            {
-                newUser = await _userService.CreateUserAsync(user);
-                return Ok(newUser);
-            }
 
-            return Conflict("Registration Failed: This username is already in use. Please choose a different username");
-        }
-
-        [HttpPost("/login")]
-        public async Task<ActionResult<User>> LoginUser(UserDto user)
-        {
-            var existUser = await _userService.LoginUserAsync(user);
-            if (existUser == null)
-            {
-                return BadRequest("Login Failed. Wrong data...");
-            }
-
-            return Ok(existUser);
-        }
 
         [HttpGet("/user/{userId}")]
-        public async Task<ActionResult<User>> GetUserById(int userId)
+        public async Task<ActionResult<User>> GetUserById(string userId)
         {
             var existUser = await _userService.GetById(userId);
             if (existUser == null)
@@ -75,7 +52,7 @@ namespace webapi.Controllers
         }
 
         [HttpDelete("/user/delete/{userId}")]
-        public async Task<ActionResult<Product>> DeleteUser(int userId)
+        public async Task<ActionResult<Product>> DeleteUser(string userId)
         {
             var userToDelete = await _userService.DeleteUser(userId);
             if (userToDelete == null)

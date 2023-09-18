@@ -15,7 +15,7 @@ namespace webapi.Data
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             // It would be a good idea to move the connection string to user secrets
-            options.UseSqlServer("Server=localhost,1433;Database=SwapShop;User Id=sa;Password=SaraAttila94;Encrypt=True;TrustServerCertificate=True;");
+            options.UseSqlServer("Server=localhost,1433;Database=WebShop;User Id=sa;Password=SaraAttila94;Encrypt=True;TrustServerCertificate=True;");
 
         }
 

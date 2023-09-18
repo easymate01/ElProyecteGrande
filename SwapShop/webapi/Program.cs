@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using SolarWatch.Services.Authentication;
+using webapi.Services.Authentication;
 using System.Numerics;
 using System.Text;
 using webapi.Data;
@@ -27,12 +27,16 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddTransient<IProduct, ProductService>();
 builder.Services.AddTransient<IUser, UserService>();
+builder.Services.AddDbContext<UsersContext>();
+builder.Services.AddDbContext<DataContext>();
 
 
-builder.Services.AddDbContext<DataContext>(options =>
+
+
+/*builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+});*/
 
 
 var app = builder.Build();
@@ -94,7 +98,7 @@ void AddAuthentication()
              options.Password.RequireLowercase = false;
          })
          .AddRoles<IdentityRole>()
-         .AddEntityFrameworkStores<DataContext>();
+         .AddEntityFrameworkStores<UsersContext>();
     }
     void ConfigureSwagger()
     {

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using webapi.Data;
 using webapi.DTOs;
 using webapi.Models;
@@ -8,10 +9,12 @@ namespace webapi.Repositories
     public class ProductService : IProduct
     {
         private readonly DataContext _dbContext;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ProductService(DataContext dbContext)
+        public ProductService(DataContext dbContext, UserManager<IdentityUser> userManager)
         {
             _dbContext = dbContext;
+            _userManager = userManager;
         }
 
         public async Task<Product> UpdateProduct(string productId, ProductDto product)
@@ -59,14 +62,23 @@ namespace webapi.Repositories
 
         public async Task<Product> CreateAsync(ProductDto product)
         {
+            var user = await _userManager.FindByIdAsync(product.userId);
+
+            if (user == null)
+            {
+                // Felhasználó nem található
+                return null;
+            }
+
             var newProduct = new Product
             {
                 Name = product.Name,
                 Category = product.Category,
                 Description = product.Description,
                 Price = product.Price,
-                User = await _dbContext.Users.FirstOrDefaultAsync(user => user.Id == product.userId)
+                User = new User { UserName = user.UserName, Email = user.Email , Id = user.Id},
             };
+
             _dbContext.Products.Add(newProduct);
             await _dbContext.SaveChangesAsync();
             return newProduct;

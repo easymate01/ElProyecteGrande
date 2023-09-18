@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SolarWatch.Services.Authentication;
+using webapi.Services.Authentication;
 using webapi.Contracts;
 using webapi.Services.Authentication;
 
@@ -15,14 +15,14 @@ namespace webapi.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<ActionResult<RegistrationResponse>> Register(RegistrationRequest request, string role)
+        public async Task<ActionResult<RegistrationResponse>> Register(RegistrationRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var result = await _authService.RegisterAsync(request.Email, request.Username, request.Password, role);
+            var result = await _authService.RegisterAsync(request.Email, request.Username, request.Password, "User");
 
             if (!result.Success)
             {

@@ -5,7 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace SolarWatch.Services.Authentication
+namespace webapi.Services.Authentication
 {
     public class TokenService : ITokenService
     {

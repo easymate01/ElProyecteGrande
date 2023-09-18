@@ -6,9 +6,6 @@ const Dashboard = ({ allPRoducts, isLoggedIn }) => {
       <section className="service-section">
         <h2>All Products</h2>
 
-        <div className="mobile-only">
-          <button className="flat-button">Toggle search</button>
-        </div>
         {/* --- DASHBOARD FEATURES ---*/}
         <div className="tiles">
           {allPRoducts.length > 0 &&

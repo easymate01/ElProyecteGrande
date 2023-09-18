@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using SolarWatch.Services.Authentication;
 using System.Numerics;
 using System.Text;
 using webapi.Data;
@@ -21,9 +22,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
-//builder.Services.AddTransient<IProduct, ProductService>();
-//builder.Services.AddTransient<IUser, UserService>();
+builder.Services.AddTransient<IProduct, ProductService>();
+builder.Services.AddTransient<IUser, UserService>();
 
 builder.Services.AddDbContext<DataContext>(options =>
 {

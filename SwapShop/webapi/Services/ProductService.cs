@@ -5,7 +5,7 @@ using webapi.Models;
 
 namespace webapi.Repositories
 {
-    public class ProductService 
+    public class ProductService : IProduct
     {
         private readonly DataContext _dbContext;
 

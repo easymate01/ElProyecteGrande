@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using webapi.Services.Authentication;
 using webapi.Contracts;
 using webapi.Services.Authentication;
 
@@ -8,14 +7,14 @@ namespace webapi.Controllers
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;
-       
+
         public AuthController(IAuthService authenticationService)
         {
             _authService = authenticationService;
         }
 
         [HttpPost("Register")]
-        public async Task<ActionResult<RegistrationResponse>> Register(RegistrationRequest request)
+        public async Task<ActionResult<RegistrationResponse>> Register([FromBody] RegistrationRequest request)
         {
             if (!ModelState.IsValid)
             {

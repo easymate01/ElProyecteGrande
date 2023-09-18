@@ -12,5 +12,9 @@ namespace webapi.Models
         public string userId { get; set; }
         [JsonIgnore]
         public User User { get; set; }
+        public Product()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
     }
 }

@@ -76,7 +76,7 @@ namespace webapi.Repositories
                 Category = product.Category,
                 Description = product.Description,
                 Price = product.Price,
-                User = new User { UserName = user.UserName, Email = user.Email , Id = user.Id},
+                User = new User { UserName = user.UserName, Email = user.Email, Id = user.Id },
             };
 
             _dbContext.Products.Add(newProduct);

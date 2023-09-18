@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using SolarWatch.Services.Authentication;
 using System.Numerics;
 using System.Text;
@@ -15,17 +16,18 @@ using webapi.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 AddAuthentication();
 AddIdentity();
+ConfigureSwagger();
 
 // Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAuthService, AuthService>();
-
+builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddTransient<IProduct, ProductService>();
 builder.Services.AddTransient<IUser, UserService>();
+
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
@@ -94,3 +96,35 @@ void AddAuthentication()
          .AddRoles<IdentityRole>()
          .AddEntityFrameworkStores<DataContext>();
     }
+    void ConfigureSwagger()
+    {
+        builder.Services.AddSwaggerGen(option =>
+        {
+        option.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo API", Version = "v1" });
+        option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+        {
+            In = ParameterLocation.Header,
+            Description = "Please enter a valid token",
+            Name = "Authorization",
+            Type = SecuritySchemeType.Http,
+            BearerFormat = "JWT",
+            Scheme = "Bearer"
+        });
+        option.AddSecurityRequirement(new OpenApiSecurityRequirement
+                         {
+                   {
+                                 new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type=ReferenceType.SecurityScheme,
+                    Id="Bearer"
+                }
+            },
+            new string[]{}
+        }
+    });
+
+    });
+
+}

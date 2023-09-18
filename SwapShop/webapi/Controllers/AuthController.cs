@@ -1,15 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SolarWatch.Services.Authentication;
 using webapi.Contracts;
+using webapi.Services.Authentication;
 
 namespace webapi.Controllers
 {
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;
-        public record AuthRequest(string Email, string Password);
-        public record AuthResponse(string Email, string UserName, string Token);
-
+       
         public AuthController(IAuthService authenticationService)
         {
             _authService = authenticationService;

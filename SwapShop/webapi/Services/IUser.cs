@@ -7,12 +7,10 @@ namespace webapi.Repositories
     {
         //DELETE USER
         //Logout User
-        Task<User> UpdateUser(int userId, UserDto user);
-        Task<User> DeleteUser(int userId);
+        Task<User> UpdateUser(string userId, UserDto user);
+        Task<User> DeleteUser(string userId);
         Task<IEnumerable<User>?> GetAllUsersAsync();
-        Task<User> CreateUserAsync(UserDto user);
-        Task<User>? LoginUserAsync(UserDto user);
-        Task<User>? GetById(int userId);
+        Task<User>? GetById(string userId);
         Task<User>? GetUserByNameAsync(string userName);
 
     }

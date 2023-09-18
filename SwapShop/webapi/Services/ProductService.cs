@@ -57,7 +57,7 @@ namespace webapi.Repositories
                 .SingleOrDefaultAsync(c => c.Id == productId);
         }
 
-        /*public async Task<Product> CreateAsync(ProductDto product)
+        public async Task<Product> CreateAsync(ProductDto product)
         {
             var newProduct = new Product
             {
@@ -70,7 +70,7 @@ namespace webapi.Repositories
             _dbContext.Products.Add(newProduct);
             await _dbContext.SaveChangesAsync();
             return newProduct;
-        }*/
+        }
 
         public async Task<IEnumerable<Product>?> GetProductByCategoryAsync(string category)
         {

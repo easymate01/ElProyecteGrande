@@ -29,7 +29,7 @@ namespace webapi.Controllers
         [HttpPost("/create/product")]
         public async Task<ActionResult<Product>> CreateProduct(ProductDto product)
         {
-            if (product.userId == null || product.userId <= 0)
+            if (product.userId == null )
             {
                 return BadRequest("Invalid userID. A valid userID is required.");
             }
@@ -40,7 +40,7 @@ namespace webapi.Controllers
         }
 
         [HttpGet("/product/{productId}")]
-        public async Task<ActionResult<Product>> GetProductById(int productId)
+        public async Task<ActionResult<Product>> GetProductById(string productId)
         {
             var product = await _productService.GetById(productId);
             if (product == null)
@@ -62,7 +62,7 @@ namespace webapi.Controllers
         }
 
         [HttpPut("/product/update/{productId}")]
-        public async Task<ActionResult<Product>> UpdateProduct(int productId, ProductDto product)
+        public async Task<ActionResult<Product>> UpdateProduct(string productId, ProductDto product)
         {
             var result = await _productService.UpdateProduct(productId, product);
             if (result == null)
@@ -73,7 +73,7 @@ namespace webapi.Controllers
         }
 
         [HttpDelete("/product/delete/{productId}")]
-        public async Task<ActionResult<Product>> DeleteProduct(int productId)
+        public async Task<ActionResult<Product>> DeleteProduct(string productId)
         {
             var productToDelete = await _productService.DeleteProduct(productId);
             if (productToDelete == null)
@@ -84,7 +84,7 @@ namespace webapi.Controllers
         }
 
         [HttpGet("/products/user/{userId}")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductByUserId(int userId)
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductByUserId(string userId)
         {
             var productsByUserId = await _productService.GetProductsByUserIdAsync(userId);
             if (!productsByUserId.Any())

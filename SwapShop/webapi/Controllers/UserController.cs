@@ -64,7 +64,7 @@ namespace webapi.Controllers
 
 
         [HttpPut("/user/update/{userId}")]
-        public async Task<ActionResult<User>> UpdateUser(int userId, UserDto user)
+        public async Task<ActionResult<User>> UpdateUser(string userId, UserDto user)
         {
             var result = await _userService.UpdateUser(userId, user);
             if (result == null)

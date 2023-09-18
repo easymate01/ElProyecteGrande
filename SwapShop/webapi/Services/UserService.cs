@@ -5,7 +5,7 @@ using webapi.Models;
 
 namespace webapi.Repositories
 {
-    public class UserService 
+    public class UserService :IUser
     {
         private readonly DataContext _dbContext;
 
@@ -14,15 +14,14 @@ namespace webapi.Repositories
             _dbContext = dbContext;
         }
 
-        /*public async Task<User> UpdateUser(int userId, UserDto user)
+        public async Task<User> UpdateUser(string userId, UserDto user)
         {
             var newUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
             if (newUser == null)
             {
                 return null;
             }
-            newUser.Username = user.Username;
-            newUser.Password = user.Password;
+            newUser.UserName = user.Username;
             newUser.Email = user.Email;
 
             _dbContext.Users.Update(newUser);
@@ -31,7 +30,7 @@ namespace webapi.Repositories
 
         }
 
-        public async Task<User> DeleteUser(int userId)
+        public async Task<User> DeleteUser(string userId)
         {
             var userToDelete = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
             if (userToDelete == null)
@@ -48,34 +47,15 @@ namespace webapi.Repositories
             return await _dbContext.Users.ToListAsync();
         }
 
-        public async Task<User> CreateUserAsync(UserDto user)
-        {
-            var newUser = new User
-            {
-                Username = user.Username,
-                Email = user.Email,
-                Password = user.Password,
-            };
-            _dbContext.Users.Add(newUser);
-            await _dbContext.SaveChangesAsync();
-            return newUser;
-        }
 
-        public async Task<User>? LoginUserAsync(UserDto user)
-        {
-            return await _dbContext.Users
-                .Where(users => user.Username == users.Username && user.Password == users.Password && user.Email == users.Email)
-                .FirstOrDefaultAsync();
-        }
-
-        public async Task<User>? GetById(int userId)
+        public async Task<User>? GetById(string userId)
         {
             return await _dbContext.Users.FirstOrDefaultAsync(user => user.Id == userId);
         }
 
         public async Task<User>? GetUserByNameAsync(string userName)
         {
-            return await _dbContext.Users.FirstOrDefaultAsync(user => user.Username == userName);
-        }*/
+            return await _dbContext.Users.FirstOrDefaultAsync(user => user.UserName == userName);
+        }
     }
 }

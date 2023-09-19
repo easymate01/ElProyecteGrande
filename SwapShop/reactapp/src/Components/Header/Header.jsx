@@ -75,11 +75,27 @@ const Header = ({ isLoggedIn, userName, onLogout }) => {
             <div className="app-header-mobile">
               <div className="">
                 <div className="tabs">
+                  <Link to="/product/create">Add Products</Link>
+
                   <Link to="/marketplace">Marketplace</Link>
                   <Link to="/">Trending Products</Link>
                   <Link to="/marketplace/you/account">Account</Link>
-                  <Link to="/">Business</Link>
-                  <Link to="/">System</Link>
+                  {isLoggedIn ? (
+                    <>
+                      <li>Hello, {userName}!</li>
+                      <li>
+                        <button className="logout-btn" onClick={onLogout}>
+                          Logout
+                        </button>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <Link to="/login">Login</Link>
+
+                      <Link to="/register">Register</Link>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

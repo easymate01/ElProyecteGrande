@@ -1,15 +1,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using webapi.Services.Authentication;
-using System.Numerics;
 using System.Text;
 using webapi.Data;
-using webapi.Models;
 using webapi.Repositories;
+using webapi.Services.Authentication;
 
 
 
@@ -86,26 +82,26 @@ void AddAuthentication()
             };
         });
 }
-    void AddIdentity()
+void AddIdentity()
+{
+    builder.Services
+     .AddIdentityCore<IdentityUser>(options =>
+     {
+         options.SignIn.RequireConfirmedAccount = false;
+         options.User.RequireUniqueEmail = true;
+         options.Password.RequireDigit = false;
+         options.Password.RequiredLength = 6;
+         options.Password.RequireNonAlphanumeric = false;
+         options.Password.RequireUppercase = false;
+         options.Password.RequireLowercase = false;
+     })
+     .AddRoles<IdentityRole>()
+     .AddEntityFrameworkStores<UsersContext>();
+}
+void ConfigureSwagger()
+{
+    builder.Services.AddSwaggerGen(option =>
     {
-        builder.Services
-         .AddIdentityCore<IdentityUser>(options =>
-         {
-             options.SignIn.RequireConfirmedAccount = false;
-             options.User.RequireUniqueEmail = true;
-             options.Password.RequireDigit = false;
-             options.Password.RequiredLength = 6;
-             options.Password.RequireNonAlphanumeric = false;
-             options.Password.RequireUppercase = false;
-             options.Password.RequireLowercase = false;
-         })
-         .AddRoles<IdentityRole>()
-         .AddEntityFrameworkStores<UsersContext>();
-    }
-    void ConfigureSwagger()
-    {
-        builder.Services.AddSwaggerGen(option =>
-        {
         option.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo API", Version = "v1" });
         option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
@@ -117,7 +113,7 @@ void AddAuthentication()
             Scheme = "Bearer"
         });
         option.AddSecurityRequirement(new OpenApiSecurityRequirement
-                         {
+                     {
                    {
                                  new OpenApiSecurityScheme
             {
@@ -129,10 +125,10 @@ void AddAuthentication()
             },
             new string[]{}
         }
-    });
+});
 
     });
-    
+
 
 }
 void AddRoles()

@@ -22,12 +22,12 @@ namespace webapi.Services.Authentication
                 return FailedRegistration(result, email, username);
             }
             await _userManager.AddToRoleAsync(user, role);
-            return new AuthResult(true, email, username, "");
+            return new AuthResult(true, null, email, username, "");
         }
 
         private static AuthResult FailedRegistration(IdentityResult result, string email, string username)
         {
-            var authResult = new AuthResult(false, email, username, "");
+            var authResult = new AuthResult(false, null, email, username, "");
 
             foreach (var error in result.Errors)
             {
@@ -52,21 +52,22 @@ namespace webapi.Services.Authentication
             }
             var roles = await _userManager.GetRolesAsync(managedUser);
             var role = roles.First();
+            Console.WriteLine(role);
             var adminAccessToken = _tokenService.CreateToken(managedUser, role);
-            return new AuthResult(true, managedUser.Email, managedUser.UserName, adminAccessToken);
-         
+            return new AuthResult(true, managedUser.Id, managedUser.Email, managedUser.UserName, adminAccessToken);
+
         }
 
         private static AuthResult InvalidEmail(string email)
         {
-            var result = new AuthResult(false, email, "", "");
+            var result = new AuthResult(false, null, email, "", "");
             result.ErrorMessages.Add("Bad credentials", "Invalid email");
             return result;
         }
 
         private static AuthResult InvalidPassword(string email, string userName)
         {
-            var result = new AuthResult(false, email, userName, "");
+            var result = new AuthResult(false, null, email, userName, "");
             result.ErrorMessages.Add("Bad credentials", "Invalid password");
             return result;
         }

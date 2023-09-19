@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using webapi.DTOs;
 using webapi.Models;
 using webapi.Repositories;
@@ -18,7 +19,7 @@ namespace webapi.Controllers
             _logger = logger;
         }
 
-        [HttpGet("/users")]
+        [HttpGet("/users"), Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<User>>> GetAllUser()
         {
             var users = await _userService.GetAllUsersAsync();
@@ -28,7 +29,7 @@ namespace webapi.Controllers
 
 
 
-        [HttpGet("/user/{userId}")]
+        [HttpGet("/user/{userId}"), Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<User>> GetUserById(string userId)
         {
             var existUser = await _userService.GetById(userId);
@@ -40,7 +41,7 @@ namespace webapi.Controllers
         }
 
 
-        [HttpPut("/user/update/{userId}")]
+        [HttpPut("/user/update/{userId}"), Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<User>> UpdateUser(string userId, UserDto user)
         {
             var result = await _userService.UpdateUser(userId, user);
@@ -51,7 +52,7 @@ namespace webapi.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("/user/delete/{userId}")]
+        [HttpDelete("/user/delete/{userId}"), Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<Product>> DeleteUser(string userId)
         {
             var userToDelete = await _userService.DeleteUser(userId);

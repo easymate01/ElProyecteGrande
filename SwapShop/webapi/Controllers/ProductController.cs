@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using webapi.DTOs;
 using webapi.Models;
 using webapi.Repositories;
@@ -19,6 +20,7 @@ namespace webapi.Controllers
             _logger = logger;
         }
 
+        //See all products at the /marketplace
         [HttpGet("/products")]
         public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
         {
@@ -26,10 +28,10 @@ namespace webapi.Controllers
             return Ok(products);
         }
 
-        [HttpPost("/create/product")]
+        [HttpPost("/create/product"), Authorize(Roles = "User")]
         public async Task<ActionResult<Product>> CreateProduct(ProductDto product)
         {
-            if (product.userId == null )
+            if (product.userId == null)
             {
                 return BadRequest("Invalid userID. A valid userID is required.");
             }
@@ -39,7 +41,7 @@ namespace webapi.Controllers
 
         }
 
-        [HttpGet("/product/{productId}")]
+        [HttpGet("/product/{productId}"), Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<Product>> GetProductById(string productId)
         {
             var product = await _productService.GetById(productId);
@@ -61,7 +63,7 @@ namespace webapi.Controllers
             return Ok(existProduct);
         }
 
-        [HttpPut("/product/update/{productId}")]
+        [HttpPut("/product/update/{productId}"), Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<Product>> UpdateProduct(string productId, ProductDto product)
         {
             var result = await _productService.UpdateProduct(productId, product);
@@ -72,7 +74,7 @@ namespace webapi.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("/product/delete/{productId}")]
+        [HttpDelete("/product/delete/{productId}"), Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<Product>> DeleteProduct(string productId)
         {
             var productToDelete = await _productService.DeleteProduct(productId);
@@ -83,7 +85,7 @@ namespace webapi.Controllers
             return Ok(productToDelete);
         }
 
-        [HttpGet("/products/user/{userId}")]
+        [HttpGet("/products/user/{userId}"), Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductByUserId(string userId)
         {
             var productsByUserId = await _productService.GetProductsByUserIdAsync(userId);

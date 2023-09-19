@@ -10,16 +10,16 @@ namespace webapi.Services.Authentication
     public class TokenService : ITokenService
     {
         private const int ExpirationMinutes = 30;
-        
 
-        public string CreateToken(IdentityUser user, string r)
+
+        public string CreateToken(IdentityUser user, string role)
         {
             var expiration = DateTime.UtcNow.AddMinutes(ExpirationMinutes);
             var token = CreateJwtToken(
-                CreateClaims(user,r),
+                CreateClaims(user, role),
                 CreateSigningCredentials(),
                 expiration
-            ) ;
+            );
             var tokenHandler = new JwtSecurityTokenHandler();
             return tokenHandler.WriteToken(token);
         }

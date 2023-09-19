@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Nav from "../../Components/Navigation/Nav";
 import ProductCard from "../../Components/ProductCard/ProductCard";
 import API_BASE_URL from "../../config";
+import MyProductCard from "../../Components/MyProducts/MyProducts";
 
 const MyAccount = ({ user, isLoggedIn }) => {
   const [products, setProduct] = useState([]);
@@ -44,23 +45,24 @@ const MyAccount = ({ user, isLoggedIn }) => {
       <div className="app">
         <div className="app-body">
           <Nav></Nav>
-          <section className="service-section">
+          <div className="app-body-main-content">
             {isLoggedIn ? (
               <h1>Your Listing: </h1>
             ) : (
               <h1>Please Log in first!</h1>
             )}
-            <div className="tiles">
+            <div className="tile-card">
               {products.length > 0 &&
                 products.map((prod) => (
-                  <ProductCard
+                  <MyProductCard
+                    key={prod.id}
                     product={prod}
                     myAccount={true}
                     onDeleteProduct={handleDeleteProduct}
                   />
                 ))}
             </div>
-          </section>
+          </div>
         </div>
       </div>
     </section>

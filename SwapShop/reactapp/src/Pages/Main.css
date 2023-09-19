@@ -704,14 +704,6 @@ li {
 .settings-button:hover {
   color: var(--c-white);
 }
-input:focus,
-select:focus,
-a:focus,
-textarea:focus,
-button:focus {
-  outline: 0;
-  box-shadow: 0 0 0 2px var(--c-gray-800), 0 0 0 4px var(--c-gray-300);
-}
 
 .logout-btn {
   width: 100px;

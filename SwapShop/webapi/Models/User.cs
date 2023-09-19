@@ -1,12 +1,22 @@
-﻿namespace webapi.Models
+﻿using Microsoft.AspNetCore.Identity;
+using System.Text.Json.Serialization;
+
+namespace webapi.Models
 {
     public class User
     {
-        public int Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public string Id { get; init; }
+        public string UserName { get; set; }
         public string Email { get; set; }
-        public DateTime BirthDate { get; set; }
+        public string IdentityUserId { get; set; }
         public ICollection<Product> Products { get; set; }
+       
+        [JsonIgnore]
+        public IdentityUser IdentityUser { get; set; }
+        public User()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
+
     }
 }

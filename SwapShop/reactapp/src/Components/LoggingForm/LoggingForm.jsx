@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import { Outlet, Link } from "react-router-dom";
 import React from "react";
 
@@ -17,24 +18,26 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
     e.preventDefault();
     console.log("Registering...");
     console.log({ saveUsername, saveEmail, savePassword });
-    fetch(`https://localhost:7035/create/user`, {
+    fetch(`https://localhost:7035/Register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username: saveUsername,
         email: saveEmail,
+        username: saveUsername,
         password: savePassword,
       }),
     })
       .then((res) => {
-        if (res.status === 200) {
-          return res.json(); // Parse the response body as JSON
-        } else {
+        if (res.status !== 201) {
           console.log("Registration error:", res);
-          throw new Error("Registration failed."); // Handle non-JSON responses
+        } else if (res.status === 400) {
+          console.log(
+            "Username or email is already taken, or password is not valid."
+          );
         }
+        return res.json();
       })
       .then((data) => {
         console.log("Registration response:", data);
@@ -55,9 +58,8 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username: saveUsername,
-        password: savePassword,
         email: saveEmail,
+        password: savePassword,
       }),
     })
       .then((res) => {
@@ -69,8 +71,13 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
         }
       })
       .then((data) => {
-        const userId = data;
-        onLogin(saveUsername, userId);
+        const { id, email, userName, token } = data;
+
+        Cookies.set("userId", id, { expires: 1 });
+        Cookies.set("userEmail", email, { expires: 1 });
+        Cookies.set("userUserName", userName, { expires: 1 });
+        Cookies.set("userToken", token, { expires: 1 });
+        onLogin();
         navigate("/marketplace");
       })
       .catch((error) => {
@@ -91,15 +98,29 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
             <div className="subtitle">Let's create your account!</div>
           </>
         )}
-        <div className="input-container ic1">
-          <div className="cut"></div>
+        {isHandleRegister ? (
+          <div className="input-container ic1">
+            <div className="cut"></div>
+            <input
+              id="firstname"
+              className="input"
+              type="text"
+              placeholder="full name"
+              onChange={(e) => setSaveUsername(e.target.value)}
+            />
+          </div>
+        ) : (
+          <></>
+        )}
+        <div className="input-container ic2">
           <input
-            id="firstname"
+            id="email"
             className="input"
             type="text"
-            placeholder="full name"
-            onChange={(e) => setSaveUsername(e.target.value)}
+            placeholder="email"
+            onChange={(e) => setSaveEmail(e.target.value)}
           />
+          <div className="cut cut-short"></div>
         </div>
 
         <div className="input-container ic2">
@@ -111,17 +132,6 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
             onChange={(e) => setSavePassword(e.target.value)}
           />
           <div className="cut"></div>
-        </div>
-
-        <div className="input-container ic2">
-          <input
-            id="email"
-            className="input"
-            type="text"
-            placeholder="email"
-            onChange={(e) => setSaveEmail(e.target.value)}
-          />
-          <div className="cut cut-short"></div>
         </div>
 
         {isHandleRegister ? (

@@ -1,13 +1,15 @@
 import { useState } from "react";
 import "./Product.css";
 
-const ProductCreator = ({ isLoggedIn, userId }) => {
+const ProductCreator = ({ isLoggedIn, user }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState("");
   const [created, setCreated] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
 
+  console.log(user.userToken);
   const handelAddProduct = (e) => {
     e.preventDefault();
 
@@ -15,13 +17,14 @@ const ProductCreator = ({ isLoggedIn, userId }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${user.userToken}`,
       },
       body: JSON.stringify({
         name: name,
         description: description,
         price: price,
         category: category,
-        userID: userId,
+        userId: user.id,
       }),
     })
       .then((res) => res.json())
@@ -33,6 +36,7 @@ const ProductCreator = ({ isLoggedIn, userId }) => {
         console.error("Createing Product error:", error);
       });
   };
+
   return (
     <div className="form-container">
       <div className="nice-form-group">
@@ -74,6 +78,16 @@ const ProductCreator = ({ isLoggedIn, userId }) => {
             placeholder="Category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
+          />
+        </div>
+
+        <div className="nice-form-group img-upload">
+          <input
+            placeholder="Image"
+            type="file"
+            id="image"
+            accept="image/*"
+            onChange={(e) => setImageFile(e.target.files[0])}
           />
         </div>
 

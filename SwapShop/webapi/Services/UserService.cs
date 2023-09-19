@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using webapi.Data;
 using webapi.DTOs;
 using webapi.Models;
@@ -8,74 +9,96 @@ namespace webapi.Repositories
     public class UserService : IUser
     {
         private readonly DataContext _dbContext;
-
-        public UserService(DataContext dbContext)
+        private readonly UserManager<IdentityUser> _userManager;
+        public UserService(DataContext dbContext, UserManager<IdentityUser> userManager)
         {
             _dbContext = dbContext;
+            _userManager = userManager;
         }
 
-        public async Task<User> UpdateUser(int userId, UserDto user)
+        public async Task<IdentityUser> UpdateUser(string userId, UserDto user)
         {
-            var newUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
+            var newUser = await _userManager.FindByIdAsync(userId);
+           
+
             if (newUser == null)
             {
                 return null;
             }
-            newUser.Username = user.Username;
-            newUser.Password = user.Password;
+
+            newUser.UserName = user.Username;
             newUser.Email = user.Email;
 
-            _dbContext.Users.Update(newUser);
-            await _dbContext.SaveChangesAsync();
-            return newUser;
+            var result = await _userManager.UpdateAsync(newUser);
+            
 
+           
+
+            if (result.Succeeded)
+            {
+                return newUser;
+            }
+            else
+            {
+                // A felhasználó frissítése sikertelen volt
+                // Kezelheted a hibákat itt
+                return null;
+            }
         }
 
-        public async Task<User> DeleteUser(int userId)
+
+        public async Task<IdentityUser> DeleteUser(string userId)
         {
-            var userToDelete = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
+            var userToDelete = await _userManager.FindByIdAsync(userId);
+
             if (userToDelete == null)
             {
                 return null;
             }
-            _dbContext.Users.Remove(userToDelete);
-            await _dbContext.SaveChangesAsync();
-            return userToDelete;
-        }
 
-        public async Task<IEnumerable<User>?> GetAllUsersAsync()
-        {
-            return await _dbContext.Users.ToListAsync();
-        }
+            var result = await _userManager.DeleteAsync(userToDelete);
 
-        public async Task<User> CreateUserAsync(UserDto user)
-        {
-            var newUser = new User
+            if (result.Succeeded)
             {
-                Username = user.Username,
-                Email = user.Email,
-                Password = user.Password,
-            };
-            _dbContext.Users.Add(newUser);
-            await _dbContext.SaveChangesAsync();
-            return newUser;
+                return userToDelete;
+            }
+            else
+            {
+                // A felhasználó törlése sikertelen volt
+                // Kezelheted a hibákat itt
+                return null;
+            }
         }
 
-        public async Task<User>? LoginUserAsync(UserDto user)
+
+        public async Task<IEnumerable<IdentityUser>?> GetAllUsersAsync()
         {
-            return await _dbContext.Users
-                .Where(users => user.Username == users.Username && user.Password == users.Password && user.Email == users.Email)
-                .FirstOrDefaultAsync();
+            return await _userManager.Users.ToListAsync();
         }
 
-        public async Task<User>? GetById(int userId)
+
+        public async Task<IdentityUser>? GetUserByNameAsync(string userName) 
         {
-            return await _dbContext.Users.FirstOrDefaultAsync(user => user.Id == userId);
+            var user = await _userManager.FindByNameAsync(userName);
+            if (user == null)
+            {
+                return null;
+            }
+
+            return user;
         }
 
-        public async Task<User>? GetUserByNameAsync(string userName)
+        public async Task<IdentityUser> GetById(string userId)
         {
-            return await _dbContext.Users.FirstOrDefaultAsync(user => user.Username == userName);
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return user;
         }
+
     }
 }

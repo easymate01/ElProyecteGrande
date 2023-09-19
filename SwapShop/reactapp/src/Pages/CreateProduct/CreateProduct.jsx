@@ -6,11 +6,10 @@ import React from "react";
 import "./ProductCreating.css";
 
 const CreateProduct = ({ isLoggedIn, user }) => {
-  const { id } = user;
   return (
     <React.Fragment>
       <div>
-        <ProductCreator isLoggedIn={isLoggedIn} userId={id} />
+        <ProductCreator isLoggedIn={isLoggedIn} user={user} />
       </div>
     </React.Fragment>
   );

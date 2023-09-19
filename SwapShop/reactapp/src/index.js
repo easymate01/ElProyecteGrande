@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Cookies from "js-cookie";
 
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
@@ -14,18 +15,22 @@ import Header from "./Components/Header/Header";
 import MyAccount from "./Pages/MyAccount/MyAccount";
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [userName, setUserName] = React.useState("");
-  const [user, setUser] = React.useState("");
+  const userId = Cookies.get("userId");
+  const userName = Cookies.get("userName");
+  const userToken = Cookies.get("userToken");
+  const userEmail = Cookies.get("userEmail");
 
-  const handleLogin = (username, user) => {
+  const [isLoggedIn, setIsLoggedIn] = React.useState(userId ? true : false);
+
+  const handleLogin = () => {
     setIsLoggedIn(true);
-    setUserName(username);
-    setUser(user);
   };
   const handleLogout = () => {
     setIsLoggedIn(false);
-    setUserName("");
+    Cookies.remove("userId");
+    Cookies.remove("userName");
+    Cookies.remove("userToken");
+    Cookies.remove("userEmail");
   };
 
   const router = createBrowserRouter([
@@ -56,20 +61,29 @@ const App = () => {
           element: <MainPage />,
         },
         {
+          //needs token
           path: "/product/:id",
           element: <ProductPage />,
         },
         {
+          //need to create editing product
           path: "/product/edit",
           element: <Registering />,
         },
         {
+          //needs token
           path: "/marketplace/you/account",
-          element: <MyAccount userId={user.id} isLoggedIn={isLoggedIn} />,
+          element: <MyAccount userId={userId} isLoggedIn={isLoggedIn} />,
         },
         {
+          //needs token
           path: "/product/create",
-          element: <CreateProduct isLoggedIn={isLoggedIn} user={user} />,
+          element: (
+            <CreateProduct
+              isLoggedIn={isLoggedIn}
+              user={{ userToken, userId }}
+            />
+          ),
         },
       ],
     },

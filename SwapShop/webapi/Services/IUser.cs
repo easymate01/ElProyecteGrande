@@ -1,5 +1,6 @@
 ﻿using webapi.DTOs;
 using webapi.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace webapi.Repositories
 {
@@ -7,13 +8,11 @@ namespace webapi.Repositories
     {
         //DELETE USER
         //Logout User
-        Task<User> UpdateUser(int userId, UserDto user);
-        Task<User> DeleteUser(int userId);
-        Task<IEnumerable<User>?> GetAllUsersAsync();
-        Task<User> CreateUserAsync(UserDto user);
-        Task<User>? LoginUserAsync(UserDto user);
-        Task<User>? GetById(int userId);
-        Task<User>? GetUserByNameAsync(string userName);
+        Task<IdentityUser> UpdateUser(string userId, UserDto user);
+        Task<IdentityUser> DeleteUser(string userId);
+        Task<IEnumerable<IdentityUser>?> GetAllUsersAsync();
+        Task<IdentityUser>? GetById(string userId);
+        Task<IdentityUser>? GetUserByNameAsync(string userName);
 
     }
 }

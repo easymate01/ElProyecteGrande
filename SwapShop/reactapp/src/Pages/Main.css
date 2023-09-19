@@ -115,7 +115,7 @@ a {
   margin-left: 1rem;
 }
 .app-header-mobile {
-  display: none;
+  display: block;
 }
 @media (max-width: 1200px) {
   .app-header-mobile {
@@ -294,10 +294,7 @@ li {
 .icon-button {
   width: 32px;
   height: 32px;
-  border-radius: 50%;
-  border: 0;
   background-color: transparent;
-  border: 1px solid var(--c-gray-500);
   color: var(--c-text-primary);
   display: flex;
   align-items: center;
@@ -305,6 +302,7 @@ li {
   cursor: pointer;
   transition: 0.25s ease;
   flex-shrink: 0;
+  display: none;
 }
 .icon-button.large {
   width: 42px;
@@ -727,4 +725,39 @@ button:focus {
   transition: top 0.3s, font-size 0.3s;
   cursor: pointer;
   margin-left: 25px;
+}
+
+.app-header-mobile {
+  display: none;
+}
+
+.app-header-mobile .tabs {
+  flex-direction: column;
+}
+
+/* Media Query for Mobile View */
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .app-header-navigation {
+    display: none; /* Hide desktop navigation */
+  }
+
+  .app-header-mobile {
+    display: block; /* Show mobile navigation */
+  }
+
+  .icon-button.large {
+    display: block;
+    margin-top: 10px;
+    border: 1px solid white;
+    position: absolute; /* Position the button absolutely */
+    top: 40px; /* Position at the top of the screen */
+    right: 40px;
+    margin-top: 10px; /* Move the button down from the top */
+    margin-left: 10px;
+  }
 }

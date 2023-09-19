@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using webapi.DTOs;
 using webapi.Models;
 using webapi.Repositories;
@@ -19,6 +20,7 @@ namespace webapi.Controllers
             _logger = logger;
         }
 
+        //See all products at the /marketplace
         [HttpGet("/products")]
         public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
         {
@@ -26,10 +28,10 @@ namespace webapi.Controllers
             return Ok(products);
         }
 
-        [HttpPost("/create/product")]
+        [HttpPost("/create/product"), Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<Product>> CreateProduct(ProductDto product)
         {
-            if (product.userId == null || product.userId <= 0)
+            if (product.userId == null)
             {
                 return BadRequest("Invalid userID. A valid userID is required.");
             }
@@ -39,8 +41,8 @@ namespace webapi.Controllers
 
         }
 
-        [HttpGet("/product/{productId}")]
-        public async Task<ActionResult<Product>> GetProductById(int productId)
+        [HttpGet("/product/{productId}"), Authorize(Roles = "Admin, User")]
+        public async Task<ActionResult<Product>> GetProductById(string productId)
         {
             var product = await _productService.GetById(productId);
             if (product == null)
@@ -61,8 +63,8 @@ namespace webapi.Controllers
             return Ok(existProduct);
         }
 
-        [HttpPut("/product/update/{productId}")]
-        public async Task<ActionResult<Product>> UpdateProduct(int productId, ProductDto product)
+        [HttpPut("/product/update/{productId}"), Authorize(Roles = "Admin, User")]
+        public async Task<ActionResult<Product>> UpdateProduct(string productId, ProductDto product)
         {
             var result = await _productService.UpdateProduct(productId, product);
             if (result == null)
@@ -72,8 +74,8 @@ namespace webapi.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("/product/delete/{productId}")]
-        public async Task<ActionResult<Product>> DeleteProduct(int productId)
+        [HttpDelete("/product/delete/{productId}"), Authorize(Roles = "Admin, User")]
+        public async Task<ActionResult<Product>> DeleteProduct(string productId)
         {
             var productToDelete = await _productService.DeleteProduct(productId);
             if (productToDelete == null)
@@ -83,8 +85,8 @@ namespace webapi.Controllers
             return Ok(productToDelete);
         }
 
-        [HttpGet("/products/user/{userId}")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductByUserId(int userId)
+        [HttpGet("/products/user/{userId}"), Authorize(Roles = "Admin, User")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductByUserId(string userId)
         {
             var productsByUserId = await _productService.GetProductsByUserIdAsync(userId);
             if (!productsByUserId.Any())

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using webapi.DTOs;
 using webapi.Models;
 using webapi.Repositories;
@@ -18,7 +19,7 @@ namespace webapi.Controllers
             _logger = logger;
         }
 
-        [HttpGet("/users")]
+        [HttpGet("/users"), Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<User>>> GetAllUser()
         {
             var users = await _userService.GetAllUsersAsync();
@@ -26,33 +27,10 @@ namespace webapi.Controllers
             return Ok(users);
         }
 
-        [HttpPost("/create/user")]
-        public async Task<ActionResult<User>> CreateUser(UserDto user)
-        {
-            var newUser = await _userService.GetUserByNameAsync(user.Username);
-            if (newUser == null)
-            {
-                newUser = await _userService.CreateUserAsync(user);
-                return Ok(newUser);
-            }
 
-            return Conflict("Registration Failed: This username is already in use. Please choose a different username");
-        }
 
-        [HttpPost("/login")]
-        public async Task<ActionResult<User>> LoginUser(UserDto user)
-        {
-            var existUser = await _userService.LoginUserAsync(user);
-            if (existUser == null)
-            {
-                return BadRequest("Login Failed. Wrong data...");
-            }
-
-            return Ok(existUser);
-        }
-
-        [HttpGet("/user/{userId}")]
-        public async Task<ActionResult<User>> GetUserById(int userId)
+        [HttpGet("/user/{userId}"), Authorize(Roles = "Admin, User")]
+        public async Task<ActionResult<User>> GetUserById(string userId)
         {
             var existUser = await _userService.GetById(userId);
             if (existUser == null)
@@ -63,8 +41,8 @@ namespace webapi.Controllers
         }
 
 
-        [HttpPut("/user/update/{userId}")]
-        public async Task<ActionResult<User>> UpdateUser(int userId, UserDto user)
+        [HttpPut("/user/update/{userId}"), Authorize(Roles = "Admin, User")]
+        public async Task<ActionResult<User>> UpdateUser(string userId, UserDto user)
         {
             var result = await _userService.UpdateUser(userId, user);
             if (result == null)
@@ -74,8 +52,8 @@ namespace webapi.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("/user/delete/{userId}")]
-        public async Task<ActionResult<Product>> DeleteUser(int userId)
+        [HttpDelete("/user/delete/{userId}"), Authorize(Roles = "Admin, User")]
+        public async Task<ActionResult<Product>> DeleteUser(string userId)
         {
             var userToDelete = await _userService.DeleteUser(userId);
             if (userToDelete == null)

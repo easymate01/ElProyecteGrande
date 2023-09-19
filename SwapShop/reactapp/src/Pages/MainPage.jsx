@@ -11,7 +11,7 @@ import Login from "./Login/Login";
 const MainPage = () => {
   const [userData, setUserData] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [products, setProducts] = useState([]);
   const [viewProduct, setViewProduct] = useState(false);
@@ -36,7 +36,21 @@ const MainPage = () => {
       <div className="app">
         <div className="app-body">
           <Nav />
-          <Dashboard allPRoducts={products} isLoggedIn={isLoggedIn} />
+          <div className="app-body-main-content">
+            <div className="service-section">
+              {loading ? (
+                <div>Loading fetching data...</div>
+              ) : (
+                <Dashboard allPRoducts={products} isLoggedIn={isLoggedIn} />
+              )}
+              <footer className="service-section-footer">
+                <p>
+                  Services are paid according to the current state of the
+                  currency and tariff.
+                </p>
+              </footer>
+            </div>
+          </div>
         </div>
       </div>
     </>

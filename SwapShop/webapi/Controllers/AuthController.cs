@@ -8,7 +8,7 @@ namespace webapi.Controllers
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;
-        private readonly  DataContext _dbContext;
+        private readonly DataContext _dbContext;
 
         public AuthController(IAuthService authenticationService, DataContext dataContext)
         {
@@ -31,8 +31,8 @@ namespace webapi.Controllers
                 AddErrors(result);
                 return BadRequest(ModelState);
             }
-            
-           
+
+
 
             return CreatedAtAction(nameof(Register), new RegistrationResponse(result.Email, result.UserName));
         }
@@ -60,7 +60,7 @@ namespace webapi.Controllers
                 return BadRequest(ModelState);
             }
 
-            return Ok(new AuthResponse(result.IdentityUserId ,result.Email, result.UserName, result.Token));
+            return Ok(new AuthResponse(result.IdentityUserId, result.Email, result.UserName, result.Token));
         }
     }
 }

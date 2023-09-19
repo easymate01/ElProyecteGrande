@@ -19,7 +19,7 @@ namespace webapi.Services.Authentication
         public async Task<AuthResult> RegisterAsync(string email, string username, string password, string role)
         {
             var identityuser = new IdentityUser { UserName = username, Email = email };
-            
+
             var result = await _userManager.CreateAsync(identityuser, password);
 
             if (!result.Succeeded)
@@ -28,10 +28,10 @@ namespace webapi.Services.Authentication
             }
             await _userManager.AddToRoleAsync(identityuser, role);
 
-             _dataContext.Users.Add(new User { UserName = username, Email = email, IdentityUserId = identityuser.Id });
+            _dataContext.Users.Add(new User { UserName = username, Email = email, IdentityUserId = identityuser.Id });
 
             await _dataContext.SaveChangesAsync();
-            return new AuthResult(true, identityuser.Id, email, username, "") ;
+            return new AuthResult(true, identityuser.Id, email, username, "");
         }
 
         private static AuthResult FailedRegistration(IdentityResult result, string email, string username)
@@ -63,6 +63,8 @@ namespace webapi.Services.Authentication
             var role = roles.First();
             Console.WriteLine(role);
             var adminAccessToken = _tokenService.CreateToken(managedUser, role);
+
+
             return new AuthResult(true, managedUser.Id, managedUser.Email, managedUser.UserName, adminAccessToken);
 
         }

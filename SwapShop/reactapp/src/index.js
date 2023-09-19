@@ -73,7 +73,9 @@ const App = () => {
         {
           //needs token
           path: "/marketplace/you/account",
-          element: <MyAccount userId={userId} isLoggedIn={isLoggedIn} />,
+          element: (
+            <MyAccount user={{ userToken, userId }} isLoggedIn={isLoggedIn} />
+          ),
         },
         {
           //needs token

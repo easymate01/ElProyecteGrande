@@ -83,9 +83,11 @@ namespace webapi.Repositories
 
         public async Task<IEnumerable<Product>?> GetProductsByUserIdAsync(string userId)
         {
+            var dbContextUser = await _dbContext.Users.FirstOrDefaultAsync(user => user.IdentityUserId == userId);
+
             return await _dbContext.Products
-                .Where(p => p.userId == userId).ToListAsync();
+                .Where(p => p.userId == dbContextUser.Id).ToListAsync();
         }
-       
+
     }
 }

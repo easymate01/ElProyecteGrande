@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import Nav from "../../Components/Navigation/Nav";
 import ProductCard from "../../Components/ProductCard/ProductCard";
+import API_BASE_URL from "../../config";
 
-const MyAccount = ({ userId, isLoggedIn }) => {
+const MyAccount = ({ user, isLoggedIn }) => {
   const [products, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -10,8 +11,15 @@ const MyAccount = ({ userId, isLoggedIn }) => {
     async function fetchProducts() {
       try {
         const response = await fetch(
-          `https://localhost:7035/products/user/${userId}`
+          `${API_BASE_URL}/products/user/${user.userId}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${user.userToken}`,
+            },
+          }
         );
+
         const data = await response.json();
         setProduct(data);
         setLoading(false);

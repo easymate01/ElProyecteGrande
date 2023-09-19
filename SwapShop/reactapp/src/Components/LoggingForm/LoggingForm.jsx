@@ -74,10 +74,10 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
       .then((data) => {
         const { id, email, userName, token } = data;
         console.log(id);
-        Cookies.set("userId", id, { expires: 1 });
-        Cookies.set("userEmail", email, { expires: 1 });
-        Cookies.set("userUserName", userName, { expires: 1 });
-        Cookies.set("userToken", token, { expires: 1 });
+        Cookies.set("userId", id, { expires: 10 });
+        Cookies.set("userEmail", email, { expires: 10 });
+        Cookies.set("userUserName", userName, { expires: 10 });
+        Cookies.set("userToken", token, { expires: 10 });
         onLogin();
         navigate("/marketplace");
       })
@@ -141,7 +141,8 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
               Register
             </button>
             <div className="link-account">
-              <Link to="/login">Login</Link>
+              If you already have an account, you can log in here:
+              <Link to="/login"> Login</Link>
             </div>
           </React.Fragment>
         ) : (

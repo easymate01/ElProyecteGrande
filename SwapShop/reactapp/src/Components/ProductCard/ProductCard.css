@@ -72,8 +72,9 @@ h4 {
   cursor: pointer;
 }
 .product-view-btn:hover {
-  color: white;
-  background-color: var(--c-gray-600);
+  border: 1px solid #2d81f4;
+  background-color: #263951;
+  color: #2d81f4;
 }
 
 /* MYACCOUNT */

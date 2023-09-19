@@ -16,7 +16,7 @@ import MyAccount from "./Pages/MyAccount/MyAccount";
 
 const App = () => {
   const userId = Cookies.get("userId");
-  const userName = Cookies.get("userName");
+  const userName = Cookies.get("userUserName");
   const userToken = Cookies.get("userToken");
   const userEmail = Cookies.get("userEmail");
 
@@ -28,7 +28,7 @@ const App = () => {
   const handleLogout = () => {
     setIsLoggedIn(false);
     Cookies.remove("userId");
-    Cookies.remove("userName");
+    Cookies.remove("userUserName");
     Cookies.remove("userToken");
     Cookies.remove("userEmail");
   };

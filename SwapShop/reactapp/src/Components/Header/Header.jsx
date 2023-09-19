@@ -4,7 +4,6 @@ import React, { useState } from "react";
 
 const Header = ({ isLoggedIn, userName, onLogout }) => {
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
-
   const toggleMobileNav = () => {
     setIsMobileNavVisible(!isMobileNavVisible);
   };

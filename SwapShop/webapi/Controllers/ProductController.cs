@@ -28,7 +28,7 @@ namespace webapi.Controllers
             return Ok(products);
         }
 
-        [HttpPost("/create/product"), Authorize(Roles = "User")]
+        [HttpPost("/create/product"), Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<Product>> CreateProduct(ProductDto product)
         {
             if (product.userId == null)

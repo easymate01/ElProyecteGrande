@@ -17,7 +17,7 @@ namespace webapi.Data
         {
             // It would be a good idea to move the connection string to user secrets
             options.UseSqlServer(
-                "Server=localhost,1433;Database=WebShop;User Id=sa;Password=SaraAttila94;Encrypt=True;TrustServerCertificate=True;");
+                "Server=tcp:swapshop.database.windows.net,1433;Initial Catalog=SwapShop;Persist Security Info=False;User ID=gulmatan;Password=a$%Jd5Ze!9+VwQea;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

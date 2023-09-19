@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using webapi.Data;
+using webapi.Models;
 
 namespace webapi.Services.Authentication
 {
@@ -6,23 +8,30 @@ namespace webapi.Services.Authentication
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ITokenService _tokenService;
+        private readonly DataContext _dataContext;
 
-        public AuthService(UserManager<IdentityUser> userManager, ITokenService tokenService)
+        public AuthService(UserManager<IdentityUser> userManager, ITokenService tokenService, DataContext dataContext)
         {
             _userManager = userManager;
             _tokenService = tokenService;
+            _dataContext = dataContext;
         }
         public async Task<AuthResult> RegisterAsync(string email, string username, string password, string role)
         {
-            var user = new IdentityUser { UserName = username, Email = email };
-            var result = await _userManager.CreateAsync(user, password);
+            var identityuser = new IdentityUser { UserName = username, Email = email };
+            
+            var result = await _userManager.CreateAsync(identityuser, password);
 
             if (!result.Succeeded)
             {
                 return FailedRegistration(result, email, username);
             }
-            await _userManager.AddToRoleAsync(user, role);
-            return new AuthResult(true, null, email, username, "");
+            await _userManager.AddToRoleAsync(identityuser, role);
+
+             _dataContext.Users.Add(new User { UserName = username, Email = email, IdentityUserId = identityuser.Id });
+
+            await _dataContext.SaveChangesAsync();
+            return new AuthResult(true, identityuser.Id, email, username, "") ;
         }
 
         private static AuthResult FailedRegistration(IdentityResult result, string email, string username)

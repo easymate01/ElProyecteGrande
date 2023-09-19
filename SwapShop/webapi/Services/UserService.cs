@@ -19,6 +19,7 @@ namespace webapi.Repositories
         public async Task<IdentityUser> UpdateUser(string userId, UserDto user)
         {
             var newUser = await _userManager.FindByIdAsync(userId);
+           
 
             if (newUser == null)
             {
@@ -29,6 +30,9 @@ namespace webapi.Repositories
             newUser.Email = user.Email;
 
             var result = await _userManager.UpdateAsync(newUser);
+            
+
+           
 
             if (result.Succeeded)
             {

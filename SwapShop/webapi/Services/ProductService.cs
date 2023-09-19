@@ -62,22 +62,14 @@ namespace webapi.Repositories
 
         public async Task<Product> CreateAsync(ProductDto product)
         {
-            var user = await _userManager.FindByIdAsync(product.userId);
-            if (user == null)
-            {
-                // Felhasználó nem található
-                return null;
-            }
-
             var newProduct = new Product
             {
                 Name = product.Name,
                 Category = product.Category,
                 Description = product.Description,
                 Price = product.Price,
-                User = new User(),
+                User = await _dbContext.Users.FirstOrDefaultAsync(user => user.IdentityUserId == product.userId)
             };
-
             _dbContext.Products.Add(newProduct);
             await _dbContext.SaveChangesAsync();
             return newProduct;
@@ -94,5 +86,6 @@ namespace webapi.Repositories
             return await _dbContext.Products
                 .Where(p => p.userId == userId).ToListAsync();
         }
+       
     }
 }

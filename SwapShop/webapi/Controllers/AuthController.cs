@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using webapi.Contracts;
+using webapi.Data;
 using webapi.Services.Authentication;
 
 namespace webapi.Controllers
@@ -7,10 +8,12 @@ namespace webapi.Controllers
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;
+        private readonly  DataContext _dbContext;
 
-        public AuthController(IAuthService authenticationService)
+        public AuthController(IAuthService authenticationService, DataContext dataContext)
         {
             _authService = authenticationService;
+            _dbContext = dataContext;
         }
 
         [HttpPost("Register")]
@@ -28,6 +31,8 @@ namespace webapi.Controllers
                 AddErrors(result);
                 return BadRequest(ModelState);
             }
+            
+           
 
             return CreatedAtAction(nameof(Register), new RegistrationResponse(result.Email, result.UserName));
         }
@@ -55,7 +60,7 @@ namespace webapi.Controllers
                 return BadRequest(ModelState);
             }
 
-            return Ok(new AuthResponse(result.Id, result.Email, result.UserName, result.Token));
+            return Ok(new AuthResponse(result.IdentityUserId ,result.Email, result.UserName, result.Token));
         }
     }
 }

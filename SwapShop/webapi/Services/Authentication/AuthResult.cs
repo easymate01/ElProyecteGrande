@@ -2,10 +2,11 @@
 {
     public record AuthResult(
     bool Success,
-    string? Id,
+     string? IdentityUserId,
     string Email,
     string UserName,
-    string Token)
+    string Token
+   )
     {
         //Error code - error message
         public readonly Dictionary<string, string> ErrorMessages = new();

@@ -23,7 +23,6 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddTransient<IProduct, ProductService>();
 builder.Services.AddTransient<IUser, UserService>();
-builder.Services.AddDbContext<UsersContext>();
 builder.Services.AddDbContext<DataContext>();
 
 
@@ -97,7 +96,7 @@ void AddIdentity()
          options.Password.RequireLowercase = false;
      })
      .AddRoles<IdentityRole>()
-     .AddEntityFrameworkStores<UsersContext>();
+     .AddEntityFrameworkStores<DataContext>();
 }
 void ConfigureSwagger()
 {

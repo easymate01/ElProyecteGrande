@@ -73,3 +73,11 @@ button:hover {
   font-size: 14px;
   color: #aaaaaa;
 }
+
+.img-upload input {
+  height: 100px;
+  padding: 10px;
+}
+.img-upload button {
+  background-color: #000;
+}

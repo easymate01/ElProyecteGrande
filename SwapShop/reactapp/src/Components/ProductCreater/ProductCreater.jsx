@@ -7,6 +7,7 @@ const ProductCreator = ({ isLoggedIn, userId }) => {
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState("");
   const [created, setCreated] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
 
   const handelAddProduct = (e) => {
     e.preventDefault();
@@ -33,6 +34,7 @@ const ProductCreator = ({ isLoggedIn, userId }) => {
         console.error("Createing Product error:", error);
       });
   };
+
   return (
     <div className="form-container">
       <div className="nice-form-group">
@@ -74,6 +76,16 @@ const ProductCreator = ({ isLoggedIn, userId }) => {
             placeholder="Category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
+          />
+        </div>
+
+        <div className="nice-form-group img-upload">
+          <input
+            placeholder="Image"
+            type="file"
+            id="image"
+            accept="image/*"
+            onChange={(e) => setImageFile(e.target.files[0])}
           />
         </div>
 

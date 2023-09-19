@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace webapi.Models
+﻿namespace webapi.Models
 {
-    public class User : IdentityUser
+    public class User
     {
-        
         public ICollection<Product> Products { get; set; }
     }
 }

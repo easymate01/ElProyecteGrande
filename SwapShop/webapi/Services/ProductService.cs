@@ -63,7 +63,6 @@ namespace webapi.Repositories
         public async Task<Product> CreateAsync(ProductDto product)
         {
             var user = await _userManager.FindByIdAsync(product.userId);
-
             if (user == null)
             {
                 // Felhasználó nem található
@@ -76,7 +75,7 @@ namespace webapi.Repositories
                 Category = product.Category,
                 Description = product.Description,
                 Price = product.Price,
-                User = new User { UserName = user.UserName, Email = user.Email, Id = user.Id },
+                User = new User(),
             };
 
             _dbContext.Products.Add(newProduct);

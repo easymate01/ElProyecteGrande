@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { Outlet, Link } from "react-router-dom";
 import React from "react";
 
+import API_BASE_URL from "../../config";
 import "./LoggingStyle.css";
 
 const LoggingForm = ({ isHandleRegister, onLogin }) => {
@@ -18,7 +19,7 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
     e.preventDefault();
     console.log("Registering...");
     console.log({ saveUsername, saveEmail, savePassword });
-    fetch(`https://localhost:7035/Register`, {
+    fetch(`${API_BASE_URL}/Register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +53,7 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
   const handleLogin = (e) => {
     e.preventDefault();
     console.log("Logging in...");
-    fetch(`https://localhost:7035/login`, {
+    fetch(`${API_BASE_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -72,7 +73,7 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
       })
       .then((data) => {
         const { id, email, userName, token } = data;
-
+        console.log(id);
         Cookies.set("userId", id, { expires: 1 });
         Cookies.set("userEmail", email, { expires: 1 });
         Cookies.set("userUserName", userName, { expires: 1 });

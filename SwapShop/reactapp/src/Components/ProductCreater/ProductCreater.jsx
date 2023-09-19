@@ -1,4 +1,7 @@
 import { useState } from "react";
+
+import API_BASE_URL from "../../config";
+
 import "./Product.css";
 
 const ProductCreator = ({ isLoggedIn, user }) => {
@@ -9,11 +12,10 @@ const ProductCreator = ({ isLoggedIn, user }) => {
   const [created, setCreated] = useState(false);
   const [imageFile, setImageFile] = useState(null);
 
-  console.log(user.userToken);
   const handelAddProduct = (e) => {
     e.preventDefault();
 
-    fetch(`https://localhost:7035/create/product`, {
+    fetch(`${API_BASE_URL}/create/product`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,7 +26,7 @@ const ProductCreator = ({ isLoggedIn, user }) => {
         description: description,
         price: price,
         category: category,
-        userId: user.id,
+        userId: user.userId,
       }),
     })
       .then((res) => res.json())

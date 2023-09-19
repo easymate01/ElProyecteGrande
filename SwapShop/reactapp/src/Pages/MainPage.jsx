@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import "./Main.css";
+import API_BASE_URL from "../config";
 
 import Nav from "../Components/Navigation/Nav";
 import Header from "../Components/Header/Header";
@@ -18,7 +19,7 @@ const MainPage = () => {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const response = await fetch("https://localhost:7035/products");
+        const response = await fetch(`${API_BASE_URL}/products`);
         const data = await response.json();
         setProducts(data);
         setLoading(false);

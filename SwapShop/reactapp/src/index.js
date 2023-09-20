@@ -13,6 +13,7 @@ import Registering from "./Pages/Register/Register";
 import CreateProduct from "./Pages/CreateProduct/CreateProduct";
 import Header from "./Components/Header/Header";
 import MyAccount from "./Pages/MyAccount/MyAccount";
+import AdminPage from "./Pages/AdminPage/AdminPage";
 
 const App = () => {
   const userId = Cookies.get("userId");
@@ -86,6 +87,10 @@ const App = () => {
               user={{ userToken, userId }}
             />
           ),
+        },
+        {
+          path: "/admin",
+          element: <AdminPage />,
         },
       ],
     },

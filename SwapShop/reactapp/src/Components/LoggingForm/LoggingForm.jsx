@@ -5,8 +5,6 @@ import { Outlet, Link } from "react-router-dom";
 import React from "react";
 import jwtDecode from "jwt-decode";
 
-
-
 import API_BASE_URL from "../../config";
 import "./LoggingStyle.css";
 
@@ -16,7 +14,6 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
   const [savePassword, setSavePassword] = useState("");
   const [error, setError] = useState();
   const [tokens, setTokens] = useState("");
-
 
   const navigate = useNavigate();
 
@@ -79,27 +76,31 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
       .then((data) => {
         const { id, email, userName, token } = data;
 
-
-
         Cookies.set("userId", id, { expires: 10 });
         Cookies.set("userEmail", email, { expires: 10 });
         Cookies.set("userUserName", userName, { expires: 10 });
         Cookies.set("userToken", token, { expires: 10 });
-        console.log(token)
 
         setTokens(token);
-        try {
-          const decodedToken = jwtDecode(tokens);
-          console.log(decodedToken)
-        }
-        catch
-        {
-          console.error('Error decoding token:', error)
-        }
+        const decodedToken = jwtDecode(token);
 
-
+        console.log(decodedToken);
+        if (
+          decodedToken &&
+          decodedToken[
+            "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+          ] === "Admin"
+        ) {
+          // User is an admin
+          console.log("User is an admin.");
+          Cookies.set("Role", "Admin");
+          navigate("/admin");
+        } else {
+          // User is not an admin
+          Cookies.set("Role", "User");
+          navigate("/marketplace");
+        }
         onLogin();
-        navigate("/marketplace");
       })
       .catch((error) => {
         console.error("Login error:", error);

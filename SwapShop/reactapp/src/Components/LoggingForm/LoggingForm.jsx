@@ -95,6 +95,7 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
           console.log("User is an admin.");
           Cookies.set("Role", "Admin");
           navigate("/admin");
+          onLogin();
         } else {
           // User is not an admin
           Cookies.set("Role", "User");

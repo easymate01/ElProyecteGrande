@@ -27,6 +27,12 @@ namespace webapi.Controllers
             var products = await _productService.GetAllProductAsync();
             return Ok(products);
         }
+        [HttpGet("/products/available")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetAvailableProducts()
+        {
+            var products = await _productService.GetAllProductAvailableAsync();
+            return Ok(products);
+        }
 
         [HttpPost("/create/product"), Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<Product>> CreateProduct(ProductDto product)
@@ -94,6 +100,18 @@ namespace webapi.Controllers
                 return NotFound("No products found for this user ID");
             }
             return Ok(productsByUserId);
+        }
+
+        [HttpPut("/product/sold/{productId}"), Authorize(Roles = "Admin, User")]
+        public async Task<ActionResult<Product>> SetProductSold(string productId)
+        {
+            var result = await _productService.SetProductUnAvailable(productId);
+            if (result == null)
+            {
+                return NotFound("This product doesn't exsist!");
+            }
+            return Ok(result);
+
         }
     }
 }

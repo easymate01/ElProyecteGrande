@@ -11,11 +11,12 @@ namespace webapi.Repositories
         Task<Product> DeleteProduct(string productId);
 
         Task<IEnumerable<Product>?> GetAllProductAsync();
+        Task<IEnumerable<Product>?> GetAllProductAvailableAsync();
         Task<Product>? GetById(string productId);
         Task<Product> CreateAsync(ProductDto product);
         Task<IEnumerable<Product>?> GetProductByCategoryAsync(string category);
         Task<IEnumerable<Product>?> GetProductsByUserIdAsync(string userId);
-      
+        Task<Product> SetProductUnAvailable(string productId);
 
     }
 }

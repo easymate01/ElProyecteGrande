@@ -54,6 +54,12 @@ namespace webapi.Repositories
             return await _dbContext.Products.ToListAsync();
         }
 
+        public async Task<IEnumerable<Product>?> GetAllProductAvailableAsync()
+        {
+            var availableProduct = await _dbContext.Products.Where(p => p.IsAvailable == true).ToListAsync();
+            return availableProduct;
+        }
+
         public async Task<Product>? GetById(string productId)
         {
             return await _dbContext.Products
@@ -89,6 +95,17 @@ namespace webapi.Repositories
 
             return await _dbContext.Products
                 .Where(p => p.userId == dbContextUser.Id).ToListAsync();
+        }
+
+        public async Task<Product> SetProductUnAvailable(string productId)
+        {
+            var productToUpdate = await _dbContext.Products.FirstOrDefaultAsync(product => product.Id == productId);
+            productToUpdate.IsAvailable = false;
+
+            _dbContext.Products.Update(productToUpdate);
+            await _dbContext.SaveChangesAsync();
+
+            return productToUpdate;
         }
 
     }

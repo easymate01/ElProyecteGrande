@@ -5,6 +5,7 @@ import API_BASE_URL from "../../config";
 import "./Product.css";
 
 const ProductCreator = ({ isLoggedIn, user }) => {
+  const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
@@ -12,13 +13,61 @@ const ProductCreator = ({ isLoggedIn, user }) => {
   const [created, setCreated] = useState(false);
   const [imageFile, setImageFile] = useState(null);
 
-  const readFileAsBase64 = (file) => {
+  const readFileAsBase64AndCompress = (file, maxWidth, maxHeight, quality) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        const imageBase64 = reader.result.split(",")[1];
-        resolve(imageBase64);
+        const originalImageBase64 = reader.result.split(",")[1];
+
+        // Create an HTML image element to manipulate the image
+        const img = new Image();
+        img.src = `data:image/jpeg;base64,${originalImageBase64}`;
+
+        img.onload = () => {
+          let width = img.width;
+          let height = img.height;
+
+          // Calculate the new dimensions while maintaining aspect ratio
+          if (width > maxWidth) {
+            height *= maxWidth / width;
+            width = maxWidth;
+          }
+
+          if (height > maxHeight) {
+            width *= maxHeight / height;
+            height = maxHeight;
+          }
+
+          // Create a canvas to draw the resized image
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+
+          // Draw the resized image on the canvas
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Convert the canvas content back to base64 with compression
+          canvas.toBlob(
+            (blob) => {
+              const compressedImage = new File([blob], file.name, {
+                type: "image/jpeg", // Adjust the MIME type if needed
+                lastModified: Date.now(),
+              });
+
+              const readerCompressed = new FileReader();
+              readerCompressed.readAsDataURL(compressedImage);
+              readerCompressed.onload = () => {
+                const compressedImageBase64 =
+                  readerCompressed.result.split(",")[1];
+                resolve(compressedImageBase64);
+              };
+            },
+            "image/jpeg", // Adjust the MIME type if needed
+            quality // Adjust the quality (0-1) to control compression level
+          );
+        };
       };
       reader.onerror = (error) => {
         reject(error);
@@ -28,11 +77,11 @@ const ProductCreator = ({ isLoggedIn, user }) => {
 
   const handleAddProduct = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     if (imageFile) {
       try {
         // Read the image file
-        const imageBase64 = await readFileAsBase64(imageFile);
+        const imageBase64 = await readFileAsBase64AndCompress(imageFile);
 
         // Send the product data including the imageBase64 to the backend
         const productData = {
@@ -57,6 +106,7 @@ const ProductCreator = ({ isLoggedIn, user }) => {
         if (response.ok) {
           const data = await response.json();
           console.log("Creating Product response:", data);
+          setLoading(false);
           setCreated(true);
         } else {
           console.error(
@@ -72,6 +122,16 @@ const ProductCreator = ({ isLoggedIn, user }) => {
       console.error("No image selected");
     }
   };
+
+  if (loading) {
+    return (
+      <div className="form-container">
+        <div className="nice-form-group">
+          <div>Loading...</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>

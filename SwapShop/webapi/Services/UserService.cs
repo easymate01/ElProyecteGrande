@@ -1,8 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using webapi.Data;
 using webapi.DTOs;
-using webapi.Models;
 
 namespace webapi.Repositories
 {
@@ -19,7 +18,7 @@ namespace webapi.Repositories
         public async Task<IdentityUser> UpdateUser(string userId, UserDto user)
         {
             var newUser = await _userManager.FindByIdAsync(userId);
-           
+
 
             if (newUser == null)
             {
@@ -30,9 +29,9 @@ namespace webapi.Repositories
             newUser.Email = user.Email;
 
             var result = await _userManager.UpdateAsync(newUser);
-            
 
-           
+
+
 
             if (result.Succeeded)
             {
@@ -77,7 +76,7 @@ namespace webapi.Repositories
         }
 
 
-        public async Task<IdentityUser>? GetUserByNameAsync(string userName) 
+        public async Task<IdentityUser>? GetUserByNameAsync(string userName)
         {
             var user = await _userManager.FindByNameAsync(userName);
             if (user == null)

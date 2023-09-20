@@ -30,7 +30,8 @@ const MyProductCard = ({ product, isLoggedIn, myAccount, onDeleteProduct }) => {
       <div className="image-column">
         <img
           className="product-image"
-          src="https://scontent-vie1-1.xx.fbcdn.net/v/t45.5328-4/363503499_6849900495040486_2838732717185533293_n.jpg?stp=dst-jpg_p720x720&_nc_cat=110&ccb=1-7&_nc_sid=1a0e84&_nc_ohc=B1qH3E43CTQAX8KfFgO&_nc_ht=scontent-vie1-1.xx&oh=00_AfCF89xqSsXc0U2JmxNTzSBdJW8nt0bEz8G3vh-WOEyMqw&oe=64FD36F8"
+          src={`data:image/jpeg;base64,${product.imageBase64}`}
+          alt={product.name}
         />
       </div>
       <div className="text-column">

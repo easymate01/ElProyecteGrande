@@ -28,6 +28,7 @@
 .product-img {
   border-radius: 8px;
   margin: 0 auto;
+  height: 280px;
   max-height: 330px;
 }
 .product-infos {

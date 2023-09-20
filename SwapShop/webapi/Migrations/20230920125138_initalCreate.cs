@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace webapi.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initalCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -184,6 +184,8 @@ namespace webapi.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsAvailable = table.Column<bool>(type: "bit", nullable: false),
+                    ImageBase64 = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     userId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>

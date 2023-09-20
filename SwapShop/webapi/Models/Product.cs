@@ -9,6 +9,7 @@ namespace webapi.Models
         public string Description { get; set; }
         public decimal Price { get; set; }
         public string Category { get; set; }
+        public bool IsAvailable { get; set; }
         public string ImageBase64 { get; set; }
         public string userId { get; set; }
         [JsonIgnore]
@@ -16,6 +17,7 @@ namespace webapi.Models
         public Product()
         {
             Id = Guid.NewGuid().ToString();
+            IsAvailable = true;
         }
     }
 }

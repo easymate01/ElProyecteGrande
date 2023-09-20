@@ -12,8 +12,8 @@ using webapi.Data;
 namespace webapi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230919140236_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230920125138_initalCreate")]
+    partial class initalCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -235,6 +235,13 @@ namespace webapi.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageBase64")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()

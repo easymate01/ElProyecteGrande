@@ -32,6 +32,7 @@ const App = () => {
     Cookies.remove("userUserName");
     Cookies.remove("userToken");
     Cookies.remove("userEmail");
+    Cookies.remove("Role");
   };
 
   const router = createBrowserRouter([

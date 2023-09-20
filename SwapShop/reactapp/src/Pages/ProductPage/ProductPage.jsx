@@ -47,7 +47,7 @@ const ProductPage = ({ user }) => {
         <>Loading</>
       ) : (
         <React.Fragment>
-          {product.imageBase64 && (
+          <div className="product-modal">
             <div className="product-page-card">
               <div className="photo">
                 <img src={`data:image/jpeg;base64,${product.imageBase64}`} />
@@ -56,13 +56,13 @@ const ProductPage = ({ user }) => {
                 <Link to="/marketplace">All Products</Link>
                 <h2>{product.name}</h2>
                 <h4>{product.category}</h4>
-                <h1>{product.price}$</h1>
+                <h1>Price: {product.price}$</h1>
                 <p>{product.description}</p>
               </div>
               <button onClick={handleContactSeller}>Contact with seller</button>
               <button>Wishlist</button>
             </div>
-          )}
+          </div>
         </React.Fragment>
       )}
     </>

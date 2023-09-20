@@ -29,6 +29,7 @@ namespace webapi.Repositories
             newProduct.Category = product.Category;
             newProduct.Description = product.Description;
             newProduct.Price = product.Price;
+            newProduct.ImageBase64 = product.ImageBase64;
 
             _dbContext.Products.Update(newProduct);
             await _dbContext.SaveChangesAsync();
@@ -68,6 +69,7 @@ namespace webapi.Repositories
                 Category = product.Category,
                 Description = product.Description,
                 Price = product.Price,
+                ImageBase64 = product.ImageBase64,
                 User = await _dbContext.Users.FirstOrDefaultAsync(user => user.IdentityUserId == product.userId)
             };
             _dbContext.Products.Add(newProduct);

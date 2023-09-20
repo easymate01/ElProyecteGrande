@@ -3,6 +3,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { Outlet, Link } from "react-router-dom";
 import React from "react";
+import jwtDecode from "jwt-decode";
+
+
 
 import API_BASE_URL from "../../config";
 import "./LoggingStyle.css";
@@ -12,6 +15,8 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
   const [saveEmail, setSaveEmail] = useState("");
   const [savePassword, setSavePassword] = useState("");
   const [error, setError] = useState();
+  const [tokens, setTokens] = useState("");
+
 
   const navigate = useNavigate();
 
@@ -73,11 +78,26 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
       })
       .then((data) => {
         const { id, email, userName, token } = data;
-        console.log(id);
+
+
+
         Cookies.set("userId", id, { expires: 10 });
         Cookies.set("userEmail", email, { expires: 10 });
         Cookies.set("userUserName", userName, { expires: 10 });
         Cookies.set("userToken", token, { expires: 10 });
+        console.log(token)
+
+        setTokens(token);
+        try {
+          const decodedToken = jwtDecode(tokens);
+          console.log(decodedToken)
+        }
+        catch
+        {
+          console.error('Error decoding token:', error)
+        }
+
+
         onLogin();
         navigate("/marketplace");
       })

@@ -74,11 +74,19 @@ const Header = ({ isLoggedIn, userName, onLogout }) => {
             <div className="app-header-mobile">
               <div className="">
                 <div className="tabs">
-                  <Link to="/product/create">Add Products</Link>
+                  <Link to="/product/create" onClick={toggleMobileNav}>
+                    Add Products
+                  </Link>
 
-                  <Link to="/marketplace">Marketplace</Link>
-                  <Link to="/">Trending Products</Link>
-                  <Link to="/marketplace/you/account">Account</Link>
+                  <Link to="/marketplace" onClick={toggleMobileNav}>
+                    Marketplace
+                  </Link>
+                  <Link to="/" onClick={toggleMobileNav}>
+                    Trending Products
+                  </Link>
+                  <Link to="/marketplace/you/account" onClick={toggleMobileNav}>
+                    Account
+                  </Link>
                   {isLoggedIn ? (
                     <>
                       <li>Hello, {userName}!</li>

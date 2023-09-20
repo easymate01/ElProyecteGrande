@@ -80,3 +80,13 @@ button:hover {
 .img-upload button {
   background-color: #000;
 }
+@media (max-width: 768px) {
+  select,
+  input {
+    min-width: 200px;
+    padding: 15px 50px;
+  }
+  .small-desc {
+    width: 300px;
+  }
+}

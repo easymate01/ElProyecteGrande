@@ -79,3 +79,21 @@
 .product-button svg {
   fill: #fff; /* Változtasd meg a kívánt ikonszínre */
 }
+@media (max-width: 768px) {
+  .product-card-2 {
+    display: block;
+    width: 400px;
+  }
+  .button-column {
+    display: block;
+  }
+  .product-image {
+    width: auto;
+  }
+  .tile-card {
+    display: flex;
+    max-width: 800px;
+    height: auto; /* Adj hozzá egy alapértelmezett magasságot vagy az igényeidnek megfelelő magasságot */
+    flex-wrap: wrap;
+  }
+}

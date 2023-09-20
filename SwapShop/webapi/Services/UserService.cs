@@ -18,7 +18,7 @@ namespace webapi.Repositories
         public async Task<IdentityUser> UpdateUser(string userId, UserDto user)
         {
             var newUser = await _userManager.FindByIdAsync(userId);
-
+            var dbContextUser = await _dbContext.Users.FirstOrDefaultAsync(user => user.IdentityUserId == userId);
 
             if (newUser == null)
             {
@@ -28,8 +28,19 @@ namespace webapi.Repositories
             newUser.UserName = user.Username;
             newUser.Email = user.Email;
 
-            var result = await _userManager.UpdateAsync(newUser);
 
+
+            dbContextUser.UserName = user.Username;
+            dbContextUser.Email = user.Email;
+
+
+
+
+
+
+            var result = await _userManager.UpdateAsync(newUser);
+            _dbContext.Users.Update(dbContextUser);
+            _dbContext.SaveChanges();
 
 
 
@@ -49,28 +60,23 @@ namespace webapi.Repositories
         public async Task<IdentityUser> DeleteUser(string userId)
         {
             var userToDelete = await _userManager.FindByIdAsync(userId);
+            var dbContextUser = await _dbContext.Users.FirstOrDefaultAsync(user => user.IdentityUserId == userId);
+
 
             if (userToDelete == null)
             {
                 return null;
             }
+            await _userManager.DeleteAsync(userToDelete);
 
-            var result = await _userManager.DeleteAsync(userToDelete);
+            _dbContext.Users.Remove(dbContextUser);
+            _dbContext.SaveChanges();
 
-            if (result.Succeeded)
-            {
-                return userToDelete;
-            }
-            else
-            {
-                // A felhasználó törlése sikertelen volt
-                // Kezelheted a hibákat itt
-                return null;
-            }
+            return userToDelete;
         }
 
 
-        public async Task<IEnumerable<IdentityUser>?> GetAllUsersAsync()
+            public async Task<IEnumerable<IdentityUser>?> GetAllUsersAsync()
         {
             return await _userManager.Users.ToListAsync();
         }

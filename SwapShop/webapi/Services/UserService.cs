@@ -28,21 +28,12 @@ namespace webapi.Repositories
             newUser.UserName = user.Username;
             newUser.Email = user.Email;
 
-
-
             dbContextUser.UserName = user.Username;
             dbContextUser.Email = user.Email;
-
-
-
-
-
 
             var result = await _userManager.UpdateAsync(newUser);
             _dbContext.Users.Update(dbContextUser);
             _dbContext.SaveChanges();
-
-
 
             if (result.Succeeded)
             {
@@ -76,7 +67,7 @@ namespace webapi.Repositories
         }
 
 
-            public async Task<IEnumerable<IdentityUser>?> GetAllUsersAsync()
+        public async Task<IEnumerable<IdentityUser>?> GetAllUsersAsync()
         {
             return await _userManager.Users.ToListAsync();
         }

@@ -8,6 +8,7 @@ const MyProductCard = ({
   myAccount,
   onDeleteProduct,
   user,
+  isSold,
 }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -54,7 +55,7 @@ const MyProductCard = ({
   };
 
   return (
-    <div className="product-card-2">
+    <div className={`product-card-2 ${isSold ? "sold" : ""}`}>
       {loading ? (
         <div>Loading...</div>
       ) : (

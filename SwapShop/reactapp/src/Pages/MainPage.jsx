@@ -19,7 +19,7 @@ const MainPage = () => {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const response = await fetch(`${API_BASE_URL}/products`);
+        const response = await fetch(`${API_BASE_URL}/products/available`);
         const data = await response.json();
         setProducts(data);
         setLoading(false);

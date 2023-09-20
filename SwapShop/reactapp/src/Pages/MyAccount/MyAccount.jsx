@@ -3,10 +3,14 @@ import Nav from "../../Components/Navigation/Nav";
 import ProductCard from "../../Components/ProductCard/ProductCard";
 import API_BASE_URL from "../../config";
 import MyProductCard from "../../Components/MyProducts/MyProducts";
+import { Outlet, Link } from "react-router-dom";
 
 const MyAccount = ({ user, isLoggedIn }) => {
   const [products, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const availableProducts = products.filter((prod) => prod.isAvailable);
+  const unavailableProducts = products.filter((prod) => !prod.isAvailable);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -47,13 +51,34 @@ const MyAccount = ({ user, isLoggedIn }) => {
           <Nav></Nav>
           <div className="app-body-main-content">
             {isLoggedIn ? (
-              <h1>Your Listing: </h1>
+              <h1>Available Products: </h1>
             ) : (
               <h1>Please Log in first!</h1>
             )}
             <div className="tile-card">
-              {products.length > 0 &&
-                products.map((prod) => (
+              {availableProducts.length > 0 ? (
+                availableProducts.map((prod) => (
+                  <MyProductCard
+                    key={prod.id}
+                    product={prod}
+                    myAccount={true}
+                    onDeleteProduct={handleDeleteProduct}
+                    user={user}
+                  />
+                ))
+              ) : (
+                <>
+                  <div>- You have no available products! </div>
+                  <>
+                    <Link to="/product/create"> Create Product</Link>
+                  </>
+                </>
+              )}
+            </div>
+            <h1>Sold Items: </h1>
+            <div className="tile-card">
+              {unavailableProducts.length > 0 &&
+                unavailableProducts.map((prod) => (
                   <MyProductCard
                     key={prod.id}
                     product={prod}

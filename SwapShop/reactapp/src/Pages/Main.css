@@ -36,6 +36,7 @@ textarea {
 }
 a {
   color: inherit;
+  margin-left: 5px;
 }
 .app-header-actions a {
   padding-top: 1rem;

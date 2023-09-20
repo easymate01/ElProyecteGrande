@@ -5,9 +5,10 @@ body {
   background: #242526 !important;
 }
 
-.product-card {
+.product-page-card {
   color: #fff !important;
   width: 90%;
+  height: 60%;
   position: absolute;
   background: #454749;
   margin: 0 auto;
@@ -47,7 +48,6 @@ body {
 }
 
 .product-card .photo {
-  background: url(https://scontent-vie1-1.xx.fbcdn.net/v/t45.5328-4/369032305_6523624674425610_3437164529856044739_n.jpg?stp=dst-jpg_p720x720&_nc_cat=102&ccb=1-7&_nc_sid=1a0e84&_nc_ohc=8vQG8MAPegEAX8wEZeS&_nc_ht=scontent-vie1-1.xx&oh=00_AfC9WPhWpkeVEemLlKaiRKwi_CXh3VkMbp-vYkjINSLBTw&oe=64EB6ED5);
   padding: 30px;
   width: 55%;
   aspect-ratio: 2/3;

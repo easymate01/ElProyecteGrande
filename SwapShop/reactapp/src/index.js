@@ -64,7 +64,7 @@ const App = () => {
         {
           //needs token
           path: "/product/:id",
-          element: <ProductPage />,
+          element: <ProductPage user={{ userToken, userId }} />,
         },
         {
           //need to create editing product

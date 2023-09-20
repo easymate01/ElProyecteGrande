@@ -59,6 +59,7 @@ const MyAccount = ({ user, isLoggedIn }) => {
                     product={prod}
                     myAccount={true}
                     onDeleteProduct={handleDeleteProduct}
+                    user={user}
                   />
                 ))}
             </div>

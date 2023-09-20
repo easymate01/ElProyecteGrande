@@ -84,7 +84,6 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
         setTokens(token);
         const decodedToken = jwtDecode(token);
 
-        console.log(decodedToken);
         if (
           decodedToken &&
           decodedToken[

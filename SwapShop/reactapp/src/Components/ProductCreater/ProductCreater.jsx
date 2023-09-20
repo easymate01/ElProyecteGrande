@@ -12,31 +12,65 @@ const ProductCreator = ({ isLoggedIn, user }) => {
   const [created, setCreated] = useState(false);
   const [imageFile, setImageFile] = useState(null);
 
-  const handelAddProduct = (e) => {
+  const readFileAsBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const imageBase64 = reader.result.split(",")[1];
+        resolve(imageBase64);
+      };
+      reader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
+  const handleAddProduct = async (e) => {
     e.preventDefault();
 
-    fetch(`${API_BASE_URL}/create/product`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.userToken}`,
-      },
-      body: JSON.stringify({
-        name: name,
-        description: description,
-        price: price,
-        category: category,
-        userId: user.userId,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Createing Product response:", data);
-        setCreated(true);
-      })
-      .catch((error) => {
-        console.error("Createing Product error:", error);
-      });
+    if (imageFile) {
+      try {
+        // Read the image file
+        const imageBase64 = await readFileAsBase64(imageFile);
+
+        // Send the product data including the imageBase64 to the backend
+        const productData = {
+          name: name,
+          description: description,
+          price: price,
+          category: category,
+          userId: user.userId,
+          imageBase64: imageBase64,
+        };
+
+        // Make the API POST request here
+        const response = await fetch(`${API_BASE_URL}/create/product`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.userToken}`,
+          },
+          body: JSON.stringify(productData),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Creating Product response:", data);
+          setCreated(true);
+        } else {
+          console.error(
+            "Creating Product error:",
+            response.status,
+            response.statusText
+          );
+        }
+      } catch (error) {
+        console.error("Error reading image or making the request:", error);
+      }
+    } else {
+      console.error("No image selected");
+    }
   };
 
   return (
@@ -98,7 +132,7 @@ const ProductCreator = ({ isLoggedIn, user }) => {
 
             <div className="bottom-container">
               <>
-                <button type="submit" onClick={handelAddProduct}>
+                <button type="submit" onClick={handleAddProduct}>
                   Add Product
                 </button>
               </>

@@ -7,12 +7,15 @@ const Dashboard = ({ allPRoducts, isLoggedIn }) => {
 
       {/* --- DASHBOARD FEATURES ---*/}
       <div className="tiles">
-        {allPRoducts.length > 0 &&
+        {allPRoducts.length > 0 ? (
           allPRoducts.map((product) => (
             <React.Fragment key={product.id}>
               <ProductCard product={product} isLoggedIn={isLoggedIn} />
             </React.Fragment>
-          ))}
+          ))
+        ) : (
+          <>No Product added yet...</>
+        )}
       </div>
     </React.Fragment>
   );

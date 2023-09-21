@@ -23,6 +23,7 @@ h3,
 p {
   color: white;
 }
+textarea,
 select,
 input {
   min-width: 300px;
@@ -81,6 +82,7 @@ button:hover {
   background-color: #000;
 }
 @media (max-width: 768px) {
+  textarea,
   select,
   input {
     min-width: 200px;

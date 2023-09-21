@@ -55,9 +55,9 @@ const ProductPage = ({ user }) => {
               <div className="description">
                 <Link to="/marketplace">All Products</Link>
                 <h2>{product.name}</h2>
-                <h4>{product.category}</h4>
+                <h4>category: {product.category}</h4>
                 <h1>Price: {product.price}$</h1>
-                <p>{product.description}</p>
+                <p>Description: {product.description}</p>
               </div>
               <button onClick={handleContactSeller}>Contact with seller</button>
               <button>Wishlist</button>

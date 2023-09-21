@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./myProducts.css";
 import { useState } from "react";
+import EditProductModal from "../EditModal/EditModal";
 
 const MyProductCard = ({
   product,
@@ -11,13 +12,20 @@ const MyProductCard = ({
   isSold,
   handleOnSoldProduct,
 }) => {
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const { id: productId } = product;
 
-  const onEdit = () => {
-    navigate(`/product/edit/`);
+  const openEditModal = () => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsModalOpen(false);
+    setSelectedProduct(null);
   };
 
   const onDelete = (e) => {
@@ -66,6 +74,11 @@ const MyProductCard = ({
         <div>Loading...</div>
       ) : (
         <>
+          <EditProductModal
+            isOpen={isModalOpen}
+            onClose={closeEditModal}
+            product={product}
+          />
           <div className="image-column">
             <img
               className="product-image"
@@ -81,7 +94,10 @@ const MyProductCard = ({
             <h2>{product.price} $</h2>
           </div>
           <div className="button-column">
-            <button className="product-button edit-btn" onClick={onEdit}>
+            <button
+              className="product-button edit-btn"
+              onClick={() => openEditModal()}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"

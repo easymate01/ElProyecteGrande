@@ -7,6 +7,7 @@ import Nav from "../Components/Navigation/Nav";
 import Header from "../Components/Header/Header";
 import Dashboard from "../Components/Dashboard/Dashboard";
 import Login from "./Login/Login";
+import EditProductModal from "../Components/EditModal/EditModal";
 
 const MainPage = ({ userId }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(userId ? true : false);
@@ -38,14 +39,16 @@ const MainPage = ({ userId }) => {
               {loading ? (
                 <div>Loading fetching data...</div>
               ) : (
-                <Dashboard allPRoducts={products} isLoggedIn={isLoggedIn} />
+                <>
+                  <Dashboard allPRoducts={products} isLoggedIn={isLoggedIn} />
+                  <footer className="service-section-footer">
+                    <p>
+                      Services are paid according to the current state of the
+                      currency and tariff.
+                    </p>
+                  </footer>
+                </>
               )}
-              <footer className="service-section-footer">
-                <p>
-                  Services are paid according to the current state of the
-                  currency and tariff.
-                </p>
-              </footer>
             </div>
           </div>
         </div>

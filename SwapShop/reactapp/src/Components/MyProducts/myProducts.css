@@ -96,3 +96,11 @@
     flex-wrap: wrap;
   }
 }
+
+.sold {
+  color: #494747 !important;
+  background-color: #797d81;
+}
+.sold h3 {
+  color: #494747 !important;
+}

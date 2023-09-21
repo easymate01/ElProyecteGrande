@@ -10,7 +10,49 @@ body {
   flex-direction: column;
   justify-content: center;
   text-align: center;
+  width: 100%;
 }
+
+.form-section {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.creater-left {
+  flex: 3;
+  padding: 20px;
+}
+
+.creater-right {
+  flex: 6; /* Növeljük a rendelkezésre álló hely 60%-ára */
+  padding: 20px; /* Térköz hozzáadása a belső térhez */
+}
+.preview-section {
+  max-width: 600px;
+  margin-left: 200px;
+}
+
+.preview {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.img-panel {
+  flex: 0 0 30%; /* Állítsuk be az img-panel fix 30%-os szélességét */
+  padding: 10px; /* Térköz hozzáadása az img-panel belső részéhez */
+}
+
+.data-panel {
+  flex: 0 0 60%;
+  padding: 10px; /* Térköz hozzáadása a data-panel belső részéhez */
+}
+
 .nice-form-group label {
   position: absolute;
   color: #000;
@@ -27,7 +69,7 @@ textarea,
 select,
 input {
   min-width: 300px;
-  padding: 15px 50px;
+  padding: 15px 50px !important;
   border: 1px solid #ddd;
   background-color: #242526;
   border-radius: 15px;

@@ -15,12 +15,9 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
   const [savePassword, setSavePassword] = useState("");
   const [error, setError] = useState();
   const [tokens, setTokens] = useState("");
-
   const navigate = useNavigate();
-
-  const responseGoogle = (response) => {
-    console.log(response);
-  };
+  const currentTime = new Date();
+  const expirationTime = new Date(currentTime.getTime() + 30 * 60 * 1000); // 30 minutes in milliseconds
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -81,10 +78,10 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
       .then((data) => {
         const { id, email, userName, token } = data;
 
-        Cookies.set("userId", id, { expires: 10 });
-        Cookies.set("userEmail", email, { expires: 10 });
-        Cookies.set("userUserName", userName, { expires: 10 });
-        Cookies.set("userToken", token, { expires: 10 });
+        Cookies.set("userId", id, { expires: expirationTime });
+        Cookies.set("userEmail", email, { expires: expirationTime });
+        Cookies.set("userUserName", userName, { expires: expirationTime });
+        Cookies.set("userToken", token, { expires: expirationTime });
 
         setTokens(token);
         const decodedToken = jwtDecode(token);
@@ -159,17 +156,6 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
             onChange={(e) => setSavePassword(e.target.value)}
           />
           <div className="cut"></div>
-        </div>
-
-        <div>
-          <h1>Google Login Example</h1>
-          <GoogleLogin
-            clientId="126764366908-7oiqe29p1epj9vvm3b7hgi9en3b6em7r.apps.googleusercontent.com"
-            buttonText="Login with Google"
-            cookiePolicy={"single_host_origin"}
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-          />
         </div>
 
         {isHandleRegister ? (

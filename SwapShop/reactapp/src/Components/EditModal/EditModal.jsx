@@ -41,6 +41,7 @@ const EditProductModal = ({ isOpen, onClose, product, onUpdate }) => {
             <input
               type="text"
               name="category"
+              placeholder={product.category}
               value={editedProduct.category}
               onChange={handleChange}
             />
@@ -49,6 +50,7 @@ const EditProductModal = ({ isOpen, onClose, product, onUpdate }) => {
             <label>Description:</label>
             <textarea
               name="description"
+              placeholder={product.description}
               value={editedProduct.description}
               onChange={handleChange}
             />
@@ -58,6 +60,7 @@ const EditProductModal = ({ isOpen, onClose, product, onUpdate }) => {
             <input
               type="number"
               name="price"
+              placeholder={product.price}
               value={editedProduct.price}
               onChange={handleChange}
             />
@@ -67,7 +70,7 @@ const EditProductModal = ({ isOpen, onClose, product, onUpdate }) => {
             <input
               type="text"
               name="imageBase64"
-              value={editedProduct.imageBase64}
+              placeholder="Image Url"
               onChange={handleChange}
             />
           </div>

@@ -210,17 +210,27 @@ const ProductCreator = ({ isLoggedIn, user }) => {
             </div>
             <div className="creater-right">
               <div className="preview-section">
-                <h2>Preview Section</h2>
-                <div className="preview">
-                  <div className="img-panel">
-                    <img src={`${image}`} />
-                  </div>
-                  <div className="data-panel">
-                    <h3>{name ? name : "Title"}</h3>
-                    <h4>Details</h4>
-                    <p>{description ? description : "Small description"}</p>
-                    <p>Price: {price}</p>
-                    <p>Category: {category}</p>
+                <div className="border-2">
+                  <h3>Preview Section</h3>
+                  <div className="preview">
+                    <div className="img-panel">
+                      {image ? (
+                        <img
+                          src={`${image}`}
+                          className="img-content"
+                          alt="Image-preview"
+                        />
+                      ) : (
+                        <div className="img-content">image preview</div>
+                      )}
+                    </div>
+                    <div className="data-panel">
+                      <h3 className="p-title">{name ? name : "Title"}</h3>
+                      <h4>Details: </h4>
+                      <p>{description ? description : "Small description"}</p>
+                      <p>Price: {price} $</p>
+                      <p>Category: {category}</p>
+                    </div>
                   </div>
                 </div>
               </div>

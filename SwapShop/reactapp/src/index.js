@@ -60,7 +60,7 @@ const App = () => {
         },
         {
           path: "/marketplace",
-          element: <MainPage />,
+          element: <MainPage isLoggedIn={userId} />,
         },
         {
           //needs token

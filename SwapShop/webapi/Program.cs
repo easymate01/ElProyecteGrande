@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -25,15 +24,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddTransient<IProduct, ProductService>();
 builder.Services.AddTransient<IUser, UserService>();
 builder.Services.AddDbContext<DataContext>();
-builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultScheme = GoogleDefaults.AuthenticationScheme;
-    })
-    .AddGoogle(options =>
-    {
-        options.ClientId = "126764366908-7oiqe29p1epj9vvm3b7hgi9en3b6em7r.apps.googleusercontent.com";
-        options.ClientSecret = "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";
-    });
+
 
 
 

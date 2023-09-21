@@ -9,6 +9,7 @@ const MyProductCard = ({
   onDeleteProduct,
   user,
   isSold,
+  handleOnSoldProduct,
 }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -50,7 +51,12 @@ const MyProductCard = ({
       .then((res) => res.json())
       .then((data) => {
         console.log("Deleting Product response:", data);
+        console.log("Marking Product as Sold response:", data);
+
+        // Assuming the response indicates a successful marking as sold
+        // Remove the product from availableProducts
         setLoading(false);
+        handleOnSoldProduct(productId);
       });
   };
 

@@ -8,13 +8,10 @@ import Header from "../Components/Header/Header";
 import Dashboard from "../Components/Dashboard/Dashboard";
 import Login from "./Login/Login";
 
-const MainPage = () => {
-  const [userData, setUserData] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+const MainPage = ({ userId }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(userId ? true : false);
   const [loading, setLoading] = useState(true);
-
   const [products, setProducts] = useState([]);
-  const [viewProduct, setViewProduct] = useState(false);
 
   useEffect(() => {
     async function fetchProducts() {

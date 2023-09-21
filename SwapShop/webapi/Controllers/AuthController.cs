@@ -63,25 +63,7 @@ namespace webapi.Controllers
             return Ok(new AuthResponse(result.IdentityUserId, result.Email, result.UserName, result.Token));
         }
 
-        [HttpPost("google")]
-        public async Task<ActionResult<AuthResponse>> GoogleLogin([FromBody] GoogleAuthRequest request)
-        {
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var result = await _authService.GoogleLoginAsync(request.Email);
-
-            if (!result.Success)
-            {
-                AddErrors(result);
-                return BadRequest(ModelState);
-            }
-
-            return Ok(new AuthResponse(result.IdentityUserId, result.Email, result.UserName, result.Token));
-        }
     }
 }
 

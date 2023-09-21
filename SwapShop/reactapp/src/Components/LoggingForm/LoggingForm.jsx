@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { Outlet, Link } from "react-router-dom";
 import React from "react";
 import jwtDecode from "jwt-decode";
+import { GoogleLogin } from "react-google-login";
 
 import API_BASE_URL from "../../config";
 import "./LoggingStyle.css";
@@ -16,6 +17,10 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
   const [tokens, setTokens] = useState("");
 
   const navigate = useNavigate();
+
+  const responseGoogle = (response) => {
+    console.log(response);
+  };
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -154,6 +159,17 @@ const LoggingForm = ({ isHandleRegister, onLogin }) => {
             onChange={(e) => setSavePassword(e.target.value)}
           />
           <div className="cut"></div>
+        </div>
+
+        <div>
+          <h1>Google Login Example</h1>
+          <GoogleLogin
+            clientId="126764366908-7oiqe29p1epj9vvm3b7hgi9en3b6em7r.apps.googleusercontent.com"
+            buttonText="Login with Google"
+            cookiePolicy={"single_host_origin"}
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+          />
         </div>
 
         {isHandleRegister ? (

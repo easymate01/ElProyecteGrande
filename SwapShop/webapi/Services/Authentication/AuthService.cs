@@ -82,5 +82,37 @@ namespace webapi.Services.Authentication
             result.ErrorMessages.Add("Bad credentials", "Invalid password");
             return result;
         }
+
+        public async Task<AuthResult> GoogleLoginAsync(string email)
+        {
+            // Check if a user with the provided email exists in the database
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                // If the user doesn't exist, create a new IdentityUser with the given email
+                user = new IdentityUser
+                {
+                    UserName = email,
+                    Email = email,
+                };
+
+                var result = await _userManager.CreateAsync(user);
+
+                if (!result.Succeeded)
+                {
+                    return FailedRegistration(result, email, email);
+                }
+            }
+
+            // Add user to a role if needed (replace "User" with your desired role)
+            await _userManager.AddToRoleAsync(user, "User");
+
+            // Generate a JWT token using the TokenService
+            var role = "User"; // You can customize this based on your needs
+            var token = _tokenService.CreateToken(user, role);
+
+            return new AuthResult(true, user.Id, email, user.UserName, token);
+        }
     }
 }

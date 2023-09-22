@@ -50,7 +50,7 @@ body {
 
 .data-panel {
   flex: 0 0 40%;
-  padding: 100px 10px;
+  padding: 100px 0px;
   border-left: 1px solid white;
 }
 .img-content {

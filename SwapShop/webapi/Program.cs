@@ -173,4 +173,8 @@ async Task CreateAdminIfNotExists()
             await userManager.AddToRoleAsync(admin, "Admin");
         }
     }
+
+
 }
+
+public partial class Program { };

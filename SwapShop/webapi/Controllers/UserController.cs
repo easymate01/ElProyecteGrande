@@ -47,7 +47,7 @@ namespace webapi.Controllers
             var result = await _userService.UpdateUser(userId, user);
             if (result == null)
             {
-                return NotFound("This user doesn't exsist!");
+                return NotFound("This user doesn't exist!");
             }
             return Ok(result);
         }

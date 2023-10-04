@@ -1,15 +1,3 @@
-using Microsoft.AspNetCore.Mvc.Testing;
-using Newtonsoft.Json;
-using NUnit.Framework.Internal;
-using System.Net;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Text.Json;
-using webapi.DTOs;
-using webapi.Models;
-using webapi.Services.Authentication;
-using JsonSerializer = System.Text.Json.JsonSerializer;
-
 namespace SwapShop_Tests
 {
     public class ProductControllerTest : WebApplicationFactory<Program>
@@ -46,6 +34,7 @@ namespace SwapShop_Tests
         {
             _client.Dispose();
         }
+
         [Test]
         public async Task Return_Get_all_Endpoint()
         {
@@ -55,6 +44,7 @@ namespace SwapShop_Tests
             Assert.NotNull(content);
             Assert.IsNotEmpty(content);
         }
+
         [Test]
         public async Task Get_ProductsByAvaiable_Return_true()
         {
@@ -64,6 +54,7 @@ namespace SwapShop_Tests
             Assert.NotNull(content);
             Assert.IsNotEmpty(content);
         }
+
         [Test]
         public async Task Add_Product_Return_true()
         {
@@ -112,7 +103,6 @@ namespace SwapShop_Tests
             Assert.AreEqual("This product doesn't exist", responseContent);
         }
 
-
         [Test]
         public async Task GetProductById_NonExistingProduct_ReturnsNotFound()
         {
@@ -125,8 +115,8 @@ namespace SwapShop_Tests
             var responseContent = await response.Content.ReadAsStringAsync();
             Assert.AreEqual("Product doesn't exist!", responseContent);
         }
-        [Test]
 
+        [Test]
         public async Task GetProductByCategory_NonExistingProduct_ReturnsNotFound()
         {
             string category = "InvalidCategory";

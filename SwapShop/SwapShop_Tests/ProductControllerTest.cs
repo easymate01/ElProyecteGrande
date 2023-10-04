@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Newtonsoft.Json;
+using NUnit.Framework.Internal;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using webapi.Controllers;
 using webapi.DTOs;
 using webapi.Models;
 using webapi.Repositories;
@@ -19,6 +22,7 @@ namespace SwapShop_Tests
     {
         private HttpClient _client;
         private IAuthService _authService;
+      
 
         [SetUp]
         public void Setup()
@@ -97,6 +101,31 @@ namespace SwapShop_Tests
             Assert.IsNotNull(responseContent);
          
            
+        }
+        [Test]
+        public async Task GetProductById_NonExistingProduct_ReturnsNotFound()
+        {
+            string productId = "InvalidProductId";
+            var response = await _client.GetAsync($"/product/{productId}");
+
+            // Check if the response status code is 404 (Not Found)
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+            Assert.AreEqual("Product doesn't exist!", responseContent);
+        }
+        [Test]
+
+        public async Task GetProductByCategory_NonExistingProduct_ReturnsNotFound()
+        {
+            string category = "InvalidCategory";
+            var response = await _client.GetAsync($"/products/{category}");
+
+            // Check if the response status code is 404 (Not Found)
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+            Assert.AreEqual("This product doesn't exist!", responseContent);
         }
 
     }

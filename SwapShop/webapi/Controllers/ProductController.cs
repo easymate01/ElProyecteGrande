@@ -53,7 +53,7 @@ namespace webapi.Controllers
             var product = await _productService.GetById(productId);
             if (product == null)
             {
-                return NotFound("Product doesn't exsist!");
+                return NotFound("Product doesn't exist!");
             }
             return Ok(product);
         }
@@ -62,9 +62,9 @@ namespace webapi.Controllers
         public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory(string productCategory)
         {
             var existProduct = await _productService.GetProductByCategoryAsync(productCategory);
-            if (existProduct == null)
+            if (!existProduct.Any())
             {
-                return NotFound("This product doesn't exsist!");
+                return NotFound("This product doesn't exist!");
             }
             return Ok(existProduct);
         }

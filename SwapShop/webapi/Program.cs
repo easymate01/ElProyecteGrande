@@ -180,7 +180,7 @@ async Task CreateAdminIfNotExists()
             };
             using var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
             dbContext.Users.Add(customUser);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
         }
     }

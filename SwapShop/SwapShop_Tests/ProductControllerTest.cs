@@ -102,6 +102,24 @@ namespace SwapShop_Tests
          
            
         }
+
+
+        [Test]
+        public async Task Delete_Product_True()
+        {
+            string productId = "717a0527-17b0-43d8-8761-9803d7f184ef";
+
+            var response = await _client.DeleteAsync($"/product/delete/{productId}");
+            var responseContent = await response.Content.ReadAsStringAsync();
+            if (response.EnsureSuccessStatusCode() != null)
+            {
+           
+            Assert.IsNotNull(responseContent);
+            }
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+            Assert.AreEqual("This product doesn't exist!", responseContent);
+
+        }
         [Test]
         public async Task GetProductById_NonExistingProduct_ReturnsNotFound()
         {

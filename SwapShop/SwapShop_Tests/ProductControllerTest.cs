@@ -1,12 +1,17 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
+using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
+using webapi.DTOs;
+using webapi.Models;
+using webapi.Repositories;
 using webapi.Services.Authentication;
-
-
-
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace SwapShop_Tests
 {
@@ -26,8 +31,8 @@ namespace SwapShop_Tests
             };
 
             _client = CreateClient();
-         
-            AuthRequest authRequest = new AuthRequest("admin@admin.com", "admin123");
+
+            AuthRequest authRequest = new AuthRequest("admin@admin1.com", "admin1234");
             string jsonString = JsonSerializer.Serialize(authRequest);
             StringContent jsonStringContent = new StringContent(jsonString);
             jsonStringContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
@@ -44,7 +49,7 @@ namespace SwapShop_Tests
             _client.Dispose();
         }
         [Test]
-        public async Task Return_Get_all_Endpoint() 
+        public async Task Return_Get_all_Endpoint()
         {
             var response = await _client.GetAsync("/products");
             response.EnsureSuccessStatusCode();
@@ -52,6 +57,49 @@ namespace SwapShop_Tests
             Assert.NotNull(content);
             Assert.IsNotEmpty(content);
         }
+        [Test]
+        public async Task Get_ProductsByAvaiable_Return_true()
+        {
+            var response = await _client.GetAsync("/products/available");
+            response.EnsureSuccessStatusCode();
+            var content = await response.Content.ReadAsStringAsync();
+            Assert.NotNull(content);
+            Assert.IsNotEmpty(content);
+        }
+        [Test]
+        public async Task Add_Product_Return_true()
+        {
+            ProductDto productDto = new ProductDto
+            {
+                Name = "Valami",
+                Description = "Description",
+                Price = 10,
+                Category = "Car",
+                ImageBase64 = "ggglglglgl",
+                userId = "5cb76061-0423-44fe-81be-2516d3b0f179"
+            };
+            Product product = new Product
+            {
+                Name = productDto.Name,
+                Description = productDto.Description,
+                Price = productDto.Price,
+                Category = productDto.Category,
+                ImageBase64 = productDto.ImageBase64,
+                userId = productDto.userId
+            };
+
+            var content = new StringContent(JsonConvert.SerializeObject(product), Encoding.UTF8, "application/json");
+
+
+            var response = await _client.PostAsync("/create/product", content);
+            response.EnsureSuccessStatusCode();
+            var responseContent = await response.Content.ReadAsStringAsync();
+            Assert.IsNotNull(responseContent);
+         
+           
+        }
+
     }
 }
+
 

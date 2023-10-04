@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using webapi.Data;
+using webapi.Models;
 using webapi.Repositories;
 using webapi.Services.Authentication;
 
@@ -162,15 +163,25 @@ async Task CreateAdminIfNotExists()
 {
     using var scope = app.Services.CreateScope();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-    var adminInDb = await userManager.FindByEmailAsync("admin@admin.com");
+    var adminInDb = await userManager.FindByEmailAsync("admin@admin1.com");
     if (adminInDb == null)
     {
-        var admin = new IdentityUser { UserName = "admin", Email = "admin@admin.com" };
-        var adminCreated = await userManager.CreateAsync(admin, "admin123");
+        var admin = new IdentityUser { UserName = "admin1", Email = "admin@admin1.com" };
+        var adminCreated = await userManager.CreateAsync(admin, "admin1234");
 
         if (adminCreated.Succeeded)
         {
             await userManager.AddToRoleAsync(admin, "Admin");
+            var customUser = new User
+            {
+                UserName = admin.UserName,
+                Email = admin.Email,
+                IdentityUserId = admin.Id
+            };
+            using var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+            dbContext.Users.Add(customUser);
+            dbContext.SaveChanges();
+
         }
     }
 

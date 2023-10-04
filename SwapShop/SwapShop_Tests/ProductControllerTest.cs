@@ -1,18 +1,12 @@
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Newtonsoft.Json;
 using NUnit.Framework.Internal;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using webapi.Controllers;
 using webapi.DTOs;
 using webapi.Models;
-using webapi.Repositories;
 using webapi.Services.Authentication;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -22,7 +16,7 @@ namespace SwapShop_Tests
     {
         private HttpClient _client;
         private IAuthService _authService;
-      
+
 
         [SetUp]
         public void Setup()
@@ -99,27 +93,26 @@ namespace SwapShop_Tests
             response.EnsureSuccessStatusCode();
             var responseContent = await response.Content.ReadAsStringAsync();
             Assert.IsNotNull(responseContent);
-         
-           
+
+
         }
 
-
         [Test]
-        public async Task Delete_Product_True()
+        public async Task Delete_Product_NonExistingProduct_ReturnsNotFound()
         {
-            string productId = "717a0527-17b0-43d8-8761-9803d7f184ef";
+            string productId = "invalidFakeId";
 
             var response = await _client.DeleteAsync($"/product/delete/{productId}");
             var responseContent = await response.Content.ReadAsStringAsync();
-            if (response.EnsureSuccessStatusCode() != null)
-            {
-           
-            Assert.IsNotNull(responseContent);
-            }
-            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
-            Assert.AreEqual("This product doesn't exist!", responseContent);
 
+            // Check if the response status code indicates a non-success status (e.g., 404 Not Found).
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+
+            // Check the response content for a specific message.
+            Assert.AreEqual("This product doesn't exist", responseContent);
         }
+
+
         [Test]
         public async Task GetProductById_NonExistingProduct_ReturnsNotFound()
         {

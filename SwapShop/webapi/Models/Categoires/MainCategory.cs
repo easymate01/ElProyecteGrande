@@ -2,8 +2,8 @@
 {
     public enum MainCategory
     {
-        Electronics,
-        Clothing,
-        Books,
+        Electronics = 1,
+        Clothing = 2,
+        Books = 3,
     }
 }

@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import "./myProducts.css";
 import { useState } from "react";
 import EditProductModal from "../EditModal/EditModal";
-import API_BASE_URL from "../config";
 
 const MyProductCard = ({
   product,
@@ -32,7 +31,7 @@ const MyProductCard = ({
   const onDelete = (e) => {
     e.preventDefault();
     setLoading(true);
-    fetch(`${API_BASE_URL}/product/delete/${productId}`, {
+    fetch(`https://localhost:7035/product/delete/${productId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +49,7 @@ const MyProductCard = ({
   const onSold = (e) => {
     e.preventDefault();
     setLoading(true);
-    fetch(`${API_BASE_URL}/product/sold/${productId}`, {
+    fetch(`https://localhost:7035/product/sold/${productId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

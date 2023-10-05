@@ -118,6 +118,7 @@ namespace webapi.Repositories
             var mainCategoryDtos = mainCategories.Select(mainCategory => new MainCategoryDto
             {
                 Name = mainCategory.ToString(),
+                Value = (int)mainCategory,
             }).ToList();
 
             return mainCategoryDtos;

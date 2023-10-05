@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import "./ProductCard.css";
-import API_BASE_URL from "../config";
 
 const ProductCard = ({ product, isLoggedIn, myAccount, onDeleteProduct }) => {
   const navigate = useNavigate();
@@ -18,7 +17,7 @@ const ProductCard = ({ product, isLoggedIn, myAccount, onDeleteProduct }) => {
   const onDelete = (e) => {
     e.preventDefault();
 
-    fetch(`${API_BASE_URL}/product/delete/${id}`, {
+    fetch(`https://localhost:7035/product/delete/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

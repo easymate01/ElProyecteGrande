@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import API_BASE_URL from "../../config";
 
@@ -10,10 +10,26 @@ const ProductCreator = ({ isLoggedIn, user }) => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState("");
+  const [allCategories, setAllCategories] = useState([]);
+
   const [created, setCreated] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const [image, setImage] = useState(null);
 
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/Product/categories`);
+        const data = await response.json();
+        setAllCategories(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    }
+
+    fetchCategories();
+  }, []);
   const readFileAsBase64AndCompress = (file, maxWidth, maxHeight, quality) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -79,6 +95,7 @@ const ProductCreator = ({ isLoggedIn, user }) => {
   const handleAddProduct = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     if (imageFile) {
       try {
         // Read the image file
@@ -89,7 +106,8 @@ const ProductCreator = ({ isLoggedIn, user }) => {
           name: name,
           description: description,
           price: price,
-          category: category,
+          mainCategory: category,
+          subCategory: "empty",
           userId: user.userId,
           imageBase64: imageBase64,
         };
@@ -103,7 +121,7 @@ const ProductCreator = ({ isLoggedIn, user }) => {
           },
           body: JSON.stringify(productData),
         });
-
+        console.log(productData);
         if (response.ok) {
           const data = await response.json();
           console.log("Creating Product response:", data);
@@ -174,12 +192,14 @@ const ProductCreator = ({ isLoggedIn, user }) => {
               </div>
 
               <div className="nice-form-group">
-                <input
-                  type="text"
-                  placeholder="Category"
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                />
+                <select onChange={(e) => setCategory(e.target.value)}>
+                  <option value="--">--</option>
+                  {allCategories.map((category) => (
+                    <option key={category.name} value={category.value}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="nice-form-group img-upload">

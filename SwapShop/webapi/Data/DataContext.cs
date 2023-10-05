@@ -13,6 +13,7 @@ namespace webapi.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             // It would be a good idea to move the connection string to user secrets

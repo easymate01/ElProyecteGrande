@@ -11,7 +11,7 @@ namespace webapi.Models
         public decimal Price { get; set; }
         public bool IsAvailable { get; set; }
         public MainCategory MainCategory { get; set; }
-        public Enum Subcategory { get; set; }
+        public string SubCategory { get; set; }
         public string ImageBase64 { get; set; }
         public string userId { get; set; }
         [JsonIgnore]

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using webapi.DTOs;
 using webapi.Models;
+using webapi.Models.Categoires;
 using webapi.Repositories;
 
 namespace webapi.Controllers
@@ -59,7 +60,7 @@ namespace webapi.Controllers
         }
 
         [HttpGet("/products/{productCategory}")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory(string productCategory)
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory(MainCategory productCategory)
         {
             var existProduct = await _productService.GetProductByCategoryAsync(productCategory);
             if (!existProduct.Any())

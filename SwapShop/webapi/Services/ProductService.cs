@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using webapi.Data;
 using webapi.DTOs;
 using webapi.Models;
+using webapi.Models.Categoires;
 
 namespace webapi.Repositories
 {
@@ -26,7 +27,8 @@ namespace webapi.Repositories
             }
 
             newProduct.Name = product.Name;
-            newProduct.Category = product.Category;
+            newProduct.MainCategory = product.MainCategory;
+            newProduct.SubCategory = product.SubCategory;
             newProduct.Description = product.Description;
             newProduct.Price = product.Price;
             newProduct.ImageBase64 = product.ImageBase64;
@@ -72,7 +74,8 @@ namespace webapi.Repositories
             var newProduct = new Product
             {
                 Name = product.Name,
-                Category = product.Category,
+                MainCategory = product.MainCategory,
+                SubCategory = product.SubCategory,
                 Description = product.Description,
                 Price = product.Price,
                 ImageBase64 = product.ImageBase64,
@@ -83,10 +86,10 @@ namespace webapi.Repositories
             return newProduct;
         }
 
-        public async Task<IEnumerable<Product>?> GetProductByCategoryAsync(string category)
+        public async Task<IEnumerable<Product>?> GetProductByCategoryAsync(MainCategory category)
         {
             return await _dbContext.Products
-                .Where(product => product.Category == category).ToListAsync();
+                .Where(product => product.MainCategory == category).ToListAsync();
         }
 
         public async Task<IEnumerable<Product>?> GetProductsByUserIdAsync(string userId)

@@ -1,3 +1,5 @@
+using webapi.Models.Categoires;
+
 namespace SwapShop_Tests
 {
     public class ProductControllerTest : WebApplicationFactory<Program>
@@ -63,29 +65,41 @@ namespace SwapShop_Tests
                 Name = "Valami",
                 Description = "Description",
                 Price = 10,
-                Category = "Car",
+                MainCategory = MainCategory.Books,
+                SubCategory = "empty",
                 ImageBase64 = "ggglglglgl",
                 userId = "5cb76061-0423-44fe-81be-2516d3b0f179"
             };
+
+
             Product product = new Product
             {
                 Name = productDto.Name,
                 Description = productDto.Description,
                 Price = productDto.Price,
-                Category = productDto.Category,
+                MainCategory = productDto.MainCategory,
+                SubCategory = productDto.SubCategory,
                 ImageBase64 = productDto.ImageBase64,
                 userId = productDto.userId
             };
 
-            var content = new StringContent(JsonConvert.SerializeObject(product), Encoding.UTF8, "application/json");
+            var content = new StringContent(JsonConvert.SerializeObject(new
+            {
+                product.Name,
+                product.Description,
+                product.Price,
+                (int)product.MainCategory,
+                product.SubCategory,
+                product.ImageBase64,
+                product.userId
+
+            }), Encoding.UTF8, "application/json");
 
 
             var response = await _client.PostAsync("/create/product", content);
             response.EnsureSuccessStatusCode();
             var responseContent = await response.Content.ReadAsStringAsync();
             Assert.IsNotNull(responseContent);
-
-
         }
 
         [Test]

@@ -1,6 +1,5 @@
 ﻿using webapi.DTOs;
 using webapi.Models;
-using webapi.Models.Categoires;
 
 namespace webapi.Repositories
 {
@@ -15,7 +14,7 @@ namespace webapi.Repositories
         Task<IEnumerable<Product>?> GetAllProductAvailableAsync();
         Task<Product>? GetById(string productId);
         Task<Product> CreateAsync(ProductDto product);
-        Task<IEnumerable<Product>?> GetProductByCategoryAsync(MainCategory category);
+        Task<IEnumerable<Product>?> GetProductByCategoryAsync(int category);
         Task<IEnumerable<Product>?> GetProductsByUserIdAsync(string userId);
         Task<Product> SetProductUnAvailable(string productId);
 

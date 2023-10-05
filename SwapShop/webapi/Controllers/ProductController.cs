@@ -62,7 +62,7 @@ namespace webapi.Controllers
         [HttpGet("/products/{productCategory}")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory(MainCategory productCategory)
         {
-            var existProduct = await _productService.GetProductByCategoryAsync(productCategory);
+            var existProduct = await _productService.GetProductByCategoryAsync((int)productCategory);
             if (!existProduct.Any())
             {
                 return NotFound("This product doesn't exist!");

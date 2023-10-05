@@ -86,10 +86,10 @@ namespace webapi.Repositories
             return newProduct;
         }
 
-        public async Task<IEnumerable<Product>?> GetProductByCategoryAsync(MainCategory category)
+        public async Task<IEnumerable<Product>?> GetProductByCategoryAsync(int category)
         {
             return await _dbContext.Products
-                .Where(product => product.MainCategory == category).ToListAsync();
+                .Where(product => (int)product.MainCategory == category).ToListAsync();
         }
 
         public async Task<IEnumerable<Product>?> GetProductsByUserIdAsync(string userId)

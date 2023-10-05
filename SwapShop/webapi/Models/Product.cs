@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using webapi.Models.Categoires;
 
 namespace webapi.Models
 {
@@ -8,8 +9,9 @@ namespace webapi.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public string Category { get; set; }
         public bool IsAvailable { get; set; }
+        public MainCategory MainCategory { get; set; }
+        public Enum Subcategory { get; set; }
         public string ImageBase64 { get; set; }
         public string userId { get; set; }
         [JsonIgnore]

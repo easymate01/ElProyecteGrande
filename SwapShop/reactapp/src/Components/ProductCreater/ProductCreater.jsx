@@ -106,7 +106,7 @@ const ProductCreator = ({ isLoggedIn, user }) => {
           name: name,
           description: description,
           price: price,
-          mainCategory: category,
+          mainCategory: parseInt(category),
           subCategory: "empty",
           userId: user.userId,
           imageBase64: imageBase64,

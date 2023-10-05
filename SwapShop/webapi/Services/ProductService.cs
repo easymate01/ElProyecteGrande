@@ -111,5 +111,20 @@ namespace webapi.Repositories
             return productToUpdate;
         }
 
+        public async Task<List<MainCategoryDto>> GetAllMainCategories()
+        {
+            var mainCategories = Enum.GetValues(typeof(MainCategory)).Cast<MainCategory>();
+
+            var mainCategoryDtos = mainCategories.Select(mainCategory => new MainCategoryDto
+            {
+                Name = mainCategory.ToString(),
+            }).ToList();
+
+            return mainCategoryDtos;
+        }
+
+
+
+
     }
 }

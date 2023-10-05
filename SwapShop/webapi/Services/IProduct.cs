@@ -19,5 +19,6 @@ namespace webapi.Repositories
         Task<IEnumerable<Product>?> GetProductsByUserIdAsync(string userId);
         Task<Product> SetProductUnAvailable(string productId);
 
+        Task<List<MainCategoryDto>> GetAllMainCategories();
     }
 }

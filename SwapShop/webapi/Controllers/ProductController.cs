@@ -114,5 +114,15 @@ namespace webapi.Controllers
             return Ok(result);
 
         }
+
+
+
+        [HttpGet("categories")]
+        public async Task<IActionResult> GetMainCategories()
+        {
+            var mainCategories = await _productService.GetAllMainCategories();
+            return Ok(mainCategories);
+        }
+
     }
 }

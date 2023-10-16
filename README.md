@@ -13,7 +13,6 @@ SwapShop Marketplace is a web-based platform that facilitates buying and selling
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Overview
 
@@ -94,6 +93,3 @@ To run the SwapShop Marketplace, follow these steps:
 
 We welcome contributions from the community. If you have suggestions or find issues, please create an issue or submit a pull request.
 
-## License
-
-[Specify the license for your project. For example, MIT License, Apache License, etc.]

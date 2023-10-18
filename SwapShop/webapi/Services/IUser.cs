@@ -1,6 +1,6 @@
-﻿using webapi.DTOs;
+﻿using Microsoft.AspNetCore.Identity;
+using webapi.DTOs;
 using webapi.Models;
-using Microsoft.AspNetCore.Identity;
 
 namespace webapi.Repositories
 {
@@ -13,6 +13,8 @@ namespace webapi.Repositories
         Task<IEnumerable<IdentityUser>?> GetAllUsersAsync();
         Task<IdentityUser>? GetById(string userId);
         Task<IdentityUser>? GetUserByNameAsync(string userName);
+        Task<User> GetUserByProductId(string productId);
+
 
     }
 }

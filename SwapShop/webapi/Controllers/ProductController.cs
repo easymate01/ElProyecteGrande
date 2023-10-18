@@ -116,7 +116,6 @@ namespace webapi.Controllers
         }
 
 
-
         [HttpGet("categories")]
         public async Task<IActionResult> GetMainCategories()
         {

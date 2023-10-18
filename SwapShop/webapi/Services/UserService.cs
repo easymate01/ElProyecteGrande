@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using webapi.Data;
 using webapi.DTOs;
+using webapi.Models;
 
 namespace webapi.Repositories
 {
@@ -96,5 +97,18 @@ namespace webapi.Repositories
             return user;
         }
 
+        public async Task<User> GetUserByProductId(string productId)
+        {
+            var product = await _dbContext.Products
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(p => p.Id == productId);
+
+            if (product == null || product.User == null)
+            {
+                return null;
+            }
+
+            return product.User;
+        }
     }
 }

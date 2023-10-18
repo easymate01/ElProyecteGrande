@@ -8,7 +8,8 @@
         [SetUp]
         public void Setup()
         {
-            string connectionString = "Server=tcp:swapshop.database.windows.net,1433;Initial Catalog=SwapShop;Persist Security Info=False;User ID=gulmatan;Password=a$%Jd5Ze!9+VwQea;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            string connectionString =
+                "Server=localhost,1433;Database=SwapShop;User Id=sa;Password=yourStrong(!)Password;Encrypt=True;TrustServerCertificate=True;";
             Environment.SetEnvironmentVariable("CONNECTION_STRING", connectionString);
             var options = new JsonSerializerOptions
             {

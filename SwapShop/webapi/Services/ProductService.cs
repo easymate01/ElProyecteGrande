@@ -115,6 +115,10 @@ namespace webapi.Repositories
         {
             var mainCategories = Enum.GetValues(typeof(MainCategory)).Cast<MainCategory>();
 
+            //return array
+            var mainCategorie = Enum.GetValues<MainCategory>();
+
+
             var mainCategoryDtos = mainCategories.Select(mainCategory => new MainCategoryDto
             {
                 Name = mainCategory.ToString(),

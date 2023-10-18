@@ -9,6 +9,7 @@ const ProductPage = ({ user }) => {
   const { id } = useParams();
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showSeller, setShowSeller] = useState(false);
 
   const location = useLocation();
   const isLoggedIn = new URLSearchParams(location.search).get("isLoggedIn");
@@ -34,11 +35,15 @@ const ProductPage = ({ user }) => {
     fetchProducts();
   }, []);
 
-  const handleContactSeller = () => {
+  const onOpen = () => {
     if (isLoggedIn) {
-      console.log("you can contact with the seller...");
-    } else {
-      console.log("please login first!");
+      setShowSeller(!showSeller);
+    }
+  };
+
+  const onClose = () => {
+    if (isLoggedIn) {
+      setShowSeller(!showSeller);
     }
   };
   return (
@@ -59,8 +64,16 @@ const ProductPage = ({ user }) => {
                 <h1>Price: {product.price}$</h1>
                 <p>Description: {product.description}</p>
               </div>
-              <button onClick={handleContactSeller}>Contact with seller</button>
+              <button onClick={onOpen}>Show Seller Information</button>
               <button>Wishlist</button>
+            </div>
+            <div className={`modal ${showSeller ? "open" : ""}`}>
+              <div className="seller-infos">
+                <span className="close" onClick={onClose}>
+                  &times;
+                </span>
+                {showSeller && <div>This is the infos</div>}
+              </div>
             </div>
           </div>
         </React.Fragment>

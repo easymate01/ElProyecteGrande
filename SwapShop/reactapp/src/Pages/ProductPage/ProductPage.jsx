@@ -8,12 +8,12 @@ import "./ProductPage.css";
 const ProductPage = ({ user }) => {
   const { id } = useParams();
   const [product, setProduct] = useState([]);
+  const [userInfos, setUserInfos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showSeller, setShowSeller] = useState(false);
 
   const location = useLocation();
   const isLoggedIn = new URLSearchParams(location.search).get("isLoggedIn");
-
   useEffect(() => {
     async function fetchProducts() {
       try {
@@ -34,6 +34,31 @@ const ProductPage = ({ user }) => {
 
     fetchProducts();
   }, []);
+
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const response = await fetch(
+          `${API_BASE_URL}/user/product/${product.id}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${user.userToken}`,
+            },
+          }
+        );
+
+        const data = await response.json();
+        setUserInfos(data);
+        console.log(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    }
+
+    fetchUser();
+  }, [product]);
 
   const onOpen = () => {
     if (isLoggedIn) {
@@ -72,7 +97,13 @@ const ProductPage = ({ user }) => {
                 <span className="close" onClick={onClose}>
                   &times;
                 </span>
-                {showSeller && <div>This is the infos</div>}
+                {showSeller && (
+                  <div>
+                    User Contacts:
+                    <h2>Name: {userInfos.userName}</h2>
+                    <h2>Email: {userInfos.email}</h2>
+                  </div>
+                )}
               </div>
             </div>
           </div>

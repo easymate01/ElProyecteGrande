@@ -63,7 +63,7 @@ namespace webapi.Controllers
             return Ok(userToDelete);
         }
 
-        [HttpGet("/user/{productId}"), Authorize(Roles = "Admin, User")]
+        [HttpGet("/user/product/{productId}"), Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<User>> GetUserByProductId(string productId)
         {
             var user = await _userService.GetUserByProductId(productId);

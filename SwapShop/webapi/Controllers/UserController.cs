@@ -53,7 +53,7 @@ namespace webapi.Controllers
         }
 
         [HttpDelete("/user/delete/{userId}"), Authorize(Roles = "Admin, User")]
-        public async Task<ActionResult<Product>> DeleteUser(string userId)
+        public async Task<ActionResult<Product>> DeleteUserById(string userId)
         {
             var userToDelete = await _userService.DeleteUser(userId);
             if (userToDelete == null)
